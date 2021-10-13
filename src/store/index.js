@@ -1,6 +1,13 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+// general
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+import thunk from "redux-thunk";
 
-let reducers = combineReducers({});
-const store = () => { return createStore(reducers, applyMiddleware(thunk)) }
-export default store();
+// slices
+import currentItemSlice from "./currentItem.store";
+
+// store configuration
+const reducers = combineReducers({ currentItem: currentItemSlice });
+const store = configureStore({ reducer: reducers });
+
+export default store;
