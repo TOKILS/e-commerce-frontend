@@ -3,8 +3,11 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import { update } from "../store/product/product";
 const Info = styled.div`
   opacity: 0;
   width: 100%;
@@ -66,6 +69,10 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
+  useEffect(() => {
+    console.log(item, "<------");
+  }, []);
+  const dispatch = useDispatch();
   return (
     <Container>
       <Circle />
@@ -74,8 +81,10 @@ const Product = ({ item }) => {
         <Icon>
           <ShoppingCartOutlined />
         </Icon>
-        <Icon>
-          <SearchOutlined />
+        <Icon onClick={() => dispatch(update(item))}>
+          <Link exact to="/Product">
+            <SearchOutlined />
+          </Link>
         </Icon>
         <Icon>
           <FavoriteBorderOutlined />
