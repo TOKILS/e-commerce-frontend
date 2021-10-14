@@ -21,30 +21,33 @@ export default function AuthProvider(props) {
 
             const res = await superagent.post(`${serverAPI}/signin`)
                 .set('authorization', `Basic ${encodUsePass}`);
-    
+
             validateJWT(res.body.token);
         } catch (error) {
             alert('Invalid username or password');
+            return (
+                error
+            )
         }
     }
 
-    const signup = async (userName, passWord, firstname , lastname , email) => { // role
+    const signup = async (userName, passWord, firstname, lastname, email) => { // role
         try {
-          let userObj = {
-            username: userName,
-            firstname: firstname,
-            lastname: lastname,
-            password: passWord,
-            email: email,
-            // role: role
-        }
-        console.log(userObj);
-          const res = await superagent.post(`${serverAPI}/signup`, userObj);
-          validateJWT(res.body.token);
+            let userObj = {
+                username: userName,
+                firstname: firstname,
+                lastname: lastname,
+                password: passWord,
+                email: email,
+                // role: role
+            }
+            console.log(userObj);
+            const res = await superagent.post(`${serverAPI}/signup`, userObj);
+            validateJWT(res.body.token);
         } catch (error) {
-          alert(error.message)
+            alert(error.message)
         }
-      };
+    };
 
     const validateJWT = (token) => {
         if (token) {
