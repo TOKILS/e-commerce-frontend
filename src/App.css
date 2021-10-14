@@ -37,3 +37,8 @@
     transform: translateY(0px);
   }
 }
+
+a:-webkit-any-link {
+  text-decoration: none;
+  color: black;
+}
