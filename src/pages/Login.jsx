@@ -3,7 +3,7 @@ import { mobile } from "../responsive";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/authentication";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -12,8 +12,7 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("https://i.ibb.co/ggdps81/wallpaper2you-128794.jpg")
-      center;
+    url("https://i.ibb.co/ggdps81/wallpaper2you-128794.jpg") center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -62,8 +61,8 @@ const Links = styled.a`
 `;
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const context = useContext(AuthContext);
 
@@ -71,20 +70,33 @@ const Login = () => {
 
   const handleLoginSubmit = (event) => {
     event.preventDefault();
-    context.login(username, password).then(()=>{history.push('/')})
+    context
+      .login(username, password)
+      .then((res) => (res ? history.push("/") : null));
   };
-
 
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form onSubmit={handleLoginSubmit}>
-          <Input placeholder="username" type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
-          <Input placeholder="password" type="password" name="password" onChange={(e) => setPassword(e.target.value)} />
-          <Button >LOGIN</Button>
+          <Input
+            placeholder="username"
+            type="text"
+            name="username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            placeholder="password"
+            type="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button>LOGIN</Button>
           <Links>DO NOT YOU REMEMBER THE PASSWORD?</Links>
-          <Link to="/Register"><Links >CREATE A NEW ACCOUNT</Links></Link>
+          <Link to="/Register">
+            <Links>CREATE A NEW ACCOUNT</Links>
+          </Link>
         </Form>
       </Wrapper>
     </Container>

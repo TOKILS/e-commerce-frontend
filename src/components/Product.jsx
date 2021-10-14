@@ -8,6 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { update } from "../store/product/product";
+import { useContext } from "react";
+import { AuthContext } from "../context/authentication";
+import { When } from "react-if";
+import superagent from "superagent";
+import { updateCart } from "../store/cart/cart";
+
 const Info = styled.div`
   opacity: 0;
   width: 100%;
@@ -69,17 +75,42 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
-  useEffect(() => {
-    console.log(item, "<------");
-  }, []);
+  const context = useContext(AuthContext);
   const dispatch = useDispatch();
+  const addToCart = () => {
+    if (context.loggedIn) {
+      superagent
+        .post(`https://mid-project-01.herokuapp.com/api/v2/Cart`)
+        .send({
+          ProductID: item.id,
+          UserID: context.user.id,
+        })
+        .set("Authorization", "Bearer " + context.token)
+        .then((res) => {
+          dispatch(updateCart());
+        });
+    }
+  };
+  const addToWish = () => {
+    if (context.loggedIn) {
+      superagent
+        .post(`https://mid-project-01.herokuapp.com/api/v2/Wishlist`)
+        .send({
+          ProductID: item.id,
+          UserID: context.user.id,
+        })
+        .set("Authorization", "Bearer " + context.token)
+        .then((res) => {});
+    }
+  };
+
   return (
     <Container>
       <Circle />
       <Image src={item.img} />
       <Info>
         <Icon>
-          <ShoppingCartOutlined />
+          <ShoppingCartOutlined onClick={addToCart} />
         </Icon>
         <Icon onClick={() => dispatch(update(item))}>
           <Link exact to="/Product">
@@ -87,7 +118,7 @@ const Product = ({ item }) => {
           </Link>
         </Icon>
         <Icon>
-          <FavoriteBorderOutlined />
+          <FavoriteBorderOutlined onClick={addToWish} />
         </Icon>
       </Info>
     </Container>

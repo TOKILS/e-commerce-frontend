@@ -119,7 +119,7 @@ const Button = styled.button`
 const Product = (props) => {
   const item = useSelector((state) => state.product);
   useEffect(() => {
-    // console.log(item);
+    window.scrollTo(0, 0);
   }, []);
   return (
     <Container>
