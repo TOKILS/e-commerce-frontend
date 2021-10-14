@@ -4,6 +4,10 @@ import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { useContext } from 'react';
+import { AuthContext } from "../context/authentication";
+import { When } from "react-if";
+
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -63,6 +67,8 @@ const MenuItem = styled.div`
 
 
 const Navbar = () => {
+
+  const context = useContext(AuthContext);
   return (
     <Container>
       <Wrapper>
@@ -78,12 +84,21 @@ const Navbar = () => {
         </Center>
         <Right>
           
+          <When condition={!context.loggedIn}>
           <MenuItem > 
           <Link  to="/Register">Register</Link>
           </MenuItem>
+          </When>
+          <When condition={!context.loggedIn}>
           <MenuItem > 
           <Link to="/Login">SIGN IN</Link>
           </MenuItem>
+          </When>
+          <When condition={context.loggedIn}>
+          <MenuItem > 
+          <Link to="/" onClick={context.logout}> Logout </Link>
+          </MenuItem>
+          </When>
           <MenuItem>
           <Link to="/Cart">
             <Badge badgeContent={4} color="primary">
