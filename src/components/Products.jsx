@@ -14,18 +14,11 @@ const Products = () => {
   const [data, setdata] = useState([]);
   useEffect(() => {
     superagent
-      .get("https://mid-project-01.herokuapp.com/api/v2/Product")
+      .get("https://mid-project-01.herokuapp.com/api/v3/Products")
       .then((results) => {
         // console.log(results.body);
 
-        setdata(
-          results.body.map((ele) => {
-            return {
-              ...ele,
-              img: "https://place.dog/500/500",
-            };
-          })
-        );
+        setdata(results.body);
       });
   }, []);
   return (

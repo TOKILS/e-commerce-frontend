@@ -1,12 +1,24 @@
 import { Add, Remove } from "@material-ui/icons";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Reviews from "../components/Reviews";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
+import { updateCart } from "../store/cart/cart";
+import { useContext, forwardRef } from "react";
+import { AuthContext } from "../context/authentication";
+import superagent from "superagent";
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Container = styled.div``;
 
@@ -117,17 +129,51 @@ const Button = styled.button`
 `;
 
 const Product = (props) => {
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
   const item = useSelector((state) => state.product);
+  const context = useContext(AuthContext);
+  const [Color, setColor] = useState(item.color[0]);
+  const [amount, setAmount] = useState(1);
+  const dispatch = useDispatch();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const addToCart = () => {
+    if (context.loggedIn) {
+      for (let i = 0; i < amount; i++) {
+        superagent
+          .post(`https://mid-project-01.herokuapp.com/api/v2/Cart`)
+          .send({
+            ProductID: item.id,
+            UserID: context.user.id,
+          })
+          .set("Authorization", "Bearer " + context.token)
+          .then((res) => {
+            dispatch(updateCart());
+            handleClick();
+          });
+      }
+    }
+  };
+
   return (
     <Container>
       <Navbar />
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src={item.img} />
+          <Image src={Color.image[0].Image} />
         </ImgContainer>
         <InfoContainer>
           <Title>{item.Name}</Title>
@@ -136,32 +182,62 @@ const Product = (props) => {
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              <FilterColor color="#d7d7d7" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
+              {item.color.map((color) => {
+                return (
+                  <FilterColor
+                    color={`${color.Code}`}
+                    onClick={() => setColor(color)}
+                  />
+                );
+              })}
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+                {Color.size.map((size) => {
+                  return <FilterSizeOption>{size.Size}</FilterSizeOption>;
+                })}
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  if (amount > 1) {
+                    setAmount(amount - 1);
+                  }
+                }}
+              />
+              <Amount>{amount}</Amount>
+              <Add
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  if (amount < 10) {
+                    setAmount(amount + 1);
+                  }
+                }}
+              />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={addToCart}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
-      <Newsletter />
+      {/* <Newsletter /> */}
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Successfully Added {amount < 2 ? "One Item" : amount + " items"} to
+            Cart
+          </Alert>
+        </Snackbar>
+      </Stack>
+      <Reviews />
       <Footer />
     </Container>
   );
