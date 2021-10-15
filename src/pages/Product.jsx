@@ -1,4 +1,6 @@
 import { Add, Remove } from "@material-ui/icons";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -114,29 +116,27 @@ const Button = styled.button`
   }
 `;
 
-const Product = () => {
+const Product = (props) => {
+  const item = useSelector((state) => state.product);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Container>
       <Navbar />
       <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src={item.img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
-          <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
-          </Desc>
-          <Price>$ 20</Price>
+          <Title>{item.Name}</Title>
+          <Desc>{item.Description}</Desc>
+          <Price>$ {item.Price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
+              <FilterColor color="#d7d7d7" />
               <FilterColor color="darkblue" />
               <FilterColor color="gray" />
             </Filter>
