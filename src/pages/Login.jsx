@@ -12,7 +12,8 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("https://i.ibb.co/ggdps81/wallpaper2you-128794.jpg") center;
+    url("https://www.teahub.io/photos/full/73-735971_1920x1200-stylish-and-hot-modern-woman-nice-wallpapers.jpg")
+      center;
   background-size: cover;
   display: flex;
   align-items: center;

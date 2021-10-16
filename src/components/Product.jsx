@@ -75,6 +75,8 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
+  const { Name, Description, Price, Quantity, color, TypeID } = item;
+
   const context = useContext(AuthContext);
   const dispatch = useDispatch();
   const addToCart = () => {

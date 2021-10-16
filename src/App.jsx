@@ -1,12 +1,15 @@
 import Home from "./pages/Home";
-import Product from "./pages/Product"
-import Register from "./pages/Register"
-import Cart from "./pages/Cart"
-import Login from "./pages/Login"
-import ProductList from "./pages/ProductList"
+import Product from "./pages/Product";
+import Register from "./pages/Register";
+import Cart from "./pages/Cart";
+import Login from "./pages/Login";
+import ProductList from "./pages/ProductList";
 import { BrowserRouter as Routerer, Switch, Route } from "react-router-dom";
-import AuthProvider from './context/authentication';
-import "./App.css"
+import AuthProvider from "./context/authentication";
+import "./App.css";
+
+import Catalog from "./components/Catalog/Catalog";
+
 const App = () => {
   return (
     <AuthProvider>
@@ -18,6 +21,9 @@ const App = () => {
           </Route>
           <Route exact path="/Product">
             <Product />
+          </Route>
+          <Route exact path="/products">
+            <Catalog name={""} />
           </Route>
           <Route exact path="/ProductList">
             <ProductList />
@@ -35,7 +41,7 @@ const App = () => {
         {/* </IsLoadingAndError> */}
       </Routerer>
     </AuthProvider>
-  )
+  );
 };
 
 export default App;
