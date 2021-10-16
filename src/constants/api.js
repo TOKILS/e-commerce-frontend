@@ -7,7 +7,7 @@ export const IMAGES_ROUTES = "";
 //Acciones asociadas a Product
 export const GET_PRODUCTS = `${API_HOST}/api/v3/Products`; //						LISTAR PRODUCTOS
 export const POST_PRODUCT = `${API_HOST}/api/v2/Product`; //				 		AGREGAR PRODUCTO
-export const GET_PRODUCT = `${API_HOST}/api/v3/Product`; //:id || ?value		BUSCAR PRODUCTO
+export const GET_PRODUCT = `${API_HOST}/api/v2/Product`; //:id || ?value		BUSCAR PRODUCTO
 export const PUT_PRODUCT = `${API_HOST}/api/v2/Product`; //:id 					MODIFICAR PRODUCTO
 export const POST_PRODUCT_CATEGORY = `${API_HOST}/products`; //:id/category/:id  	AGREGAR CATEGORIA A UN PRODUCTO
 export const POST_PRODUCT_CATEGORIES = `${API_HOST}/products/categories`; //:id AGREGAR CATEGORIAS A UN PRODUCTO
@@ -18,7 +18,7 @@ export const GET_CATEGORIES = `${API_HOST}/api/v2/Category`; //				    LISTAR CA
 export const POST_CATEGORY = `${API_HOST}/api/v2/Category`; //.body 		    AGREGAR CATEGORIA
 export const PUT_CATEGORY = `${API_HOST}/api/v2/Category`; //:id & .body 	    MODIFICAR CATEGORIA
 export const DELETE_CATEGORY = `${API_HOST}/api/v2/Category/`; //:id 			    ELIMINAR CATEGORIA
-export const GET_PRODUCTS_CATEGORY = `${API_HOST}/products/search/category`; //:name			    LISTAR PRODUCTOS POR CATEGORIA
+export const GET_PRODUCTS_CATEGORY = `${API_HOST}/api/v3/type`; //:name			    LISTAR PRODUCTOS POR CATEGORIA
 export const DELETE_PRODUCT_CATEGORY = `${API_HOST}/products`; //:id/category/:id 	ELIMINAR CATEGORIA DE UN PRODUCTO
 
 // Acciones asociadas a User

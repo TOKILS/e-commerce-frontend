@@ -4,9 +4,10 @@ import Catalog from "./Catalog";
 import { getCategories } from "../../controllers/categories";
 import {
     getProducts,
-    getSearchProducts
 } from "../../controllers/products";
-
+import {
+    getProductsByCategory
+} from "../../controllers/categories";
 
 const CatalogContainer = ({ value }) => {
     const [products, setProducts] = useState();
@@ -15,7 +16,7 @@ const CatalogContainer = ({ value }) => {
 
     useEffect(() => {
         if (value) {
-            getSearchProducts(value)
+            getProductsByCategory(value)
                 .then(productsRes => {
                     setProducts(productsRes);
                     setProductsFilter(productsRes)
@@ -40,7 +41,10 @@ const CatalogContainer = ({ value }) => {
 
     }, [value]);
 
-    const handleFilter = event => event.target.name === 'category' && event.target.value === 'All' ? setProductsFilter(products) : setProductsFilter(products.filter(p => p.categories.find(c => c.name === event.target.value)))
+    const handleFilter = event => {
+        console.log('+-+-+-', event);
+        event.target.name === 'category' && event.target.value === 'All' ? setProductsFilter(products) : setProductsFilter(products.filter(p => p.find(c => c.TypeID === event.target.value)))
+    }
 
     return (
         <>

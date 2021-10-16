@@ -54,7 +54,7 @@ const Catalog = ({ productsFilter, handleFilter, categories }) => {
                         {categories ? (
                             categories.map((category, index) => (
 
-                                <Option id={index} name="category" value={category.Name} onClick={handleFilter}>{category.Name}</Option>
+                                <Option id={index} name="category" value={category.id} onClick={handleFilter}>{category.Name}</Option>
 
 
                             ))

@@ -1,22 +1,14 @@
-import {
-  FavoriteBorderOutlined,
-  SearchOutlined,
-  ShoppingCartOutlined,
-} from "@material-ui/icons";
 import React, { useState } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { update } from "../../../store/product/product";
-import { useContext } from "react";
-import { AuthContext } from "../../../context/authentication";
-import { When } from "react-if";
-import superagent from "superagent";
-import { updateCart } from "../../../store/cart/cart";
-
-import { addOneItemToCart, handleItemToCart } from "../../../controllers/cart";
+import {
+    FavoriteBorderOutlined,
+    SearchOutlined,
+    ShoppingCartOutlined,
+} from "@material-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
 import allActions from "../../../store/cart/actions/all_actions";
+
 
 const Info = styled.div`
   opacity: 0;
@@ -77,79 +69,54 @@ const Icon = styled.div`
     transform: scale(1.1);
   }
 `;
-
 const Product = ({ product, type }) => {
-  const context = useContext(AuthContext);
-  const { id } = product;
-  const cart = useSelector((state) => state.cart_store);
-  const products = useSelector((state) => state.cart_store.products);
-  const [open, setOpen] = useState(false);
-  const [outOfStock, setOutOfStock] = useState(false);
-  const dispatch = useDispatch();
+    console.log(product);
+    const { id, price, name } = product;
+    const cart = useSelector((state) => state.cart_store);
+    const products = useSelector((state) => state.cart_store.products);
+    const [open, setOpen] = useState(false);
+    const [outOfStock, setOutOfStock] = useState(false);
+    const dispatch = useDispatch();
 
+    const handleClose = (reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setOpen(false);
+    };
 
-  const handleClose = (reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+    const handleCloseStock = (reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setOutOfStock(false);
+    };
 
-  const handleCloseStock = (reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOutOfStock(false);
-  };
+    const handleAddToCart = () => {
+        dispatch(allActions.postCartGuest(product))
+    };
 
-  const handleAddToCart = () => {
-    // if (user.hasOwnProperty('role')) {
-    const isInCart = products.filter((p) => p.id === product.id);
-    if (isInCart.length === 1) {
-      addOneItemToCart(cart.id, product.id)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      handleItemToCart(cart.id, product.id, 1)
-        .then((response) => {
-          if (response.msg === "Product has no more stock available") {
-            setOutOfStock(true);
-            console.log(response);
-          } else {
-            console.log(response);
-          }
-          dispatch(allActions.getCart());
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    // } else {
-    //   dispatch(allActions.postCartGuest(product))
-    // }
-  };
-
-  return (
-    <Container>
-      <Circle />
-      <Image src={product.color[0].image[0].Image} />
-      <Info>
-        <Icon>
-          <ShoppingCartOutlined onClick={handleAddToCart} />
-        </Icon>
-        <Icon>
-          <Link exact to="/Product">
-            <SearchOutlined />
-          </Link>
-        </Icon>
-        <Icon>
-          <FavoriteBorderOutlined />
-        </Icon>
-      </Info>
-    </Container>
-  );
+    return (
+        <>
+            <Container>
+                <Circle />
+                <Image src={product.color[0].image[0].Image} />
+                <Info>
+                    <Icon>
+                        <ShoppingCartOutlined onClick={handleAddToCart} />
+                    </Icon>
+                    <Icon>
+                        <Link exact to="/Product">
+                            <SearchOutlined />
+                        </Link>
+                    </Icon>
+                    <Icon>
+                        <FavoriteBorderOutlined />
+                    </Icon>
+                </Info>
+            </Container>
+        </>
+    );
 };
 
 export default Product;

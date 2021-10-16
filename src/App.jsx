@@ -8,7 +8,7 @@ import { BrowserRouter as Routerer, Switch, Route } from "react-router-dom";
 import AuthProvider from "./context/authentication";
 import "./App.css";
 
-import Catalog from "./components/Catalog/Catalog";
+import Catalog from "./components/Catalog/CatalogContainer";
 
 const App = () => {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import ProductCard from "../../Products/ProductCard/ProductCard.js";
+import ProductCard from "../../Products/ProductCard/ProductCard";
 
 const Category = ({ products }) => {
     return (
