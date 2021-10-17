@@ -18,20 +18,13 @@ export default function UsersTable(props) {
         setShowUpdateDialog(true);
     };
     const handleCloseUpdate = () => {
-        setUpdateDialogSelectedUserData({});
+        // setUpdateDialogSelectedUserData({});
         setShowUpdateDialog(false);
     };
 
-    const [usersUpdateLoading, setUsersUpdateLoading] = useState({});
     async function handleUpdateUser(user) {
         setUpdateDialogSelectedUserData(user);
         handleShowUpdate();
-
-        // TODO: move the loading animation to the dialog
-        await setUsersUpdateLoading({ ...usersUpdateLoading, [user]: true });
-        await setTimeout(() => {
-            setUsersUpdateLoading({ ...usersUpdateLoading, [user]: false });
-        }, 1000);
     }
 
     // delete dialog
@@ -42,20 +35,14 @@ export default function UsersTable(props) {
         setShowDeleteDialog(true);
     };
     const handleCloseDelete = () => {
-        setDeleteDialogSelectedUser({});
+        // setDeleteDialogSelectedUser({});
         setShowDeleteDialog(false);
     };
 
-    const [usersDeleteLoading, setUsersDeleteLoading] = useState({});
-    async function handleDeleteUser(userToken, username) {
-        setDeleteDialogSelectedUser({ username, userToken });
+    async function handleDeleteUser(user) {
+        let { username, token } = user;
+        setDeleteDialogSelectedUser({ username, token });
         handleShowDelete();
-
-        // TODO: move the loading animation to the dialog
-        await setUsersDeleteLoading({ ...usersDeleteLoading, [userToken]: true });
-        await setTimeout(() => {
-            setUsersDeleteLoading({ ...usersDeleteLoading, [userToken]: false });
-        }, 1000);
     }
 
     return (
@@ -88,14 +75,10 @@ export default function UsersTable(props) {
                                     {user.createdAt.substr(0, 10)}
                                 </TableCell>
                                 <TableCell align="right" component="th" scope="row">
-                                    <LoadingButton onClick={() => handleUpdateUser(user)} loading={usersUpdateLoading[user.name]}>
-                                        Update Info
-                                    </LoadingButton>
+                                    <LoadingButton onClick={() => handleUpdateUser(user)}>Update Info</LoadingButton>
                                 </TableCell>
                                 <TableCell align="right" component="th" scope="row">
-                                    <LoadingButton onClick={() => handleDeleteUser(user.token)} loading={usersDeleteLoading[user.name]}>
-                                        Delete
-                                    </LoadingButton>
+                                    <LoadingButton onClick={() => handleDeleteUser(user)}>Delete</LoadingButton>
                                 </TableCell>
                             </TableRow>
                         );

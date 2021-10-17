@@ -2,36 +2,47 @@
 import { useState } from "react";
 
 // styled components
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Box } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Box, Select, MenuItem } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 // redux
 import { connect } from "react-redux";
 import { updateUser } from "../../../../store/dashboard/dashboard.store";
 
-const UpdateDialog = ({ user, check, handleShow, handleClose }) => {
+const UpdateDialog = ({ user, check, handleShow, handleClose, updateUser }) => {
     const [submitBtnLoading, setSubmitBtnLoading] = useState(false);
+    const [selectedRole, setSelectedRoleRole] = useState("user");
 
     async function handleUpdateSubmit(e) {
         e.preventDefault();
+        console.log("handleUpdateSubmit ran");
+
         setSubmitBtnLoading(true);
         let userName = e.target.userName.value;
         let firstName = e.target.firstName.value;
         let lastName = e.target.lastName.value;
         let email = e.target.email.value;
-        let role = e.target.role.value;
+        let role = selectedRole;
+
         let token = e.target.token.value;
 
-        updateUser({
-            userName,
-            firstName,
-            lastName,
-            email,
-            role,
-            token,
+        let errorCheck = await updateUser({
+            userName: userName,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            role: role,
+            token: token,
         });
+        console.log("~ update error check", errorCheck);
+        if (errorCheck?.error) {
+            console.error("error updating user ", errorCheck.error.message);
+        }
         setSubmitBtnLoading(false);
         handleClose();
+    }
+    function handleRoleChange(e) {
+        setSelectedRoleRole(e.target.value);
     }
     return (
         <Dialog open={check} onClose={handleClose}>
@@ -42,8 +53,14 @@ const UpdateDialog = ({ user, check, handleShow, handleClose }) => {
                     <TextField name="firstName" label="First name" variant="outlined" defaultValue={user.firstname} />
                     <TextField name="lastName" label="Last name" variant="outlined" defaultValue={user.lastname} />
                     <TextField name="email" label="Email" variant="outlined" defaultValue={user.email} />
-                    <TextField name="role" label="Role" variant="outlined" defaultValue={user.role} />
-                    <TextField sx={{ display: "none" }} name="token" label="Token" variant="outlined" defaultValue={user.token} />
+
+                    <Select name="role" value={user.role} onChange={handleRoleChange}>
+                        <MenuItem value={"user"}>User</MenuItem>
+                        <MenuItem value={"vendor"}>Vendor</MenuItem>
+                        <MenuItem value={"admin"}>Admin</MenuItem>
+                    </Select>
+
+                    <TextField sx={{ display: "none" }}  name="token" label="Token" variant="outlined" defaultValue={user.token} />
                 </Box>
             </DialogContent>
             <DialogActions>
@@ -58,10 +75,8 @@ const UpdateDialog = ({ user, check, handleShow, handleClose }) => {
     );
 };
 
-// const mapStateToProps = (state) => ({
-//   users: state.dashboard.users,
-// });
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = { updateUser };
 
-export default connect(mapDispatchToProps)(UpdateDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateDialog);

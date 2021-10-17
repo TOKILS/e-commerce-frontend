@@ -1,6 +1,6 @@
 // general
 import { getUsers } from "../../../../store/dashboard/dashboard.store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // components
 import UsersTable from "./UsersTable";
@@ -13,10 +13,13 @@ import { Cached } from "@mui/icons-material";
 import { connect } from "react-redux";
 
 const Users = (props) => {
+    // useEffect(() => {
+    //     console.log("props.users vvvv");
+    //     console.dir(props.users)
+    // }, [props.users]);
+
     const [gettingUsersLoading, setGettingUsersLoading] = useState(false);
 
-
-    
     async function handleGettingUsers(e) {
         setGettingUsersLoading(true);
         await props.getUsers();
