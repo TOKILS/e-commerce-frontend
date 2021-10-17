@@ -7,7 +7,7 @@ import { BrowserRouter as Routerer, Switch, Route } from "react-router-dom";
 import Checkout from "./pages/checkout/Checkout";
 import AuthProvider from "./context/authentication";
 import "./App.css";
-
+import Dashboard from "./components/dashBoard/Dashboard";
 import Catalog from "./components/Catalog/CatalogContainer";
 
 const App = () => {
@@ -28,6 +28,9 @@ const App = () => {
 
           <Route exact path="/Login">
             <Login />
+          </Route>
+          <Route exact path="/dashboard">
+            <Dashboard />
           </Route>
           <Route exact path="/Cart">
             <Cart />
