@@ -4,6 +4,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
 
 const Container = styled.div``;
 
@@ -239,7 +240,9 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ 80</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Link to="/checkout">
+              <Button>CHECKOUT NOW</Button>
+            </Link>
           </Summary>
         </Bottom>
       </Wrapper>
