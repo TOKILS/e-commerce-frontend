@@ -97,18 +97,25 @@ $normalPadding: 1rem;
                 background: transparent !important;
                 width: 0px;
             }
+            &::-webkit-scrollbar-track {
+                background: transparent;
+            }
             > * {
                 > div {
+                    // all divs inside each tab
                     background-color: $almostWhite;
                     box-shadow: $normalShadow;
                     border-radius: $radius;
                     padding: $normalPadding;
+                    box-sizing:content-box;
 
                     transition: 0.1s;
 
                     margin-bottom: 1rem;
+                    
+                    min-width: min-content;
 
-                    &:focus {
+                    &:focus-within {
                         outline: rgb(255, 154, 39) solid;
                         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.445);
                     }
@@ -172,7 +179,7 @@ $normalPadding: 1rem;
             .dashboardUsersEmpty_arrow {
                 @keyframes slide1 {
                     0% {
-                      transform: translate(0, 0);
+                        transform: translate(0, 0);
                     }
 
                     20% {
@@ -187,8 +194,7 @@ $normalPadding: 1rem;
                     100% {
                         transform: translate(0%, 0);
                     }
-
-                  }
+                }
                 position: absolute;
                 top: 0.8rem;
                 right: 5rem;

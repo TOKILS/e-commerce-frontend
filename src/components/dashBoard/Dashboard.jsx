@@ -38,7 +38,7 @@ const DashBoard = (props) => {
                 main: "#ff9a27",
             },
             secondary: {
-                main: "#ff9a27",
+                main: "#4e4e4e",
             },
         },
     });
