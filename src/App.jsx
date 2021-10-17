@@ -5,11 +5,15 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import ProductList from "./pages/ProductList";
 import { BrowserRouter as Routerer, Switch, Route } from "react-router-dom";
-import "./App.css";
 import Checkout from "./pages/Checkout";
+import AuthProvider from "./context/authentication";
+import "./App.css";
+
+import Catalog from "./components/Catalog/CatalogContainer";
+
 const App = () => {
   return (
-    <>
+    <AuthProvider>
       <Routerer>
         {/* <IsLoadingAndError> */}
         <Switch>
@@ -18,6 +22,9 @@ const App = () => {
           </Route>
           <Route exact path="/Product">
             <Product />
+          </Route>
+          <Route exact path="/products">
+            <Catalog name={""} />
           </Route>
           <Route exact path="/ProductList">
             <ProductList />
@@ -37,7 +44,7 @@ const App = () => {
         </Switch>
         {/* </IsLoadingAndError> */}
       </Routerer>
-    </>
+    </AuthProvider>
   );
 };
 
