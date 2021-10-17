@@ -1,7 +1,11 @@
 import { Send } from "@material-ui/icons";
+import { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-
+import React from "react";
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 const Container = styled.div`
   height: 60vh;
   background-color: #fcf5f5;
@@ -46,13 +50,29 @@ const Button = styled.button`
 `;
 
 const Newsletter = () => {
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  const [email, setemail] = useState("");
   return (
     <Container>
       <Title>Newsletter</Title>
       <Desc>Get timely updates from your favorite products.</Desc>
       <InputContainer>
-        <Input placeholder="Your email" />
-        <Button>
+        <Input
+          onChange={(e) => {
+            setemail(e.target.value);
+          }}
+          value={email}
+          name="email"
+          placeholder="Your email"
+        />
+        <Button
+          onClick={(e) => {
+            <Alert severity="success">This is a success message!</Alert>;
+            setemail("");
+          }}
+        >
           <Send />
         </Button>
       </InputContainer>

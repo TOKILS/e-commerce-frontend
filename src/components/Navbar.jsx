@@ -1,9 +1,15 @@
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/authentication";
+import { When } from "react-if";
+
+import superagent from "superagent";
+import { useSelector } from "react-redux";
 const Container = styled.div`
     height: 60px;
     ${mobile({ height: "50px" })}
@@ -62,41 +68,67 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
-    return (
-        <Container>
-            <Wrapper>
-                <Left>
-                    <SearchContainer>
-                        <Input placeholder="Search" />
-                        <Search style={{ color: "gray", fontSize: 16 }} />
-                    </SearchContainer>
-                </Left>
-                <Center>
-                    <Link to="/">
-                        <Logo>Fashionable</Logo>
-                    </Link>
-                </Center>
-                <Right>
-                    <MenuItem className="headerDashboard">
-                        <Link to="/dashboard">Dashboard</Link>
-                    </MenuItem>
-                    <MenuItem>
-                        <Link to="/Register">Register</Link>
-                    </MenuItem>
-                    <MenuItem>
-                        <Link to="/Login">SIGN IN</Link>
-                    </MenuItem>
-                    <MenuItem>
-                        <Link to="/Cart">
-                            <Badge badgeContent={4} color="primary">
-                                <ShoppingCartOutlined />
-                            </Badge>
-                        </Link>
-                    </MenuItem>
-                </Right>
-            </Wrapper>
-        </Container>
-    );
+  const cart = useSelector((state) => state.cart);
+
+  const context = useContext(AuthContext);
+  const [itemsInCart, setitemsInCart] = useState(0);
+  useEffect(() => {
+    console.log(cart);
+    if (context.loggedIn) {
+      superagent
+        .get(
+          `https://mid-project-01.herokuapp.com/api/v3/cartProductsInfo/${context.user.id}`
+        )
+        .then((res) => {
+          setitemsInCart(res.body.totalItems);
+        });
+    }
+  }, [context.loggedIn, cart]);
+  return (
+    <Container>
+      <Wrapper>
+        <Left>
+          <SearchContainer>
+            <Input placeholder="Search" />
+            <Search style={{ color: "gray", fontSize: 16 }} />
+          </SearchContainer>
+        </Left>
+        <Center>
+          <Link to="/">
+            <Logo>Fashionable</Logo>
+          </Link>
+        </Center>
+        <Right>
+          <When condition={!context.loggedIn}>
+            <MenuItem>
+              <Link to="/Register">Register</Link>
+            </MenuItem>
+          </When>
+          <When condition={!context.loggedIn}>
+            <MenuItem>
+              <Link to="/Login">SIGN IN</Link>
+            </MenuItem>
+          </When>
+          <When condition={context.loggedIn}>
+            <MenuItem>
+              <Link to="/" onClick={context.logout}>
+                {" "}
+                Logout{" "}
+              </Link>
+            </MenuItem>
+          </When>
+          <MenuItem>
+            <Link to="/Cart">
+              <Badge badgeContent={itemsInCart} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </Link>
+          </MenuItem>
+        </Right>
+      </Wrapper>
+    </Container>
+  );
+
 };
 
 export default Navbar;

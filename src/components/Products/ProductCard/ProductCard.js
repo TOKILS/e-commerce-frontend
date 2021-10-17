@@ -7,12 +7,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { update } from "../store/product/product";
+import { update } from "../../../store/product/product";
 import { useContext } from "react";
-import { AuthContext } from "../context/authentication";
+import { AuthContext } from "../../../context/authentication";
 import { When } from "react-if";
 import superagent from "superagent";
-import { updateCart } from "../store/cart/cart";
+import { updateCart } from "../../../store/cart/cart";
 import cookie from "react-cookies";
 const Info = styled.div`
   opacity: 0;
@@ -74,21 +74,18 @@ const Icon = styled.div`
   }
 `;
 
-const Product = ({ item }) => {
-  const { Name, Description, Price, Quantity, color, TypeID } = item;
-
+const Product = ({ product }) => {
   const context = useContext(AuthContext);
   const dispatch = useDispatch();
-
   const addToCart = () => {
     if (context.loggedIn) {
       superagent
         .post(`https://mid-project-01.herokuapp.com/api/v2/Cart`)
         .send({
-          ProductID: item.id,
+          ProductID: product.id,
           UserID: context.user.id,
-          ColorID: item.color[0].id,
-          SizeID: item.color[0].size[0].id,
+          ColorID: product.color[0].id,
+          SizeID: product.color[0].size[0].id,
         })
         .set("Authorization", "Bearer " + context.token)
         .then((res) => {
@@ -96,13 +93,12 @@ const Product = ({ item }) => {
         });
     }
   };
-
   const addToWish = () => {
     if (context.loggedIn) {
       superagent
         .post(`https://mid-project-01.herokuapp.com/api/v2/Wishlist`)
         .send({
-          ProductID: item.id,
+          ProductID: product.id,
           UserID: context.user.id,
         })
         .set("Authorization", "Bearer " + context.token)
@@ -113,12 +109,17 @@ const Product = ({ item }) => {
   return (
     <Container>
       <Circle />
-      <Image src={item.color[0].image[0].Image} />
+      <Image src={product.color[0].image[0].Image} />
       <Info>
         <Icon>
           <ShoppingCartOutlined onClick={addToCart} />
         </Icon>
-        <Icon onClick={() => dispatch(update(item))}>
+        <Icon
+          onClick={() => {
+            dispatch(update(product));
+            localStorage.setItem("product", JSON.stringify(product));
+          }}
+        >
           <Link exact to="/Product">
             <SearchOutlined />
           </Link>

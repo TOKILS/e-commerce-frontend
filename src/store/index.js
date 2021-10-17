@@ -1,13 +1,17 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { configureStore } from "@reduxjs/toolkit";
-
-// reducers
+import { combineReducers } from "redux";
+import productsReducer from "./products/reducer/index";
+import cart_store from "./cart/reducer/cart_reducers";
 import product from "./product/product";
+import cart from "./cart/cart";
 import dashboardSlice from "./dashboard/dashboard.store";
+export default combineReducers({
+  productsReducer,
+  dashboard: dashboardSlice,
+  cart_store,
+  product,
+  cart,
+});
 
-const reducers = combineReducers({ product: product, dashboard: dashboardSlice });
+// import { configureStore } from "@reduxjs/toolkit";
 
-const store = configureStore({ reducer: reducers });
-
-export default store;
+// const store = configureStore({ reducer: reducers });

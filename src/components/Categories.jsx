@@ -1,7 +1,8 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { categories } from "../data";
-import { mobile } from "../responsive";
+import { getCategories } from "../controllers/categories";
 import CategoryItem from "./CategoryItem";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   display: flex;
@@ -11,11 +12,20 @@ const Container = styled.div`
 `;
 
 const Categories = () => {
+  const [categories, setCategories] = useState();
+
+  useEffect(() => {
+    getCategories()
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
+
   return (
     <Container>
-      {categories.map((item) => (
-        <CategoryItem item={item} key={item.id} />
-      ))}
+      {categories &&
+        categories.map((item) => <CategoryItem item={item} key={item.id} />)}
     </Container>
   );
 };
