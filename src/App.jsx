@@ -3,9 +3,8 @@ import Product from "./pages/Product";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
-import ProductList from "./pages/ProductList";
 import { BrowserRouter as Routerer, Switch, Route } from "react-router-dom";
-import Checkout from "./pages/Checkout";
+import Checkout from "./pages/checkout/Checkout";
 import AuthProvider from "./context/authentication";
 import "./App.css";
 
@@ -26,9 +25,7 @@ const App = () => {
           <Route exact path="/products">
             <Catalog name={""} />
           </Route>
-          <Route exact path="/ProductList">
-            <ProductList />
-          </Route>
+
           <Route exact path="/Login">
             <Login />
           </Route>

@@ -254,9 +254,9 @@ const Cart = () => {
 
                         <Remove />
                       </ProductAmountContainer>
-                      <ProductPrice>
-                        $ {item.ProductID.Price * item.Quantity}
-                      </ProductPrice>
+
+                      <ProductPrice>$ {item.ProductID.Price}</ProductPrice>
+
                     </PriceDetail>
                   </Product>
                   <Hr />
