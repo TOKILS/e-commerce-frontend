@@ -5,7 +5,7 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import ProductList from "./pages/ProductList";
 import { BrowserRouter as Routerer, Switch, Route } from "react-router-dom";
-import Checkout from "./pages/Checkout";
+import Checkout from "./pages/checkout/Checkout";
 import AuthProvider from "./context/authentication";
 import "./App.css";
 
