@@ -6,6 +6,8 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
+
 import { AuthContext } from "../context/authentication";
 import superagent from "superagent";
 import { Typography } from "@material-ui/core";
@@ -222,7 +224,7 @@ const Cart = () => {
             <TopText>Shopping Bag({cartInfo.totalItems})</TopText>
             <TopText>Your Wishlist ({wishListInfo.totalItems})</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          {/* <TopButton type="filled">CHECKOUT NOW</TopButton> */}
         </Top>
         <Bottom>
           <Info>
@@ -280,7 +282,9 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cartInfo.totalPrice + 10}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Link to="/checkout">
+              <Button>CHECKOUT NOW</Button>
+            </Link>
           </Summary>
         </Bottom>
       </Wrapper>

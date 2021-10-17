@@ -5,6 +5,7 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import ProductList from "./pages/ProductList";
 import { BrowserRouter as Routerer, Switch, Route } from "react-router-dom";
+import Checkout from "./pages/checkout/Checkout";
 import AuthProvider from "./context/authentication";
 import "./App.css";
 
@@ -36,6 +37,9 @@ const App = () => {
           </Route>
           <Route exact path="/Register">
             <Register />
+          </Route>
+          <Route exact path="/checkout">
+            <Checkout />
           </Route>
         </Switch>
         {/* </IsLoadingAndError> */}
