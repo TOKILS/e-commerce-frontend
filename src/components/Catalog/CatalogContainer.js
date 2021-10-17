@@ -18,6 +18,7 @@ const CatalogContainer = ({ value }) => {
         if (value) {
             getProductsByCategory(value)
                 .then(productsRes => {
+                    console.log('searchhhhhhhhhhhhh',productsRes);
                     setProducts(productsRes);
                     setProductsFilter(productsRes)
                 })
@@ -42,10 +43,9 @@ const CatalogContainer = ({ value }) => {
     }, [value]);
 
     const handleFilter = event => {
-        console.log('+-+-+-', event);
-        event.target.name === 'category' && event.target.value === 'All' ? setProductsFilter(products) : setProductsFilter(products.filter(p => p.find(c => c.TypeID === event.target.value)))
+               event.target.value === 'All' ? setProductsFilter(products) : setProductsFilter(products.filter(p => p.TypeID == event.target.value))
     }
-
+//p.find(c => c.TypeID === event.target.value
     return (
         <>
             <Catalog productsFilter={productsFilter} handleFilter={handleFilter} categories={categories} />
