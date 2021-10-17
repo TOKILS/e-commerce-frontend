@@ -16,8 +16,6 @@ const Products = () => {
     superagent
       .get("https://mid-project-01.herokuapp.com/api/v3/Products")
       .then((results) => {
-        // console.log(results.body);
-
         setdata(results.body);
       });
   }, []);

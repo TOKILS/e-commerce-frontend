@@ -151,19 +151,20 @@ const Product = (props) => {
   }, []);
   const addToCart = () => {
     if (context.loggedIn) {
-      for (let i = 0; i < amount; i++) {
-        superagent
-          .post(`https://mid-project-01.herokuapp.com/api/v2/Cart`)
-          .send({
-            ProductID: item.id,
-            UserID: context.user.id,
-          })
-          .set("Authorization", "Bearer " + context.token)
-          .then((res) => {
-            dispatch(updateCart());
-            handleClick();
-          });
-      }
+      superagent
+        .post(`https://mid-project-01.herokuapp.com/api/v2/Cart`)
+        .send({
+          ProductID: item.id,
+          UserID: context.user.id,
+          ColorID: item.color[0].id,
+          SizeID: item.color[0].size[0].id,
+          Quantity: amount,
+        })
+        .set("Authorization", "Bearer " + context.token)
+        .then((res) => {
+          dispatch(updateCart());
+          handleClick();
+        });
     }
   };
 

@@ -84,6 +84,8 @@ const Product = ({ item }) => {
         .send({
           ProductID: item.id,
           UserID: context.user.id,
+          ColorID: item.color[0].id,
+          SizeID: item.color[0].size[0].id,
         })
         .set("Authorization", "Bearer " + context.token)
         .then((res) => {
@@ -91,6 +93,7 @@ const Product = ({ item }) => {
         });
     }
   };
+
   const addToWish = () => {
     if (context.loggedIn) {
       superagent
