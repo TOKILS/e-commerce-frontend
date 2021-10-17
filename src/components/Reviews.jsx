@@ -10,7 +10,8 @@ import Rating from "@mui/material/Rating";
 import { useSelector } from "react-redux";
 import superagent from "superagent";
 export default function AlignItemsList() {
-  const item = useSelector((state) => state.product);
+  const [item, setitem] = useState(JSON.parse(localStorage.getItem("product")));
+
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     superagent

@@ -75,9 +75,6 @@ function Checkout() {
   });
   const context = useContext(AuthContext);
   const [bodystate, setbodystate] = useState({ UserID: context.user.id });
-  useEffect(() => {
-    setbodystate({ ...bodystate, UserID: context.user.id });
-  }, [context.loggedIn]);
 
   useEffect(() => {
     if (context.loggedIn) {
@@ -94,49 +91,10 @@ function Checkout() {
 
   async function handelSubmit(event) {
     event.preventDefault();
-    let data;
-    let UserID = context.user.id;
-    let FirstName = event.target.firstName.value;
-    let LastName = event.target.lastName.value;
-    let Company = event.target.company.value || "";
-    let Address1 = event.target.addressLine.value;
-    let Address2 = event.target.addressLine2.value || "";
-    let City = event.target.city.value;
-    let Country = event.target.country.value;
-    let Province = event.target.province.value || "";
-    let PostalCode = Number(event.target.postalCode.value);
-    let Phone = Number(event.target.shippingPhone.value);
 
-    // const bodyObj = {
-    //   UserID: context.user.id,
-    //   FirstName: FirstName,
-    //   LastName: event.target.lastName.value,
-    //   Company: event.target.company.value || "",
-    //   Address1: event.target.addressLine.value,
-    //   Address2: event.target.addressLine2.value || "",
-    //   City: event.target.city.value,
-    //   Country: event.target.country.value,
-    //   Province: event.target.province.value || "",
-    //   PostalCode: Number(event.target.postalCode.value),
-    //   Phone: Number(event.target.shippingPhone.value),
-    // };
-
-    // console.log(bodystate);
     superagent
-      .post("http://localhost:3001/api/v2/Address")
-      .send({
-        UserID: UserID,
-        FirstName: FirstName,
-        LastName: LastName,
-        Company: Company,
-        Address1: Address1,
-        Address2: Address2,
-        City: City,
-        Country: Country,
-        Province: Province,
-        PostalCode: PostalCode,
-        Phone: Phone,
-      })
+      .post("https://mid-project-01.herokuapp.com/api/v2/Address")
+      .send({ ...bodystate, UserID: context.user.id })
       .set("Authorization", "Bearer " + context.token)
       .then((results) => {
         console.log(results.body);

@@ -13,7 +13,7 @@ import { AuthContext } from "../../../context/authentication";
 import { When } from "react-if";
 import superagent from "superagent";
 import { updateCart } from "../../../store/cart/cart";
-
+import cookie from "react-cookies";
 const Info = styled.div`
   opacity: 0;
   width: 100%;
@@ -114,7 +114,12 @@ const Product = ({ product }) => {
         <Icon>
           <ShoppingCartOutlined onClick={addToCart} />
         </Icon>
-        <Icon onClick={() => dispatch(update(product))}>
+        <Icon
+          onClick={() => {
+            dispatch(update(product));
+            localStorage.setItem("product", JSON.stringify(product));
+          }}
+        >
           <Link exact to="/Product">
             <SearchOutlined />
           </Link>
