@@ -79,6 +79,7 @@ const Product = ({ item }) => {
 
   const context = useContext(AuthContext);
   const dispatch = useDispatch();
+
   const addToCart = () => {
     if (context.loggedIn) {
       superagent
