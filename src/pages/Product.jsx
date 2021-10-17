@@ -146,9 +146,11 @@ const Product = (props) => {
   const [Color, setColor] = useState(item.color[0]);
   const [amount, setAmount] = useState(1);
   const dispatch = useDispatch();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   const addToCart = () => {
     if (context.loggedIn) {
       superagent

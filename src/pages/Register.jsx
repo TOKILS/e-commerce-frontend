@@ -11,7 +11,7 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+    url("https://images.ctfassets.net/rxqefefl3t5b/6I2vL9f0IVsDQ8qFgdrxH7/7660c4bab3116a4a04025d5c4802efa5/Virgin-Red-online-shopping-offers.jpg?fl=progressive&q=80")
       center;
   background-size: cover;
   display: flex;
@@ -81,6 +81,19 @@ const Register = () => {
         <Title>CREATE AN ACCOUNT</Title>
         <Form onSubmit={handleSignupSubmit}>
           <Input
+            placeholder="username"
+            onChange={(e) => setUserName(e.target.value)}
+            type="text"
+            name="username"
+          />
+
+          <Input
+            placeholder="password"
+            onChange={(e) => setPassWord(e.target.value)}
+            type="password"
+            name="password"
+          />
+          <Input
             placeholder="name"
             onChange={(e) => setFirstname(e.target.value)}
             type="text"
@@ -93,27 +106,10 @@ const Register = () => {
             name="lastname"
           />
           <Input
-            placeholder="username"
-            onChange={(e) => setUserName(e.target.value)}
-            type="text"
-            name="username"
-          />
-          <Input
             placeholder="email"
             onChange={(e) => setEmail(e.target.value)}
             type="text"
             name="email"
-          />
-          <Input
-            placeholder="password"
-            onChange={(e) => setPassWord(e.target.value)}
-            type="password"
-            name="password"
-          />
-          <Input
-            placeholder="confirm password"
-            type="password"
-            name="password"
           />
           <Agreement>
             By creating an account, I consent to the processing of my personal

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../data";
 import Product from "./Product";
-import superagent from "superagent";
+import { connect } from "react-redux";
+import { getProductById } from "../controllers/products";
+
 const Container = styled.div`
   padding: 20px;
   display: flex;
@@ -10,8 +11,9 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Products = () => {
-  const [data, setdata] = useState([]);
+const Products = ({ id, addItem }) => {
+  const [product, setProduct] = useState();
+
   useEffect(() => {
     superagent
       .get("https://mid-project-01.herokuapp.com/api/v3/Products")
@@ -19,13 +21,32 @@ const Products = () => {
         setdata(results.body);
       });
   }, []);
+
+  useEffect(() => {
+    getProductById(id)
+      .then((productRes) => {
+        console.log(productRes);
+        setProduct(productRes);
+      })
+      .catch((res) => console.log(res));
+  }, [id]);
+
   return (
     <Container>
-      {data.map((item) => (
-        <Product item={item} key={item.id} />
-      ))}
+      <div>{product && <Product product={product} addItem={addItem} />}</div>
     </Container>
   );
 };
 
-export default Products;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItem: (payload) => dispatch({ type: "ADD_ITEM", payload }),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    state: state,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

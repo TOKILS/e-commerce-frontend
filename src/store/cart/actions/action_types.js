@@ -1,0 +1,14 @@
+export const POST_CART = "POST_CART";
+export const POST_CART_GUEST = "POST_CART_GUEST";
+export const HANDLE_GUEST_CART = "HANDLE_GUEST_CART";
+export const ADD_ITEM = "ADD_ITEM";
+export const REMOVE_ITEM = "REMOVE_ITEM";
+export const EMPTY_CART = "EMPTY_CART";
+export const GET_CART = "GET_CART";
+export const PLUS_ONE = "PLUS_ONE";
+export const MINUS_ONE = "MINUS_ONE";
+export const TOTAL_PRICE = "TOTAL_PRICE";
+export const SET_NEW_CART = "SET_NEW_CART";
+export const HANDLE_GUEST_QUANTITY = "HANDLE_GUEST_QUANTITY";
+export const LOAD_CART_GUEST = "LOAD_CART_GUEST";
+export const HANDLE_GUEST_DELETE_ITEM = "HANDLE_GUEST_DELETE_ITEM";
