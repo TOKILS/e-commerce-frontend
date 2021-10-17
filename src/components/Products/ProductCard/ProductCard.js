@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import {
+  FavoriteBorderOutlined,
+  SearchOutlined,
+  ShoppingCartOutlined,
+} from "@material-ui/icons";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {
-    FavoriteBorderOutlined,
-    SearchOutlined,
-    ShoppingCartOutlined,
-} from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
-import allActions from "../../../store/cart/actions/all_actions";
-
+import { update } from "../../../store/product/product";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/authentication";
+import { When } from "react-if";
+import superagent from "superagent";
+import { updateCart } from "../../../store/cart/cart";
 
 const Info = styled.div`
   opacity: 0;
@@ -69,54 +73,58 @@ const Icon = styled.div`
     transform: scale(1.1);
   }
 `;
-const Product = ({ product, type }) => {
-    console.log(product);
-    const { id, price, name } = product;
-    const cart = useSelector((state) => state.cart_store);
-    const products = useSelector((state) => state.cart_store.products);
-    const [open, setOpen] = useState(false);
-    const [outOfStock, setOutOfStock] = useState(false);
-    const dispatch = useDispatch();
 
-    const handleClose = (reason) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        setOpen(false);
-    };
+const Product = ({ product }) => {
+  const context = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const addToCart = () => {
+    if (context.loggedIn) {
+      superagent
+        .post(`https://mid-project-01.herokuapp.com/api/v2/Cart`)
+        .send({
+          ProductID: product.id,
+          UserID: context.user.id,
+          ColorID: product.color[0].id,
+          SizeID: product.color[0].size[0].id,
+        })
+        .set("Authorization", "Bearer " + context.token)
+        .then((res) => {
+          dispatch(updateCart());
+        });
+    }
+  };
+  const addToWish = () => {
+    if (context.loggedIn) {
+      superagent
+        .post(`https://mid-project-01.herokuapp.com/api/v2/Wishlist`)
+        .send({
+          ProductID: product.id,
+          UserID: context.user.id,
+        })
+        .set("Authorization", "Bearer " + context.token)
+        .then((res) => {});
+    }
+  };
 
-    const handleCloseStock = (reason) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        setOutOfStock(false);
-    };
-
-    const handleAddToCart = () => {
-        dispatch(allActions.postCartGuest(product))
-    };
-
-    return (
-        <>
-            <Container>
-                <Circle />
-                <Image src={product.color[0].image[0].Image} />
-                <Info>
-                    <Icon>
-                        <ShoppingCartOutlined onClick={handleAddToCart} />
-                    </Icon>
-                    <Icon>
-                        <Link exact to="/Product">
-                            <SearchOutlined />
-                        </Link>
-                    </Icon>
-                    <Icon>
-                        <FavoriteBorderOutlined />
-                    </Icon>
-                </Info>
-            </Container>
-        </>
-    );
+  return (
+    <Container>
+      <Circle />
+      <Image src={product.color[0].image[0].Image} />
+      <Info>
+        <Icon>
+          <ShoppingCartOutlined onClick={addToCart} />
+        </Icon>
+        <Icon onClick={() => dispatch(update(product))}>
+          <Link exact to="/Product">
+            <SearchOutlined />
+          </Link>
+        </Icon>
+        <Icon>
+          <FavoriteBorderOutlined onClick={addToWish} />
+        </Icon>
+      </Info>
+    </Container>
+  );
 };
 
 export default Product;

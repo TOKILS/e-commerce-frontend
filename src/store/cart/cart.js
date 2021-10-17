@@ -6,8 +6,7 @@ const cartSlice = createSlice({
 
   reducers: {
     updateCart(state, action) {
-      state = state + 1;
-      return state;
+      return state + 1;
     },
   },
 });

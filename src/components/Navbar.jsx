@@ -68,11 +68,12 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
-  const item = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
 
   const context = useContext(AuthContext);
   const [itemsInCart, setitemsInCart] = useState(0);
   useEffect(() => {
+    console.log(cart);
     if (context.loggedIn) {
       superagent
         .get(
@@ -82,7 +83,7 @@ const Navbar = () => {
           setitemsInCart(res.body.totalItems);
         });
     }
-  }, [context.loggedIn, item]);
+  }, [context.loggedIn, cart]);
   return (
     <Container>
       <Wrapper>

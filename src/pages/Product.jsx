@@ -143,6 +143,7 @@ const Product = (props) => {
   };
   const item = useSelector((state) => state.product);
   const context = useContext(AuthContext);
+  console.log(item, "<=========");
   const [Color, setColor] = useState(item.color[0]);
   const [amount, setAmount] = useState(1);
   const dispatch = useDispatch();

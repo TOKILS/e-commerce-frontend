@@ -48,7 +48,7 @@ const CategoryItem = ({ item }) => {
       <Image src={item.Image} />
       <Info>
         <Title>{item.Name}</Title>
-        <Link to="/ProductList">
+        <Link to="/products">
           <Button>SHOP NOW</Button>
         </Link>
       </Info>
