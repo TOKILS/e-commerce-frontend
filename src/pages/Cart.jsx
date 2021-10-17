@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { AuthContext } from "../context/authentication";
 import superagent from "superagent";
+import { Typography } from "@material-ui/core";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -190,11 +191,25 @@ const Cart = () => {
           "https://mid-project-01.herokuapp.com/api/v3/cartProducts/" +
             context.user.id
         )
-        .then((results) => {
-          setCartItems(results.body);
+        .then(async (results) => {
+          let res = await Promise.all(
+            results.body.map(async (p) => {
+              return {
+                ...p,
+                img: await superagent.get(
+                  "https://mid-project-01.herokuapp.com/api/v3/image/" +
+                    p.ColorID.id
+                ),
+              };
+            })
+          );
+
+          setCartItems(res.map((ele) => ({ ...ele, img: ele.img.body.Image })));
+          console.log(res.map((ele) => ({ ...ele, img: ele.img.body.Image })));
         });
     }
   }, []);
+
   return (
     <Container>
       <Navbar />
@@ -216,27 +231,30 @@ const Cart = () => {
                 <>
                   <Product>
                     <ProductDetail>
-                      <Image src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A" />
+                      <Image src={item.img} />
                       <Details>
                         <ProductName>
-                          <b>Product:</b> {item.Name}
+                          <b>Product:</b> {item.ProductID.Name}
                         </ProductName>
                         <ProductId>
-                          <b>ID:</b> {item.id}
+                          <b>ID:</b> {item.ProductID.id}
                         </ProductId>
-                        <ProductColor color="black" />
+                        <ProductColor color={item.ColorID.Code} />
                         <ProductSize>
-                          <b>Size:</b> 37.5
+                          <b>Size:</b> {item.SizeID.Size}
                         </ProductSize>
                       </Details>
                     </ProductDetail>
                     <PriceDetail>
                       <ProductAmountContainer>
                         <Add />
-                        <ProductAmount>1</ProductAmount>
+                        <ProductAmount>{item.Quantity}</ProductAmount>
+
                         <Remove />
                       </ProductAmountContainer>
-                      <ProductPrice>$ {item.Price}</ProductPrice>
+                      <ProductPrice>
+                        $ {item.ProductID.Price * item.Quantity}
+                      </ProductPrice>
                     </PriceDetail>
                   </Product>
                   <Hr />
