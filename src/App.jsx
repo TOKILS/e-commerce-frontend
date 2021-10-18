@@ -10,42 +10,44 @@ import "./App.css";
 import Dashboard from "./components/dashBoard/Dashboard";
 import Catalog from "./components/Catalog/CatalogContainer";
 
-const App = () => {
-  return (
-    <AuthProvider>
-      <Routerer>
-        {/* <IsLoadingAndError> */}
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/Product">
-            <Product />
-          </Route>
-          <Route exact path="/products">
-            <Catalog name={""} />
-          </Route>
+// styled components
 
-          <Route exact path="/Login">
-            <Login />
-          </Route>
-          <Route exact path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route exact path="/Cart">
-            <Cart />
-          </Route>
-          <Route exact path="/Register">
-            <Register />
-          </Route>
-          <Route exact path="/checkout">
-            <Checkout />
-          </Route>
-        </Switch>
-        {/* </IsLoadingAndError> */}
-      </Routerer>
-    </AuthProvider>
-  );
+const App = (props) => {
+    return (
+        <AuthProvider>
+            <Routerer>
+                {/* <IsLoadingAndError> */}
+                <Switch>
+                    <Route exact path="/">
+                        <Home />
+                    </Route>
+                    <Route exact path="/Product">
+                        <Product />
+                    </Route>
+                    <Route exact path="/products">
+                        <Catalog name={""} />
+                    </Route>
+
+                    <Route exact path="/Login">
+                        <Login />
+                    </Route>
+                    <Route exact path="/dashboard">
+                        <Dashboard />
+                    </Route>
+                    <Route exact path="/Cart">
+                        <Cart />
+                    </Route>
+                    <Route exact path="/Register">
+                        <Register />
+                    </Route>
+                    <Route exact path="/checkout">
+                        <Checkout />
+                    </Route>
+                </Switch>
+                {/* </IsLoadingAndError> */}
+            </Routerer>
+        </AuthProvider>
+    );
 };
 
 export default App;

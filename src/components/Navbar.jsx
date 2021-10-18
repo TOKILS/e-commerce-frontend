@@ -68,67 +68,65 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
-  const cart = useSelector((state) => state.cart);
+    const cart = useSelector((state) => state.cart);
 
-  const context = useContext(AuthContext);
-  const [itemsInCart, setitemsInCart] = useState(0);
-  useEffect(() => {
-    console.log(cart);
-    if (context.loggedIn) {
-      superagent
-        .get(
-          `https://mid-project-01.herokuapp.com/api/v3/cartProductsInfo/${context.user.id}`
-        )
-        .then((res) => {
-          setitemsInCart(res.body.totalItems);
-        });
-    }
-  }, [context.loggedIn, cart]);
-  return (
-    <Container>
-      <Wrapper>
-        <Left>
-          <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
-        </Left>
-        <Center>
-          <Link to="/">
-            <Logo>Fashionable</Logo>
-          </Link>
-        </Center>
-        <Right>
-          <When condition={!context.loggedIn}>
-            <MenuItem>
-              <Link to="/Register">Register</Link>
-            </MenuItem>
-          </When>
-          <When condition={!context.loggedIn}>
-            <MenuItem>
-              <Link to="/Login">SIGN IN</Link>
-            </MenuItem>
-          </When>
-          <When condition={context.loggedIn}>
-            <MenuItem>
-              <Link to="/" onClick={context.logout}>
-                {" "}
-                Logout{" "}
-              </Link>
-            </MenuItem>
-          </When>
-          <MenuItem>
-            <Link to="/Cart">
-              <Badge badgeContent={itemsInCart} color="primary">
-                <ShoppingCartOutlined />
-              </Badge>
-            </Link>
-          </MenuItem>
-        </Right>
-      </Wrapper>
-    </Container>
-  );
-
+    const context = useContext(AuthContext);
+    const [itemsInCart, setitemsInCart] = useState(0);
+    useEffect(() => {
+        console.log(cart);
+        if (context.loggedIn) {
+            superagent.get(`https://mid-project-01.herokuapp.com/api/v3/cartProductsInfo/${context.user.id}`).then((res) => {
+                setitemsInCart(res.body.totalItems);
+            });
+        }
+    }, [context.loggedIn, cart]);
+    return (
+        <Container>
+            <Wrapper>
+                <Left>
+                    <SearchContainer>
+                        <Input placeholder="Search" />
+                        <Search style={{ color: "gray", fontSize: 16 }} />
+                    </SearchContainer>
+                </Left>
+                <Center>
+                    <Link to="/">
+                        <Logo>Fashionable</Logo>
+                    </Link>
+                </Center>
+                <Right>
+                    <MenuItem className="headerDashboard" >
+                        <Link to="/dashboard">DashBoard</Link>
+                    </MenuItem>
+                    <When condition={!context.loggedIn}>
+                        <MenuItem >
+                            <Link to="/Register">Register</Link>
+                        </MenuItem>
+                    </When>
+                    <When condition={!context.loggedIn}>
+                        <MenuItem>
+                            <Link to="/Login">SIGN IN</Link>
+                        </MenuItem>
+                    </When>
+                    <When condition={context.loggedIn}>
+                        <MenuItem>
+                            <Link to="/" onClick={context.logout}>
+                                {" "}
+                                Logout{" "}
+                            </Link>
+                        </MenuItem>
+                    </When>
+                    <MenuItem>
+                        <Link to="/Cart">
+                            <Badge badgeContent={itemsInCart} color="primary">
+                                <ShoppingCartOutlined />
+                            </Badge>
+                        </Link>
+                    </MenuItem>
+                </Right>
+            </Wrapper>
+        </Container>
+    );
 };
 
 export default Navbar;

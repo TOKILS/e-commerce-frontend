@@ -1,13 +1,16 @@
+// general
+import * as React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+// components
 import TabPanels from "./subComponents/TabPanels";
 
-import { Skeleton, IconButton, Button, Tabs, Tab, Typography } from "@mui/material";
+// styled components
+import { Skeleton, IconButton, Button, Tabs, Tab, Typography, Snackbar, Alert as MuiAlert } from "@mui/material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-
-import { ExitToApp } from "@mui/icons-material";
+import { ExitToApp, Add } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // tabs
@@ -17,9 +20,13 @@ import Support from "./subComponents/tabs/Support";
 
 import "./dashboard.scss";
 
+// redux
+import { connect } from "react-redux";
+import { handleSnackBar } from "../../store/snackbar/snackbar.store";
+
 const DashBoard = (props) => {
     const [finishedLoading, setFinishLoading] = useState(false);
-    const [tabItem, setTabItem] = useState("0");
+    const [tabItem, setTabItem] = useState(false);
 
     // custom components & styling
     const whitePrimaryTheme = createTheme({
@@ -35,7 +42,7 @@ const DashBoard = (props) => {
     const mainPrimaryTheme = createTheme({
         palette: {
             primary: {
-                main: "#ff9a27",
+                main: "#00bebe",
             },
             secondary: {
                 main: "#4e4e4e",
@@ -86,8 +93,19 @@ const DashBoard = (props) => {
         },
     ];
     const handleTabChange = (e, newValue) => {
-        console.log("~ newValue", newValue);
         setTabItem(newValue);
+    };
+
+    // snackbar section
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        props.handleSnackBar({ show: false });
     };
     return (
         <div className="dashBoard_shadow">
@@ -139,11 +157,22 @@ const DashBoard = (props) => {
                 <ThemeProvider theme={mainPrimaryTheme}>
                     <div className="dashBoard_main">
                         <TabPanels tabItem={tabItem} listArr={listArr} />
+                        {/* fab for the users panel */}
                     </div>
                 </ThemeProvider>
             </div>
+            <Snackbar open={props.snackbar.show} autoHideDuration={props.snackbar.type === "error" ? null : 6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={props.snackbar.type} sx={{ width: "100%" }}>
+                    {props.snackbar.text}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
+const mapStateToProps = (state) => ({
+    snackbar: state.snackbar,
+});
 
-export default DashBoard;
+const mapDispatchToProps = { handleSnackBar };
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashBoard);

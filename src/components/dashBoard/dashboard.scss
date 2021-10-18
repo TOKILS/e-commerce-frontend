@@ -4,7 +4,7 @@ $normalShadow: 0 2px 5px rgba(0, 0, 0, 0.247);
 $normalPadding: 1rem;
 
 ::selection {
-    background-color: rgb(255, 154, 39);
+    background-color: rgb(5, 209, 209);
     color: white;
 }
 
@@ -35,7 +35,8 @@ $normalPadding: 1rem;
             padding: 2rem 1rem;
         }
         .dashBoard_sideBar {
-            background: linear-gradient(196deg, rgba(255, 33, 100, 0.637) 0%, rgba(165, 69, 255, 0.226) 36%, rgba(235, 72, 91, 0) 90%);
+            // background: linear-gradient(196deg, rgba(255, 33, 100, 0.637) 0%, rgba(165, 69, 255, 0.226) 36%, rgba(235, 72, 91, 0) 90%);
+            background: linear-gradient(196deg, rgb(33, 223, 223) 0%, rgb(15, 190, 175)  36%, rgb(0, 167, 144)   90%);
             // background-color: rgba(124, 21, 209, 0.76);
             background-color: #de9e48;
             border-top-left-radius: $radius;
@@ -107,16 +108,16 @@ $normalPadding: 1rem;
                     box-shadow: $normalShadow;
                     border-radius: $radius;
                     padding: $normalPadding;
-                    box-sizing:content-box;
+                    box-sizing: content-box;
 
                     transition: 0.1s;
 
                     margin-bottom: 1rem;
-                    
+
                     min-width: min-content;
 
                     &:focus-within {
-                        outline: rgb(255, 154, 39) solid;
+                        outline: #00bebe solid;
                         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.445);
                     }
                 }
@@ -147,10 +148,57 @@ $normalPadding: 1rem;
             // users tab
             .allUsers {
                 position: relative;
-                .refreshUsersBtn {
+                .Btns {
                     position: absolute;
                     top: 1rem;
-                    right: 1rem;
+                    right: 1.5rem;
+
+                    display: flex;
+                    gap: 1rem;
+                }
+            }
+            .products {
+                min-height: 20rem;
+                .customCard {
+                    padding: $normalPadding;
+                    background-color: $almostWhite;
+                    box-shadow: $normalShadow;
+
+                    max-width: 15rem;
+                }
+                .productsCategory {
+                    
+                    > div > div > div {
+                        & > :first-child {
+                            border-top-right-radius: 0rem;
+                            border-bottom-right-radius: 0rem;
+                            border-bottom-left-radius: 1rem;
+                            border-top-left-radius: 1rem;
+                        }
+                        & > :last-child {
+                            border-top-right-radius: 1rem;
+                            border-bottom-right-radius: 1rem;
+                            border-bottom-left-radius: 0rem;
+                            border-top-left-radius: 0rem;
+                        }
+                    }
+                    .categoriesTabs {
+                        > div > div  {
+                            border: red solid;
+                            & > :first-child {
+                                border-top-right-radius: 0rem;
+                                border-bottom-right-radius: 0rem;
+                                border-bottom-left-radius: 1rem;
+                                border-top-left-radius: 1rem;
+                            }
+                            & > :last-child {
+                                border-top-right-radius: 1rem;
+                                border-bottom-right-radius: 1rem;
+                                border-bottom-left-radius: 0rem;
+                                border-top-left-radius: 0rem;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -198,7 +246,7 @@ $normalPadding: 1rem;
                 position: absolute;
                 top: 0.8rem;
                 right: 5rem;
-                color: #ff9408;
+                color: rgb(0, 190, 190);
                 animation: slide1 1s ease-in-out infinite;
             }
 
