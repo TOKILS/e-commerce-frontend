@@ -14,6 +14,7 @@ import { When } from "react-if";
 import superagent from "superagent";
 import { updateCart } from "../../../store/cart/cart";
 import cookie from "react-cookies";
+
 const Info = styled.div`
   opacity: 0;
   width: 100%;
