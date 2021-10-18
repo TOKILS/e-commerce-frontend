@@ -3,20 +3,30 @@ import superagent from "superagent";
 
 const dashboardProductsSlice = createSlice({
     name: "dashboardProducts",
-    initialState: [],
+    initialState: { categories: [], types: [], products: [] },
     reducers: {
         resetCategories(state, action) {
-            state = [];
+            state.categories.length = 0;
         },
         addCategory(state, action) {
-            state.push(action.payload);
+            state.categories.push(action.payload);
         },
-        addType(state, action) {},
-        addProduct(state, action) {},
+        resetTypes(state, action) {
+            state.types.length = 0;
+        },
+        addType(state, action) {
+            state.types.push(action.payload);
+        },
+        resetProducts(state, action) {
+            state.products.length = 0;
+        },
+        addProduct(state, action) {
+            state.products.push(action.payload);
+        },
     },
 });
 
-export const { resetCategories, addCategory, addType, addProduct } = dashboardProductsSlice.actions;
+export const { resetCategories, addCategory, resetTypes, addType, resetProducts, addProduct } = dashboardProductsSlice.actions;
 
 export const refreshCategories = () => async (dispatch) => {
     try {
@@ -24,9 +34,8 @@ export const refreshCategories = () => async (dispatch) => {
         // console.log(`${process.env.BACKEND}/users`)
         // console.log("~ response.text", response.text);
         const categories = response.body;
-        const parsedCategories = JSON.parse(categories);
         await dispatch(resetCategories());
-        parsedCategories.forEach((category) => {
+        categories.forEach((category) => {
             let { id, Name, Description, Image, createdAt, updatedAt } = category;
             dispatch(
                 addCategory({
@@ -39,7 +48,7 @@ export const refreshCategories = () => async (dispatch) => {
                 })
             );
         });
-        return { successMsg: `Users list updated` };
+        return { successMsg: `Categories list updated` };
     } catch (err) {
         console.error(err.message);
         return { error: err };
@@ -47,11 +56,58 @@ export const refreshCategories = () => async (dispatch) => {
 };
 export const refreshTypes = () => async (dispatch) => {
     try {
-    } catch (err) {}
+        const response = await superagent.get(`https://mid-project-01.herokuapp.com/api/v2/Type`);
+        // console.log(`${process.env.BACKEND}/users`)
+        // console.log("~ response.text", response.text);
+        const types = response.body;
+        await dispatch(resetTypes());
+        await types.forEach((type) => {
+            let { id, CategoryID, Name, Description, createdAt, updatedAt } = type;
+            dispatch(
+                addType({
+                    id,
+                    CategoryID,
+                    Name,
+                    Description,
+                    createdAt,
+                    updatedAt,
+                })
+            );
+        });
+        return { successMsg: `Types list updated` };
+    } catch (err) {
+        console.error(err.message);
+        return { error: err };
+    }
 };
 export const refreshProducts = () => async (dispatch) => {
     try {
-    } catch (err) {}
+        const response = await superagent.get(`https://mid-project-01.herokuapp.com/api/v2/Product`);
+        // console.log(`${process.env.BACKEND}/users`)
+        // console.log("~ response.text", response.text);
+        const products = response.body;
+        await dispatch(resetProducts());
+        await products.forEach((product) => {
+            let { id, TypeID, Name, Description, Price, Quantity, Discount, createdAt, updatedAt } = product;
+            dispatch(
+                addProduct({
+                    id,
+                    TypeID,
+                    Name,
+                    Description,
+                    Price,
+                    Quantity,
+                    Discount,
+                    createdAt,
+                    updatedAt,
+                })
+            );
+        });
+        return { successMsg: `Products list updated` };
+    } catch (err) {
+        console.error(err.message);
+        return { error: err };
+    }
 };
 
 export default dashboardProductsSlice.reducer;

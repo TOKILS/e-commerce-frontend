@@ -11,7 +11,7 @@ const snackbarSlice = createSlice({
     reducers: {
         handleSnackBar(state, action) {
             let { show, text, type } = action.payload;
-            console.log("handleSnackBar RAN >> ", show, text, type);
+            console.log("handleSnackBar RAN >> ", show, " | ", text, " | ", type);
             if (!text) text = state.text;
             if (type !== "error" && type !== "info" && type !== "success" && type !== "warning") type = "info";
             state.show = show;

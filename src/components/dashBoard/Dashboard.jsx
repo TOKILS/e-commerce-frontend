@@ -161,7 +161,7 @@ const DashBoard = (props) => {
                     </div>
                 </ThemeProvider>
             </div>
-            <Snackbar open={props.snackbar.show} autoHideDuration={props.snackbar.type === "error" ? null : 6000} onClose={handleClose}>
+            <Snackbar open={props.snackbar.show} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={props.snackbar.type} sx={{ width: "100%" }}>
                     {props.snackbar.text}
                 </Alert>

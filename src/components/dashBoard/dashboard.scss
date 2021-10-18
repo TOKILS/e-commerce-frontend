@@ -159,21 +159,33 @@ $normalPadding: 1rem;
             }
             .products {
                 min-height: 20rem;
-                .customCard {
-                    padding: $normalPadding;
-                    background-color: $almostWhite;
-                    box-shadow: $normalShadow;
+                // .customCard {
+                //     padding: $normalPadding;
+                //     background-color: $almostWhite;
+                //     box-shadow: $normalShadow;
 
-                    max-width: 15rem;
+                //     max-width: 15rem;
+                // }
+                .dashboardCategoriesBar{
+                    display: flex;
+                    justify-content: center;
+                    gap: 1rem;
                 }
-                .productsCategory {
+                .dashboardTypesBar {
+                    display: flex;
+                    justify-content: center;
+                    // gap: 1rem;
                     
-                    > div > div > div {
+                    
                         & > :first-child {
                             border-top-right-radius: 0rem;
                             border-bottom-right-radius: 0rem;
                             border-bottom-left-radius: 1rem;
                             border-top-left-radius: 1rem;
+                        }
+                        & > :nth-child(2) {
+                            flex-grow: 2;
+                            background-color: #70e2e24f;
                         }
                         & > :last-child {
                             border-top-right-radius: 1rem;
@@ -181,24 +193,8 @@ $normalPadding: 1rem;
                             border-bottom-left-radius: 0rem;
                             border-top-left-radius: 0rem;
                         }
-                    }
-                    .categoriesTabs {
-                        > div > div  {
-                            border: red solid;
-                            & > :first-child {
-                                border-top-right-radius: 0rem;
-                                border-bottom-right-radius: 0rem;
-                                border-bottom-left-radius: 1rem;
-                                border-top-left-radius: 1rem;
-                            }
-                            & > :last-child {
-                                border-top-right-radius: 1rem;
-                                border-bottom-right-radius: 1rem;
-                                border-bottom-left-radius: 0rem;
-                                border-top-left-radius: 0rem;
-                            }
-                        }
-                    }
+                        
+
                 }
             }
         }

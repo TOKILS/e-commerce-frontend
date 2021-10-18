@@ -1,5 +1,5 @@
 // general
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // styled components
 import { Skeleton, IconButton, Button, Tabs, Tab, Typography, Snackbar, Alert as MuiAlert, Card, CardActions, CardContent, CardMedia, Box } from "@mui/material";
@@ -11,9 +11,18 @@ import { LoadingButton } from "@mui/lab";
 
 // redux
 import { connect } from "react-redux";
-import { refreshCategories } from "../../../../store/dashboard-products/dashboardProducts.store";
+import { handleSnackBar } from "../../../../store/snackbar/snackbar.store";
+import { refreshCategories, refreshTypes, refreshProducts } from "../../../../store/dashboard-products/dashboardProducts.store";
 
 const Products = (props) => {
+    // auto refresh categories list
+    useEffect(async () => {
+        await handleCategoryRefresh();
+        await handleTypesRefresh();
+        await handleProductsRefresh();
+        setCategoryTabItem(0);
+    }, []);
+
     // general
     const PrimaryTheme = createTheme({
         palette: {
@@ -29,81 +38,151 @@ const Products = (props) => {
     // category section
     const [categoryLoading, setCategoryLoading] = useState(false);
     const [categoryTabItem, setCategoryTabItem] = useState(false);
-    const handleCategoryTabChange = (e, newValue) => {
+    // const [selectedCategoryId, setSelectedCategoryId] = useState("");
+    const handleCategoryTabChange = async (e, newValue) => {
+        // await setSelectedCategoryId(e.target.getAttribute("category_id"));
         setCategoryTabItem(newValue);
+        // await handleTypesRefresh();
     };
     async function handleCategoryRefresh() {
         setCategoryLoading(true);
-
-        setTimeout(() => {
-            setCategoryLoading(false);
-        }, 1000);
+        let errorCheck = await props.refreshCategories();
+        if (errorCheck?.error) {
+            console.error("Error refreshing categories", errorCheck.error.message);
+            props.handleSnackBar({
+                show: true,
+                type: "error",
+                text: errorCheck.error.message,
+            });
+        } else if (errorCheck?.successMsg) {
+            props.handleSnackBar({
+                show: true,
+                type: "info",
+                text: errorCheck.successMsg,
+            });
+        }
+        await handleTypesRefresh();
+        await handleProductsRefresh();
+        setCategoryLoading(false);
     }
 
     // type section
-    const [typeFinishedLoading, setTypeFinishLoading] = useState(true);
-    const [typeTabItem, setTypeTabItem] = useState("0");
-    const handleTypeTabChange = (e, newValue) => {
-        setTypeTabItem(newValue);
-    };
-    // products section
+    const [typeTabItem, setTypeTabItem] = useState(false);
+    function handleTypeTabChange(e, newValue) {
+        console.log("~ newValue", newValue);
 
+        setTypeTabItem(newValue);
+    }
+    async function handleTypesRefresh() {
+        let errorCheck = await props.refreshTypes();
+        if (errorCheck?.error) {
+            console.error("Error refreshing types", errorCheck.error.message);
+            props.handleSnackBar({
+                show: true,
+                type: "error",
+                text: errorCheck.error.message,
+            });
+        } else if (errorCheck?.successMsg) {
+            props.handleSnackBar({
+                show: true,
+                type: "info",
+                text: errorCheck.successMsg,
+            });
+        }
+    }
+
+    // products section
+    async function handleProductsRefresh() {
+        let errorCheck = await props.refreshProducts();
+        if (errorCheck?.error) {
+            console.error("Error refreshing products", errorCheck.error.message);
+            props.handleSnackBar({
+                show: true,
+                type: "error",
+                text: errorCheck.error.message,
+            });
+        } else if (errorCheck?.successMsg) {
+            props.handleSnackBar({
+                show: true,
+                type: "info",
+                text: errorCheck.successMsg,
+            });
+        }
+    }
     return (
         <>
             <div tabIndex="0" className="products">
                 <ThemeProvider theme={PrimaryTheme}>
-                    <Tabs className="categoriesTabs" centered value={categoryTabItem} onChange={handleCategoryTabChange}>
+                    <div className="dashboardCategoriesBar">
                         <LoadingButton loading={categoryLoading} onClick={handleCategoryRefresh}>
                             <Cached />
                         </LoadingButton>
-                        <Tab style={categoryTabItem === 1 ? { borderTopLeftRadius: "1rem", borderTopRightRadius: "1rem", backgroundColor: "#70e2e24f", transition: "0.3s" } : {}} label="Category one" />
-                        <Tab label="Users" />
-                        <Tab label="Products" />
-                        <Tab label="Support" />
+                        <Tabs className="categoriesTabs" centered value={categoryTabItem} onChange={handleCategoryTabChange}>
+                            {props.categories.map((category, idx) => {
+                                return <Tab key={category.id} style={categoryTabItem === idx ? { borderTopLeftRadius: "1rem", borderTopRightRadius: "1rem", backgroundColor: "#70e2e24f", transition: "0.3s" } : {}} label={category.Name} />;
+                            })}
+                        </Tabs>
                         <Button>
                             <Add />
                         </Button>
-                    </Tabs>
-                    <div role="tabpanel" className="productsCategory" hidden={categoryTabItem !== 1}>
-                        {categoryTabItem === 1 && (
-                            <Tabs centered value={typeTabItem} onChange={handleTypeTabChange}>
-                                <Button style={{ backgroundColor: "#70e2e24f" }}>
-                                    <Cached />
-                                </Button>
-                                <Tab style={{ backgroundColor: "#70e2e24f" }} label="Type one" />
-                                <Tab style={{ backgroundColor: "#70e2e24f" }} label="Type two" />
-                                <Tab style={{ backgroundColor: "#70e2e24f" }} label="Type three" />
-                                <Tab style={{ backgroundColor: "#70e2e24f" }} label="Type four" />
-                                <Button style={{ backgroundColor: "#70e2e24f" }}>
-                                    <Add />
-                                </Button>
-                            </Tabs>
-                        )}
                     </div>
-                    <div role="tabpanel" className="productsType" hidden={typeTabItem !== 1}>
-                        {typeTabItem === 1 && (
-                            <Box m={2} sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "1rem" }}>
-                                <Card sx={{ backgroundColor: "rgb(241, 241, 241)", borderRadius: "1rem" }}>
-                                    <CardMedia component="img" height="140" image="https://i.imgur.com/tJJ55WXh.jpg" alt="fire-dragon" />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            Lizard
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button size="small">Share</Button>
-                                        <Button size="small">Learn More</Button>
-                                    </CardActions>
-                                </Card>
-                                <Button sx={{ backgroundColor: "rgb(241, 241, 241)", borderRadius: "1rem", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                    <Add sx={{ transform: "scale(2)" }} />
-                                </Button>
-                            </Box>
-                        )}
-                    </div>
+                    {props.categories.map((category, categoryIdx) => {
+                        return (
+                            <div key={categoryIdx} role="tabpanel" className="dashboardTypesBar" hidden={categoryTabItem !== categoryIdx}>
+                                {categoryTabItem === categoryIdx && (
+                                    <>
+                                        <Button disabled style={{ backgroundColor: "#70e2e24f" }}></Button>
+                                        <Tabs centered value={typeTabItem} onChange={handleTypeTabChange}>
+                                            {props.types.map((type, typeIdx) => {
+                                                if (category.id === type.CategoryID) {
+                                                    return <Tab key={typeIdx} label={type.Name} />;
+                                                }
+                                            })}
+                                        </Tabs>
+                                        <Button style={{ backgroundColor: "#70e2e24f" }}>
+                                            <Add />
+                                        </Button>
+                                    </>
+                                )}
+                            </div>
+                        );
+                    })}
+                    {props.types.map((type, typeIdx) => {
+                        return (
+                            <div role="tabpanel" className="dashboardProductsTab" hidden={typeTabItem !== typeIdx}>
+                                {typeTabItem === typeIdx && (
+                                    <Box m={2} sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "1rem" }}>
+                                        {props.products.map((product, productIdx) => {
+                                            return (
+                                                <Card key={productIdx} sx={{ minHeight: "10rem", backgroundColor: "rgb(241, 241, 241)", borderRadius: "1rem" }}>
+                                                    {/* <CardMedia component="img" height="140" image="https://i.imgur.com/tJJ55WXh.jpg" alt="fire-dragon" /> */}
+                                                    <CardContent>
+                                                        <Typography sx={{ display: "flex", justifyContent: "space-between" }} gutterBottom variant="h5" component="div">
+                                                            {product.Name}
+                                                            {product.Price}
+                                                        </Typography>
+                                                        <Typography variant="body2" color="text.secondary">
+                                                            {product.Description}
+                                                        </Typography>
+                                                        <Typography variant="body2" color="text.secondary">
+                                                            {product.Quantity} item in storage
+                                                        </Typography>
+                                                    </CardContent>
+                                                    {/* <CardActions>
+                                                    <Button size="small">Share</Button>
+                                                    <Button size="small">Learn More</Button>
+                                                </CardActions> */}
+                                                </Card>
+                                            );
+                                        })}
+                                        <Button sx={{ minHeight: "10rem", backgroundColor: "rgb(241, 241, 241)", borderRadius: "1rem", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                            <Add sx={{ transform: "scale(2)" }} />
+                                        </Button>
+                                    </Box>
+                                )}
+                            </div>
+                        );
+                    })}
                 </ThemeProvider>
             </div>
         </>
@@ -111,9 +190,11 @@ const Products = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    categories: state.dashboardProducts,
+    categories: state.dashboardProducts.categories,
+    types: state.dashboardProducts.types,
+    products: state.dashboardProducts.products,
 });
 
-const mapDispatchToProps = { refreshCategories };
+const mapDispatchToProps = { refreshCategories, refreshTypes, refreshProducts, handleSnackBar };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);
