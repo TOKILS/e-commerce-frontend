@@ -10,6 +10,11 @@ const dashboardSlice = createSlice({
   },
 
   reducers: {
+    resetUserList(state, action) {
+      state.users.length = 0;
+
+      // console.log("~ action", action);
+    },
     addUserToList(state, action) {
       state.users.push(action.payload);
       // console.log("~ action", action);
@@ -96,21 +101,21 @@ export const updateUser = (user) => async (dispatch) => {
     // console.log(response.body);
 
     // updating redux store section
-    // let data = response.body;
-    // let newUser = {
-    //     userName: data.username,
-    //     firstName: data.firstname,
-    //     lastName: data.lastname,
-    //     email: data.email,
-    //     role: data.role,
-    //     token: data.token,
-    // };
-    // dispatch(
-    //     changeUser({
-    //         newUser: newUser,
-    //         oldToken: oldToken,
-    //     })
-    // );
+    let data = response.body;
+    let newUser = {
+      userName: data.username,
+      firstName: data.firstname,
+      lastName: data.lastname,
+      email: data.email,
+      role: data.role,
+      token: data.token,
+    };
+    dispatch(
+      changeUser({
+        newUser: newUser,
+        oldToken: oldToken,
+      })
+    );
   } catch (err) {
     console.error(err.message);
     return { error: err };

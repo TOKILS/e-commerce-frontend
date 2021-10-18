@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/authentication";
 import superagent from "superagent";
 import { Typography } from "@material-ui/core";
+import CartItem from "../components/CartItem";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -153,7 +154,7 @@ const SummaryItemPrice = styled.span``;
 const Button = styled.button`
   width: 100%;
   padding: 10px;
-  background-color: black;
+  background-color: teal;
   color: white;
   font-weight: 600;
 `;
@@ -170,45 +171,50 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const context = useContext(AuthContext);
 
+  const UpdateItems = () => {
+    superagent
+      .get(
+        "https://mid-project-01.herokuapp.com/api/v3/wishlistProductsInfo/" +
+          context.user.id
+      )
+      .then((results) => {
+        setWishListInfo(results.body);
+      });
+    superagent
+      .get(
+        "https://mid-project-01.herokuapp.com/api/v3/cartProducts/" +
+          context.user.id
+      )
+      .then(async (results) => {
+        let res = await Promise.all(
+          results.body.map(async (p) => {
+            return {
+              ...p,
+              img: await superagent.get(
+                "https://mid-project-01.herokuapp.com/api/v3/image/" +
+                  p.ColorID.id
+              ),
+            };
+          })
+        );
+
+        setCartItems(res.map((ele) => ({ ...ele, img: ele.img.body.Image })));
+      });
+  };
+  const UpdateSummery = () => {
+    superagent
+      .get(
+        "https://mid-project-01.herokuapp.com/api/v3/cartProductsInfo/" +
+          context.user.id
+      )
+      .then((results) => {
+        setCartInfo(results.body);
+      });
+  };
   useEffect(() => {
     if (context.loggedIn) {
-      superagent
-        .get(
-          "https://mid-project-01.herokuapp.com/api/v3/cartProductsInfo/" +
-            context.user.id
-        )
-        .then((results) => {
-          setCartInfo(results.body);
-        });
-      superagent
-        .get(
-          "https://mid-project-01.herokuapp.com/api/v3/wishlistProductsInfo/" +
-            context.user.id
-        )
-        .then((results) => {
-          setWishListInfo(results.body);
-        });
-      superagent
-        .get(
-          "https://mid-project-01.herokuapp.com/api/v3/cartProducts/" +
-            context.user.id
-        )
-        .then(async (results) => {
-          let res = await Promise.all(
-            results.body.map(async (p) => {
-              return {
-                ...p,
-                img: await superagent.get(
-                  "https://mid-project-01.herokuapp.com/api/v3/image/" +
-                    p.ColorID.id
-                ),
-              };
-            })
-          );
-
-          setCartItems(res.map((ele) => ({ ...ele, img: ele.img.body.Image })));
-          console.log(res.map((ele) => ({ ...ele, img: ele.img.body.Image })));
-        });
+      UpdateItems();
+      UpdateSummery();
     }
   }, []);
 
@@ -231,34 +237,11 @@ const Cart = () => {
             {cartItems.map((item) => {
               return (
                 <>
-                  <Product>
-                    <ProductDetail>
-                      <Image src={item.img} />
-                      <Details>
-                        <ProductName>
-                          <b>Product:</b> {item.ProductID.Name}
-                        </ProductName>
-                        <ProductId>
-                          <b>ID:</b> {item.ProductID.id}
-                        </ProductId>
-                        <ProductColor color={item.ColorID.Code} />
-                        <ProductSize>
-                          <b>Size:</b> {item.SizeID.Size}
-                        </ProductSize>
-                      </Details>
-                    </ProductDetail>
-                    <PriceDetail>
-                      <ProductAmountContainer>
-                        <Add />
-                        <ProductAmount>{item.Quantity}</ProductAmount>
-
-                        <Remove />
-                      </ProductAmountContainer>
-
-                      <ProductPrice>$ {item.ProductID.Price}</ProductPrice>
-
-                    </PriceDetail>
-                  </Product>
+                  <CartItem
+                    UpdateItems={UpdateItems}
+                    UpdateSummery={UpdateSummery}
+                    item={item}
+                  />
                   <Hr />
                 </>
               );
