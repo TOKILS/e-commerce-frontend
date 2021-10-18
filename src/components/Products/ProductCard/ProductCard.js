@@ -100,6 +100,8 @@ const Product = ({ product }) => {
         .send({
           ProductID: product.id,
           UserID: context.user.id,
+          ColorID: product.color[0].id,
+          SizeID: 1,
         })
         .set("Authorization", "Bearer " + context.token)
         .then((res) => {});

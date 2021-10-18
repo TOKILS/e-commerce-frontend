@@ -99,14 +99,22 @@ const Product = ({ item }) => {
 
   const addToWish = () => {
     if (context.loggedIn) {
-      superagent
-        .post(`https://mid-project-01.herokuapp.com/api/v2/Wishlist`)
-        .send({
-          ProductID: item.id,
-          UserID: context.user.id,
-        })
-        .set("Authorization", "Bearer " + context.token)
-        .then((res) => {});
+      console.log({
+        ProductID: item.id,
+        UserID: context.user.id,
+        ColorID: item.color[0].id,
+        SizeID: 1,
+      });
+      // superagent
+      //   .post(`https://mid-project-01.herokuapp.com/api/v2/Wishlist`)
+      //   .send({
+      //     ProductID: item.id,
+      //     UserID: context.user.id,
+      //     ColorID: item.color[0].id,
+      //     SizeID: 1,
+      //   })
+      //   .set("Authorization", "Bearer " + context.token)
+      //   .then((res) => {});
     }
   };
 

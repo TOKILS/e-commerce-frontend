@@ -213,6 +213,7 @@ const Cart = () => {
   };
   useEffect(() => {
     if (context.loggedIn) {
+      console.log(context.user);
       UpdateItems();
       UpdateSummery();
     }
