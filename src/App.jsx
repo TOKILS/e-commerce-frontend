@@ -9,6 +9,7 @@ import AuthProvider from "./context/authentication";
 import "./App.css";
 import Dashboard from "./components/dashBoard/Dashboard";
 import Catalog from "./components/Catalog/CatalogContainer";
+import AboutUs from "./components/AboutUs/AboutUs"
 
 const App = () => {
   return (
@@ -40,6 +41,9 @@ const App = () => {
           </Route>
           <Route exact path="/checkout">
             <Checkout />
+          </Route>
+          <Route exact path="/about-us">
+            <AboutUs />
           </Route>
         </Switch>
         {/* </IsLoadingAndError> */}
