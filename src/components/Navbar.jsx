@@ -7,64 +7,64 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/authentication";
 import { When } from "react-if";
-
+import Auth from "./login/auth";
 import superagent from "superagent";
 import { useSelector } from "react-redux";
 const Container = styled.div`
-    height: 60px;
-    ${mobile({ height: "50px" })}
+  height: 60px;
+  ${mobile({ height: "50px" })}
 `;
 
 const Wrapper = styled.div`
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    ${mobile({ padding: "10px 0px" })}
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ${mobile({ padding: "10px 0px" })}
 `;
 
 const Left = styled.div`
-    flex: 1;
-    display: flex;
-    align-items: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
 `;
 
 const SearchContainer = styled.div`
-    border: 0.5px solid lightgray;
-    display: flex;
-    align-items: center;
-    margin-left: 25px;
-    padding: 5px;
+  border: 0.5px solid lightgray;
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+  padding: 5px;
 `;
 
 const Input = styled.input`
-    border: none;
-    ${mobile({ width: "50px" })}
+  border: none;
+  ${mobile({ width: "50px" })}
 `;
 
 const Center = styled.div`
-    flex: 1;
-    text-align: center;
+  flex: 1;
+  text-align: center;
 `;
 
 const Logo = styled.h1`
-    font-weight: bold;
-    ${mobile({ fontSize: "24px" })}
+  font-weight: bold;
+  ${mobile({ fontSize: "24px" })}
 `;
 const Right = styled.div`
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    ${mobile({ flex: 2, justifyContent: "center" })}
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  ${mobile({ flex: 2, justifyContent: "center" })}
 `;
 
 const MenuItem = styled.div`
-    font-size: 14px;
-    cursor: pointer;
-    text-decoration: none;
-    margin-left: 25px;
-    ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 25px;
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
 const Navbar = () => {
@@ -73,7 +73,6 @@ const Navbar = () => {
   const context = useContext(AuthContext);
   const [itemsInCart, setitemsInCart] = useState(0);
   useEffect(() => {
-    console.log(cart);
     if (context.loggedIn) {
       superagent
         .get(
@@ -109,11 +108,15 @@ const Navbar = () => {
               <Link to="/Login">SIGN IN</Link>
             </MenuItem>
           </When>
+          <Auth capability="delete">
+            <MenuItem>
+              <Link to="/dashboard">Dashboard</Link>
+            </MenuItem>
+          </Auth>
           <When condition={context.loggedIn}>
             <MenuItem>
               <Link to="/" onClick={context.logout}>
-                {" "}
-                Logout{" "}
+                Logout
               </Link>
             </MenuItem>
           </When>
@@ -128,7 +131,6 @@ const Navbar = () => {
       </Wrapper>
     </Container>
   );
-
 };
 
 export default Navbar;

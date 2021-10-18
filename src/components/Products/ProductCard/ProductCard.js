@@ -75,7 +75,7 @@ const Icon = styled.div`
   }
 `;
 
-const Product = ({ product }) => {
+const Product = ({ product, handleClick }) => {
   const context = useContext(AuthContext);
   const dispatch = useDispatch();
   const addToCart = () => {
@@ -91,6 +91,7 @@ const Product = ({ product }) => {
         .set("Authorization", "Bearer " + context.token)
         .then((res) => {
           dispatch(updateCart());
+          handleClick();
         });
     }
   };
@@ -101,9 +102,13 @@ const Product = ({ product }) => {
         .send({
           ProductID: product.id,
           UserID: context.user.id,
+          ColorID: product.color[0].id,
+          SizeID: 1,
         })
         .set("Authorization", "Bearer " + context.token)
-        .then((res) => {});
+        .then((res) => {
+          handleClick();
+        });
     }
   };
 
