@@ -87,10 +87,10 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
+//           <SearchContainer>
+//             <Input placeholder="Search" />
+//             <Search style={{ color: "gray", fontSize: 16 }} />
+//           </SearchContainer>
         </Left>
         <Center>
           <Link to="/">
@@ -131,6 +131,7 @@ const Navbar = () => {
       </Wrapper>
     </Container>
   );
+
 };
 
 export default Navbar;

@@ -1,5 +1,5 @@
 // general
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // styled components
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Box } from "@mui/material";
@@ -9,8 +9,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 // redux
 import { connect } from "react-redux";
 import { DeleteUser } from "../../../../store/dashboard/dashboard.store";
+import { handleSnackBar } from "../../../../store/snackbar/snackbar.store";
 
-const DeleteDialog = ({ user, check, handleShow, handleClose, DeleteUser }) => {
+const DeleteDialog = ({ user, check, handleShow, handleClose, DeleteUser, handleSnackBar, snackbarState }) => {
     const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
     const deleteTheme = createTheme({
         palette: {
@@ -25,13 +26,29 @@ const DeleteDialog = ({ user, check, handleShow, handleClose, DeleteUser }) => {
     async function handleDeleteUser(token) {
         setDeleteBtnLoading(true);
         let errorCheck = await DeleteUser(token);
-        console.log("~ delete error check", errorCheck);
+        // console.log("~ errorCheck", errorCheck);
         if (errorCheck?.error) {
-            console.error("error updating user ", errorCheck.error.message);
+            console.error("error deleting user ", errorCheck.error.message);
+            handleSnackBar({
+                show: true,
+                type: "error",
+                text: errorCheck.error.message,
+            });
+        }
+        if (errorCheck.successMsg) {
+            // console.log("~ errorCheck.successMsg", errorCheck.successMsg);
+            handleSnackBar({
+                show: true,
+                type: "warning",
+                text: errorCheck.successMsg,
+            });
         }
         setDeleteBtnLoading(false);
         handleClose();
     }
+    useEffect(() => {
+        // console.log("snackbarState updated > ", snackbarState);
+    }, [snackbarState]);
     return (
         <>
             <Dialog open={check} onClose={handleClose}>
@@ -54,8 +71,8 @@ const DeleteDialog = ({ user, check, handleShow, handleClose, DeleteUser }) => {
     );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({ snackbarState: state.snackbar });
 
-const mapDispatchToProps = { DeleteUser };
+const mapDispatchToProps = { DeleteUser, handleSnackBar };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeleteDialog);

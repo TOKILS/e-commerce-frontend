@@ -2,19 +2,20 @@
 import { useState } from "react";
 
 // styled components
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Box, Select, MenuItem } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Box, Select, MenuItem } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 // redux
 import { connect } from "react-redux";
-import { updateUser } from "../../../../store/dashboard/dashboard.store";
+import { signUpUser } from "../../../../store/dashboard/dashboard.store";
 import { handleSnackBar } from "../../../../store/snackbar/snackbar.store";
 
-const UpdateDialog = ({ user, check, handleShow, handleClose, updateUser, handleSnackBar }) => {
+// TODO: >>>>>5 Refactor this update dialog to be an addUser dialog <<<<<
+const SignUpUserDialog = ({ user, check, handleShow, handleClose, updateUser,handleSnackBar }) => {
     const [submitBtnLoading, setSubmitBtnLoading] = useState(false);
     const [selectedRole, setSelectedRoleRole] = useState("user");
 
-    async function handleUpdateSubmit(e) {
+    async function handleAddSubmit(e) {
         e.preventDefault();
         console.log("handleUpdateSubmit ran");
 
@@ -22,21 +23,20 @@ const UpdateDialog = ({ user, check, handleShow, handleClose, updateUser, handle
         let username = e.target.userName.value;
         let firstname = e.target.firstName.value;
         let lastname = e.target.lastName.value;
+        let password = e.target.password.value;
         let email = e.target.email.value;
         let role = selectedRole;
 
-        let token = e.target.token.value;
-
-        let errorCheck = await updateUser({
+        let errorCheck = await signUpUser({
             username: username,
             firstname: firstname,
             lastname: lastname,
+            password: password,
             email: email,
             role: role,
-            token: token,
         });
         if (errorCheck?.error) {
-            console.error("error updating user ", errorCheck.error.message);
+            console.error("error signing up user ", errorCheck.error.message);
             handleSnackBar({
                 show: true,
                 type: "error",
@@ -57,29 +57,27 @@ const UpdateDialog = ({ user, check, handleShow, handleClose, updateUser, handle
     }
     return (
         <Dialog open={check} onClose={handleClose}>
-            <DialogTitle>{`Update ${user.username}'s info`}</DialogTitle>
+            <DialogTitle>{`Sign up user`}</DialogTitle>
             <DialogContent>
-                <Box component="form" sx={{ m: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", width: "96%" }} noValidate autoComplete="off" onSubmit={handleUpdateSubmit} id="updateForm">
-                    <TextField name="userName" label="User name" variant="outlined" defaultValue={user.username} />
-                    <TextField name="firstName" label="First name" variant="outlined" defaultValue={user.firstname} />
-                    <TextField name="lastName" label="Last name" variant="outlined" defaultValue={user.lastname} />
-                    <TextField name="email" label="Email" variant="outlined" defaultValue={user.email} />
-
-                    <Select name="role" value={user.role} onChange={handleRoleChange}>
+                <Box component="form" sx={{ m: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", width: "96%" }} noValidate autoComplete="off" onSubmit={handleAddSubmit} id="addUser">
+                    <TextField name="userName" label="User name" variant="outlined" />
+                    <TextField name="email" label="Email" variant="outlined" />
+                    <TextField name="firstName" label="First name" variant="outlined" />
+                    <TextField name="lastName" label="Last name" variant="outlined" />
+                    <TextField type="password" name="password" label="Password" variant="outlined" />
+                    <Select name="role" value="user" onChange={handleRoleChange}>
                         <MenuItem value={"user"}>User</MenuItem>
                         <MenuItem value={"vendor"}>Vendor</MenuItem>
                         <MenuItem value={"admin"}>Admin</MenuItem>
                     </Select>
-
-                    <TextField sx={{ display: "none" }} name="token" label="Token" variant="outlined" defaultValue={user.token} />
                 </Box>
             </DialogContent>
             <DialogActions>
                 <Button color="secondary" type="button" onClick={handleClose}>
                     Cancel
                 </Button>
-                <LoadingButton loading={submitBtnLoading} form="updateForm" type="submit" autoFocus>
-                    Update
+                <LoadingButton loading={submitBtnLoading} form="addUserForm" type="submit" autoFocus>
+                    Add User
                 </LoadingButton>
             </DialogActions>
         </Dialog>
@@ -88,6 +86,6 @@ const UpdateDialog = ({ user, check, handleShow, handleClose, updateUser, handle
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = { updateUser, handleSnackBar };
+const mapDispatchToProps = { signUpUser, handleSnackBar };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdateDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpUserDialog);

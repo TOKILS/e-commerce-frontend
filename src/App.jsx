@@ -13,22 +13,26 @@ import ShippongInfo from "./pages/checkout/ShippingInfo";
 import BillingInfo from "./pages/checkout/BillingInfo";
 
 
-const App = () => {
-  return (
-    <AuthProvider>
-      <Routerer>
-        {/* <IsLoadingAndError> */}
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/Product">
-            <Product />
-          </Route>
-          <Route exact path="/products">
-            <Catalog name={""} />
-          </Route>
+// styled components
 
+
+const App = (props) => {
+    return (
+        <AuthProvider>
+            <Routerer>
+                {/* <IsLoadingAndError> */}
+                <Switch>
+                    <Route exact path="/">
+                        <Home />
+                    </Route>
+                    <Route exact path="/Product">
+                        <Product />
+                    </Route>
+                    <Route exact path="/products">
+                        <Catalog name={""} />
+                    </Route>
+
+  
           <Route exact path="/Login">
             <Login />
           </Route>
@@ -55,6 +59,7 @@ const App = () => {
       </Routerer>
     </AuthProvider>
   );
+
 };
 
 export default App;
