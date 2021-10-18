@@ -88,7 +88,10 @@ function ShippongInfo() {
   let history = useHistory();
 
   useEffect(() => {
+    console.log("outside login");
     if (context.loggedIn) {
+      console.log("inside login");
+
       superagent
         .get(
           "https://mid-project-01.herokuapp.com/api/v3/cartProductsInfo/" +
@@ -102,8 +105,8 @@ function ShippongInfo() {
           `https://mid-project-01.herokuapp.com/api/v3/address/${context.user.id}`
         )
         .then((response) => {
-          console.log('inside');
-          console.log('address', response.body);
+          console.log("inside");
+          console.log("address", response.body);
           if (Object.keys(response.body).length !== 0) {
             console.log("already have an address ");
             setAddress(response.body[0]);
@@ -114,8 +117,10 @@ function ShippongInfo() {
         });
     }
   }, [context.loggegIn]);
+
   function handelSubmit(event) {
     event.preventDefault();
+    console.log(bodystate);
     if (Object.keys(address).length === 0) {
       superagent
         .post("https://mid-project-01.herokuapp.com/api/v2/Address")
@@ -164,7 +169,7 @@ function ShippongInfo() {
       <div style={{ marginTop: "-300px" }}>
         <ShippingInfo>
           <Title>Shipping Info</Title>
-          {Object.keys(address).length === 0 ? (
+          {Object.keys(address).length !== 0 ? (
             <h3 style={{ margin: "10px", textAlign: "center" }}>
               <SummaryTitle>you already have this address:</SummaryTitle>
               <SummaryItem>
@@ -178,7 +183,7 @@ function ShippongInfo() {
               </SummaryItem>
               <Button
                 onClick={() => {
-                  setAddress({ id: null });
+                  setAddress({});
                 }}
               >
                 Add new Address

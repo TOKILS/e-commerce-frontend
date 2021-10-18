@@ -1,9 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, forwardRef, useState } from "react";
 import Navbar from "../../components/Navbar";
 import styled from "styled-components";
 import superagent from "superagent";
 import { AuthContext } from "../../context/authentication";
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import { useHistory } from "react-router-dom";
 
+const Alert = forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 const BillingContainer = styled.div`
   width: 60%;
   display: inline-block;
@@ -85,6 +92,7 @@ const SummaryItemText = styled.span``;
 const SummaryItemPrice = styled.span``;
 
 function BillingInfo() {
+  let history = useHistory();
   const [cartInfo, setCartInfo] = useState({
     totalPrice: 0,
     totalItems: 0,
@@ -109,26 +117,28 @@ function BillingInfo() {
   async function handelSubmit(event) {
     event.preventDefault();
     if (context.loggedIn) {
-      superagent
-        .get( // get the user address from the db
+      let userAddress = await superagent
+        .get(
+          // get the user address from the db
           `https://mid-project-01.herokuapp.com/api/v3/address/${context.user.id}`
         )
-        .then((response) => {
-          if (Object.keys(response.body).length !== 0) {
-            setAddressId(response.body[0].id);
-          }
-        })
         .catch((e) => {
           console.log(e);
         });
-      superagent
-        .get( // get total price and total number of items from the cart
+
+      if (Object.keys(userAddress.body).length !== 0) {
+        setAddressId(userAddress.body[0].id);
+      }
+
+      let cartInfo = await superagent
+        .get(
+          // get total price and total number of items from the cart
           `https://mid-project-01.herokuapp.com/api/v3/cartProductsInfo/${context.user.id}`
         )
-        .then((response) => {
-          setCartResponse(response.body);
-        });
-      await superagent // add new order
+        .catch((e) => console.log(e));
+      setCartResponse(cartInfo);
+
+      let newOrder = await superagent // add new order
         .post("https://mid-project-01.herokuapp.com/api/v2/Order")
         .send({
           UserID: context.user.id,
@@ -138,43 +148,59 @@ function BillingInfo() {
           State: "",
         })
         .set("Authorization", "Bearer " + context.token)
-        .then(async (res) => {
-          await superagent
-            .get( // get the user products from the cart
-              `https://mid-project-01.herokuapp.com/api/v3/cartProducts/${context.user.id}`
-            )
-            .then((response) => {
-              Promise.all(
-                response.body.map(async (element) => {
-                  await superagent
-                    .post( // Add new order detail
-                      "https://mid-project-01.herokuapp.com/api/v2/OrderDetails"
-                    )
-                    .send({
-                      ProductID: element.ProductID.id,
-                      UserID: context.user.id,
-                      ColorID: element.ColorID.id,
-                      SizeID: element.SizeID.id,
-                      OrderID: res.body.id,
-                      Quantity: element.Quantity,
-                    })
-                    .set("Authorization", "Bearer " + context.token);
-                })
-              );
-            });
+        .catch((e) => console.log(e));
 
-          superagent
-            .delete(
-              // delete all cart Items
-              `https://mid-project-01.herokuapp.com/api/v3/cart/${context.user.id}`
-            )
-            .set("Authorization", "Bearer " + context.token)
-            .then((resulte) => {
-              console.log(resulte.body);
-            });
-        });
+      let cartProducts = await superagent
+        .get(
+          // get the user products from the cart
+          `https://mid-project-01.herokuapp.com/api/v3/cartProducts/${context.user.id}`
+        )
+        .catch((e) => console.log(e));
+
+      for (let i = 0; i < cartProducts.body.length; i++) {
+        await superagent
+          .post(
+            // Add new order detail
+            "https://mid-project-01.herokuapp.com/api/v2/OrderDetails"
+          )
+          .send({
+            ProductID: cartProducts.body[i].ProductID.id,
+            UserID: context.user.id,
+            ColorID: cartProducts.body[i].ColorID.id,
+            SizeID: cartProducts.body[i].SizeID.id,
+            OrderID: newOrder.body.id,
+            Quantity: cartProducts.body[i].Quantity,
+          })
+          .set("Authorization", "Bearer " + context.token)
+          .catch((e) => console.log(e));
+        setTimeout(() => {}, 100);
+      }
+      await superagent
+        .delete(
+          // delete all cart Items
+          `https://mid-project-01.herokuapp.com/api/v3/cart/${context.user.id}`
+        )
+        .set("Authorization", "Bearer " + context.token)
+        .catch((e) => console.log(e));
+      handleClick();
+      setTimeout(() => {
+        history.push("/");
+      }, 2000);
     }
   }
+
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    console.log("open", open);
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   return (
     <>
@@ -289,6 +315,17 @@ function BillingInfo() {
           <SummaryItemPrice>$ {cartInfo.totalPrice + 10}</SummaryItemPrice>
         </SummaryItem>
       </Summary>
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Payment Successfully , Thank You
+          </Alert>
+        </Snackbar>
+      </Stack>
     </>
   );
 }
