@@ -6,7 +6,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 const Container = styled.div`
-padding: 20px
+  padding: 20px;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-around;
