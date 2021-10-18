@@ -9,7 +9,7 @@ import AuthProvider from "./context/authentication";
 import "./App.css";
 import Dashboard from "./components/dashBoard/Dashboard";
 import Catalog from "./components/Catalog/CatalogContainer";
-import AboutUs from "./components/AboutUs/AboutUs"
+import AboutUs from "./components/AboutUs/AboutUsContainer";
 
 const App = () => {
   return (

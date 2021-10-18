@@ -11,7 +11,6 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 
-
 const Container = styled.div`
   display: flex;
   ${mobile({ flexDirection: "column" })}
@@ -113,15 +112,29 @@ const Footer = () => {
       <Center>
         <Title>Useful Links</Title>
         <List>
-          <ListItem> <Link to="/"> Home </Link></ListItem>
-          <ListItem> <Link to="/Cart">Cart </Link></ListItem>
-          <ListItem><Link to="/products"> Products </Link></ListItem>
-          <ListItem> <Link to="/about-us">About us</Link></ListItem>
+          <ListItem>
+            {" "}
+            <Link to="/"> Home </Link>
+          </ListItem>
+          <ListItem>
+            {" "}
+            <Link to="/Cart">Cart </Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/products"> Products </Link>
+          </ListItem>
+          <ListItem>
+            {" "}
+            <Link to="/about-us">About us</Link>
+          </ListItem>
           <ListItem>Accessories</ListItem>
           <ListItem>My Account</ListItem>
           <ListItem>Order Tracking</ListItem>
           <ListItem>Wishlist</ListItem>
-          <ListItem>Support</ListItem>
+          <ListItem>
+            {" "}
+            <a href="https://mid-project-01.herokuapp.com/client">Support</a>
+          </ListItem>
           <ListItem>Terms</ListItem>
         </List>
       </Center>
