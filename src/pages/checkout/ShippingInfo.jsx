@@ -9,27 +9,35 @@ import Footer from "../../components/Footer";
 const ShippingInfo = styled.div`
   width: 60%;
   display: inline-block;
-  border: 0.5px solid lightgray;
+  border: 0.5px solid teal;
   margin: 30px 40px 40px 90px;
 `;
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
   margin: 10px;
-  border: 0.5px solid gray;
+  border: 1px solid teal;
   text-align: center;
+  padding: 10px;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+`;
+
+const InputDiv = styled.div`
+  width: 100%;
 `;
 
 const Input = styled.input`
   flex: 1;
-  width: 400px;
-  margin: 20px;
+  width: 290px;
+  margin: 10px auto 10px 45px;
   padding: 10px;
+  text-align: center;
+  border: 1px solid teal;
 `;
 
 const Button = styled.button`
@@ -47,7 +55,7 @@ const Summary = styled.div`
   margin: 0px 15px 15px 15px;
   flex: 1;
   float: right;
-  border: 0.5px solid lightgray;
+  border: 0.5px solid teal;
   width: 300px;
   border-radius: 10px;
   padding: 20px;
@@ -94,16 +102,20 @@ function ShippongInfo() {
           `https://mid-project-01.herokuapp.com/api/v3/address/${context.user.id}`
         )
         .then((response) => {
-          if (Object.keys(response.body).length === 0) {
+          console.log('inside');
+          console.log('address', response.body);
+          if (Object.keys(response.body).length !== 0) {
             console.log("already have an address ");
-            setAddress(response.body);
+            setAddress(response.body[0]);
           }
+        })
+        .catch((e) => {
+          console.error(e);
         });
     }
-  }, []);
+  }, [context.loggegIn]);
   function handelSubmit(event) {
     event.preventDefault();
-    console.log(address);
     if (Object.keys(address).length === 0) {
       superagent
         .post("https://mid-project-01.herokuapp.com/api/v2/Address")
@@ -118,6 +130,7 @@ function ShippongInfo() {
         });
     }
   }
+
   return (
     <>
       <Navbar />
@@ -140,7 +153,7 @@ function ShippongInfo() {
           <SummaryItemPrice>$ {cartInfo.totalPrice + 10}</SummaryItemPrice>
         </SummaryItem>
       </Summary>
-      <br style={{clear: 'both'}}/>
+      <br style={{ clear: "both" }} />
       <Summary>
         <SummaryTitle>SHIPPING & DELIVERY</SummaryTitle>
         <SummaryItemText>
@@ -148,109 +161,140 @@ function ShippongInfo() {
           holidays.
         </SummaryItemText>
       </Summary>
-      <ShippingInfo>
-        <Title>Shipping Info</Title>
-        {!Object.keys(address).length === 0 ? (
-          <h3 style={{ margin: "10px", textAlign: "center" }}>
-            you already have this address
-          </h3>
-        ) : (
-          <Form onSubmit={handelSubmit}>
-            <Input
-              placeholder="First Name*"
-              onChange={(e) => {
-                setbodystate({ ...bodystate, FirstName: e.target.value });
-              }}
-              type="text"
-              name="firstName"
-              required
-            />
-            <Input
-              placeholder="Last Name*"
-              onChange={(e) => {
-                setbodystate({ ...bodystate, LastName: e.target.value });
-              }}
-              type="text"
-              name="lastName"
-              required
-            />
-            <Input
-              placeholder="Company"
-              onChange={(e) => {
-                setbodystate({ ...bodystate, Company: e.target.value });
-              }}
-              type="text"
-              name="company"
-            />
-            <Input
-              placeholder="Postal Code*"
-              onChange={(e) => {
-                setbodystate({
-                  ...bodystate,
-                  PostalCode: Number(e.target.value),
-                });
-              }}
-              type="text"
-              name="postalCode"
-              required
-            />
-            <Input
-              placeholder="Address Line 1 *"
-              onChange={(e) => {
-                setbodystate({ ...bodystate, Address1: e.target.value });
-              }}
-              type="text"
-              name="addressLine"
-              required
-            />
-            <Input
-              placeholder="Address Line 2"
-              onChange={(e) => {
-                setbodystate({ ...bodystate, Address2: e.target.value });
-              }}
-              type="text"
-              name="addressLine2"
-            />
-            <Input
-              placeholder="Country*"
-              onChange={(e) => {
-                setbodystate({ ...bodystate, Country: e.target.value });
-              }}
-              type="text"
-              name="country"
-              required
-            />
-            <Input
-              placeholder="Province"
-              onChange={(e) => {
-                setbodystate({ ...bodystate, Province: e.target.value });
-              }}
-              type="text"
-              name="province"
-            />
-            <Input
-              placeholder="City*"
-              onChange={(e) => {
-                setbodystate({ ...bodystate, City: e.target.value });
-              }}
-              type="text"
-              name="city"
-              required
-            />
-            <Input
-              placeholder="Shipping Phone*"
-              onChange={(e) => {
-                setbodystate({ ...bodystate, Phone: Number(e.target.value) });
-              }}
-              type="text"
-              name="shippingPhone"
-              required
-            />
-            <Button type="submit">Continue To Billing</Button>
-          </Form>
-        )}
-      </ShippingInfo>
-      <br style={{clear: 'both'}}/>
+      <div style={{ marginTop: "-300px" }}>
+        <ShippingInfo>
+          <Title>Shipping Info</Title>
+          {Object.keys(address).length === 0 ? (
+            <h3 style={{ margin: "10px", textAlign: "center" }}>
+              <SummaryTitle>you already have this address:</SummaryTitle>
+              <SummaryItem>
+                <SummaryItemText>Address: {address.Address1}</SummaryItemText>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>City: {address.City}</SummaryItemText>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>Phone: {address.Phone}</SummaryItemText>
+              </SummaryItem>
+              <Button
+                onClick={() => {
+                  setAddress({ id: null });
+                }}
+              >
+                Add new Address
+              </Button>
+              <Button
+                onClick={() => {
+                  history.push("/billing");
+                }}
+              >
+                Continue To Billing
+              </Button>
+            </h3>
+          ) : (
+            <Form onSubmit={handelSubmit}>
+              <InputDiv>
+                <Input
+                  placeholder="First Name*"
+                  onChange={(e) => {
+                    setbodystate({ ...bodystate, FirstName: e.target.value });
+                  }}
+                  type="text"
+                  name="firstName"
+                  required
+                />
+                <Input
+                  placeholder="Last Name*"
+                  onChange={(e) => {
+                    setbodystate({ ...bodystate, LastName: e.target.value });
+                  }}
+                  type="text"
+                  name="lastName"
+                  required
+                />
+
+                <Input
+                  placeholder="Company"
+                  onChange={(e) => {
+                    setbodystate({ ...bodystate, Company: e.target.value });
+                  }}
+                  type="text"
+                  name="company"
+                />
+                <Input
+                  placeholder="Postal Code*"
+                  onChange={(e) => {
+                    setbodystate({
+                      ...bodystate,
+                      PostalCode: Number(e.target.value),
+                    });
+                  }}
+                  type="text"
+                  name="postalCode"
+                  required
+                />
+                <Input
+                  placeholder="Address Line 1 *"
+                  onChange={(e) => {
+                    setbodystate({ ...bodystate, Address1: e.target.value });
+                  }}
+                  type="text"
+                  name="addressLine"
+                  required
+                />
+                <Input
+                  placeholder="Address Line 2"
+                  onChange={(e) => {
+                    setbodystate({ ...bodystate, Address2: e.target.value });
+                  }}
+                  type="text"
+                  name="addressLine2"
+                />
+                <Input
+                  placeholder="Country*"
+                  onChange={(e) => {
+                    setbodystate({ ...bodystate, Country: e.target.value });
+                  }}
+                  type="text"
+                  name="country"
+                  required
+                />
+                <Input
+                  placeholder="Province"
+                  onChange={(e) => {
+                    setbodystate({ ...bodystate, Province: e.target.value });
+                  }}
+                  type="text"
+                  name="province"
+                />
+                <Input
+                  placeholder="City*"
+                  onChange={(e) => {
+                    setbodystate({ ...bodystate, City: e.target.value });
+                  }}
+                  type="text"
+                  name="city"
+                  required
+                />
+                <Input
+                  placeholder="Shipping Phone*"
+                  onChange={(e) => {
+                    setbodystate({
+                      ...bodystate,
+                      Phone: Number(e.target.value),
+                    });
+                  }}
+                  type="text"
+                  name="shippingPhone"
+                  required
+                />
+              </InputDiv>
+              <Button type="submit">Continue To Billing</Button>
+            </Form>
+          )}
+        </ShippingInfo>
+      </div>
+      <br style={{ clear: "both" }} />
       <Footer />
     </>
   );

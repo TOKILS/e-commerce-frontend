@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/authentication";
 const BillingContainer = styled.div`
   width: 60%;
   display: inline-block;
-  border: 0.5px solid lightgray;
+  border: 0.5px solid teal;
   margin: 30px 40px 40px 90px;
 `;
 
@@ -15,7 +15,7 @@ const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
   margin: 10px;
-  border: 0.5px solid gray;
+  border: 0.5px solid teal;
   text-align: center;
 `;
 
@@ -39,11 +39,12 @@ const Input = styled.input`
   flex: 1;
   width: 400px;
   padding: 10px;
+  border: 0.5px solid teal;
 `;
 
 const DescriptionP = styled.p`
-  color: lightgray;
-  margin: 3px 120px;
+  color: gray;
+  margin: 5px 125px;
 `;
 
 const Button = styled.button`
@@ -62,7 +63,7 @@ const Summary = styled.div`
   margin: 50px 15px 15px 15px;
   flex: 1;
   float: right;
-  border: 0.5px solid lightgray;
+  border: 0.5px solid teal;
   width: 300px;
   border-radius: 10px;
   padding: 20px;
@@ -90,6 +91,7 @@ function BillingInfo() {
   });
   const context = useContext(AuthContext);
   const [addressId, setAddressId] = useState(0);
+  const [cartResponse, setCartResponse] = useState({});
 
   useEffect(() => {
     if (context.loggedIn) {
@@ -104,20 +106,72 @@ function BillingInfo() {
     }
   }, []);
 
-  function handelSubmit(event) {
+  async function handelSubmit(event) {
     event.preventDefault();
     if (context.loggedIn) {
       superagent
-        .get(
+        .get( // get the user address from the db
           `https://mid-project-01.herokuapp.com/api/v3/address/${context.user.id}`
         )
         .then((response) => {
           if (Object.keys(response.body).length !== 0) {
-            console.log(response.body);
+            setAddressId(response.body[0].id);
           }
         })
         .catch((e) => {
           console.log(e);
+        });
+      superagent
+        .get( // get total price and total number of items from the cart
+          `https://mid-project-01.herokuapp.com/api/v3/cartProductsInfo/${context.user.id}`
+        )
+        .then((response) => {
+          setCartResponse(response.body);
+        });
+      await superagent // add new order
+        .post("https://mid-project-01.herokuapp.com/api/v2/Order")
+        .send({
+          UserID: context.user.id,
+          AdressID: addressId,
+          TotalPrice: cartResponse.totalPrice,
+          Quantity: cartResponse.totalItems,
+          State: "",
+        })
+        .set("Authorization", "Bearer " + context.token)
+        .then(async (res) => {
+          await superagent
+            .get( // get the user products from the cart
+              `https://mid-project-01.herokuapp.com/api/v3/cartProducts/${context.user.id}`
+            )
+            .then((response) => {
+              Promise.all(
+                response.body.map(async (element) => {
+                  await superagent
+                    .post( // Add new order detail
+                      "https://mid-project-01.herokuapp.com/api/v2/OrderDetails"
+                    )
+                    .send({
+                      ProductID: element.ProductID.id,
+                      UserID: context.user.id,
+                      ColorID: element.ColorID.id,
+                      SizeID: element.SizeID.id,
+                      OrderID: res.body.id,
+                      Quantity: element.Quantity,
+                    })
+                    .set("Authorization", "Bearer " + context.token);
+                })
+              );
+            });
+
+          superagent
+            .delete(
+              // delete all cart Items
+              `https://mid-project-01.herokuapp.com/api/v3/cart/${context.user.id}`
+            )
+            .set("Authorization", "Bearer " + context.token)
+            .then((resulte) => {
+              console.log(resulte.body);
+            });
         });
     }
   }
@@ -127,22 +181,26 @@ function BillingInfo() {
       <Navbar />
       <BillingContainer>
         <Title>Billing Information</Title>
-        <InputDiv>
+        <InputDiv style={{ textAlign: "center" }}>
           <img
+            style={{ marginRight: "10px" }}
             src="https://www.uxfordev.com/demo/1.0.6/assets/images/payment-icon-set/icons/visa-curved-32px.png"
             alt="Visa"
           />
           <img
+            style={{ marginRight: "10px" }}
             src="https://www.uxfordev.com/demo/1.0.6/assets/images/payment-icon-set/icons/mastercard-curved-32px.png"
             alt="MasterCard"
           />
           <img
-            src="https://www.uxfordev.com/demo/1.0.6/assets/images/payment-icon-set/icons/maestro-curved-32px.png"
-            alt="Maestro"
-          />
-          <img
+            style={{ marginRight: "10px" }}
             src="https://www.uxfordev.com/demo/1.0.6/assets/images/payment-icon-set/icons/american-express-curved-32px.png"
             alt="American Ex"
+          />
+          <img
+            style={{ marginRight: "10px" }}
+            src="https://www.uxfordev.com/demo/1.0.6/assets/images/payment-icon-set/icons/maestro-curved-32px.png"
+            alt="Maestro"
           />
         </InputDiv>
         <Form onSubmit={handelSubmit}>
