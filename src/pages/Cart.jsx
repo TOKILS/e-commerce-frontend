@@ -266,7 +266,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cartInfo.totalPrice + 10}</SummaryItemPrice>
             </SummaryItem>
-            <Link to="/checkout">
+            <Link to="/shipping">
               <Button>CHECKOUT NOW</Button>
             </Link>
           </Summary>
