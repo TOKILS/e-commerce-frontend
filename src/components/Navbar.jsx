@@ -73,7 +73,6 @@ const Navbar = () => {
   const context = useContext(AuthContext);
   const [itemsInCart, setitemsInCart] = useState(0);
   useEffect(() => {
-    console.log(cart);
     if (context.loggedIn) {
       superagent
         .get(
