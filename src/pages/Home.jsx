@@ -16,7 +16,7 @@ const Home = ({ products, getAllProducts, fetchUserCartEffect }) => {
 
   let homeProducts = [];
   console.log(homeProducts);
-  for (let i = products.length - 1; i > products.length - 6 && i >= 0; i--) {
+  for (let i = products.length - 1; i > products.length - 4 && i >= 0; i--) {
     if (products.length >= 1 && products[i] !== undefined) {
       homeProducts.push(products[i]);
     }
