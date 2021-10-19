@@ -126,6 +126,7 @@ export const addProductToBackend = (productObj, colorObj, sizeObj, imageObj) => 
             .send(productObj);
         console.log("~ productResponse.body", productResponse.body);
         const backProductId = productResponse.body.id;
+        let productResponseBody = productResponse.body;
 
         // add color
         let newColorObj = { ...colorObj, ProductID: backProductId };
@@ -135,6 +136,7 @@ export const addProductToBackend = (productObj, colorObj, sizeObj, imageObj) => 
             .send(newColorObj);
         console.log("~ colorResponse.body", colorResponse.body);
         const backColorId = colorResponse.body.id;
+        let colorResponseBody = colorResponse.body;
 
         // add size
         let newSizeObj = { ...sizeObj, ColorID: backColorId };
@@ -143,6 +145,7 @@ export const addProductToBackend = (productObj, colorObj, sizeObj, imageObj) => 
             .set("Authorization", "Bearer " + authToken)
             .send(newSizeObj);
         console.log("~ sizeResponse.body", sizeResponse);
+        let sizeResponseBody = sizeResponse.body;
 
         // add image
         let newImageObj = { ...imageObj, ColorID: backColorId };
@@ -154,50 +157,51 @@ export const addProductToBackend = (productObj, colorObj, sizeObj, imageObj) => 
 
         let imageResponseBody = imageResponse.body;
 
-        // let colorObjToAdd = [
-        //     {
-        //         id:imageResponseBody.id,
-        //         ProductID: imageResponseBody.ProductID,
-        //         Name: imageResponseBody.Name,
-        //         Code: imageResponseBody.Code,
-        //         Image: imageResponseBody.Image,
-        //         createdAt: imageResponseBody.createAt,
-        //         updatedAt: updatedAt,
-        //         image: [
-        //             {
-        //                 id: 11,
-        //                 ColorID: 9,
-        //                 Image: "https://cdn.shopify.com/s/files/1/1136/2606/products/ABLE21-FALL-074_2048x2048.jpg?v=1628528064",
-        //                 createdAt: "2021-10-18T21:58:58.526Z",
-        //                 updatedAt: "2021-10-18T21:58:58.526Z",
-        //             },
-        //         ],
-        //         size: [
-        //             {
-        //                 id: 9,
-        //                 ColorID: 9,
-        //                 Size: "NA",
-        //                 createdAt: "2021-10-18T21:58:40.769Z",
-        //                 updatedAt: "2021-10-18T21:58:40.769Z",
-        //             },
-        //         ],
-        //     },
-        // ];
-
-        // let productToAddToRedux = {
-        //     id,
-        //     TypeID,
-        //     TypeIDName,
-        //     Name,
-        //     Description,
-        //     Price,
-        //     Quantity,
-        //     Discount,
-        //     createdAt,
-        //     updatedAt,
-        //     color,
-        // };
-
+        let productToAddToReduxObj = {
+            id: productResponseBody.id,
+            TypeID: productResponseBody.TypeID,
+            Name: productResponseBody.Name,
+            Description: productResponseBody.Description,
+            Price: productResponseBody.Price,
+            Quantity: productResponseBody.Quantity,
+            Discount: productResponseBody.Discount,
+            createdAt: productResponseBody.createdAt,
+            updatedAt: productResponseBody.updatedAt,
+            color: [
+                {
+                    id: colorResponseBody.id,
+                    ProductID: colorResponseBody.ProductID,
+                    Name: colorResponseBody.Name,
+                    Code: colorResponseBody.Code,
+                    Image: colorResponseBody.Image,
+                    createdAt: colorResponseBody.createAt,
+                    updatedAt: colorResponseBody.updatedAt,
+                    image: [
+                        {
+                            id: imageResponseBody.id,
+                            ColorID: imageResponseBody.ColorID,
+                            Image: imageResponseBody.Image,
+                            createdAt: imageResponseBody.createdAt,
+                            updatedAt: imageResponseBody.updatedAt,
+                        },
+                    ],
+                    size: [
+                        {
+                            id: sizeResponseBody.id,
+                            ColorID: sizeResponseBody.ColorID,
+                            Size: sizeResponseBody.Size,
+                            createdAt: sizeResponseBody.createdAt,
+                            updatedAt: sizeResponseBody.updatedAt,
+                        },
+                    ],
+                },
+            ],
+        };
+        dispatch(
+            addProduct({
+                ...productToAddToReduxObj,
+            })
+        );
         return { successMsg: `Added product successfully` };
     } catch (err) {
         console.error(err.message);

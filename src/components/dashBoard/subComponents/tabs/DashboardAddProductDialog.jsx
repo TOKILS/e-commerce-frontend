@@ -72,6 +72,7 @@ const DashboardAddProductDialog = ({ user, check, handleShow, type, handleClose,
         { name: "Cognac", code: "#ff7d32" },
         { name: "Spruce", code: "#5f6b4f" },
         { name: "Slate", code: "#7f746b" },
+        {name: "Grey", code: "#767676"}
     ];
 
     async function handleUpdateSubmit(e) {
@@ -188,7 +189,7 @@ const DashboardAddProductDialog = ({ user, check, handleShow, type, handleClose,
                 });
             }
             setSubmitBtnLoading(false);
-            // handleClose();
+            handleClose();
         } else {
             setSubmitBtnLoading(false);
         }
