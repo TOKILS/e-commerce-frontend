@@ -14,6 +14,7 @@ import { When } from "react-if";
 import superagent from "superagent";
 import { updateCart } from "../../../store/cart/cart";
 import cookie from "react-cookies";
+
 const Info = styled.div`
   opacity: 0;
   width: 100%;
@@ -74,7 +75,7 @@ const Icon = styled.div`
   }
 `;
 
-const Product = ({ product }) => {
+const Product = ({ product, handleClick }) => {
   const context = useContext(AuthContext);
   const dispatch = useDispatch();
   const addToCart = () => {
@@ -90,6 +91,7 @@ const Product = ({ product }) => {
         .set("Authorization", "Bearer " + context.token)
         .then((res) => {
           dispatch(updateCart());
+          handleClick();
         });
     }
   };
@@ -100,9 +102,13 @@ const Product = ({ product }) => {
         .send({
           ProductID: product.id,
           UserID: context.user.id,
+          ColorID: product.color[0].id,
+          SizeID: product.color[0].size[0].id,
         })
         .set("Authorization", "Bearer " + context.token)
-        .then((res) => {});
+        .then((res) => {
+          handleClick();
+        });
     }
   };
 
