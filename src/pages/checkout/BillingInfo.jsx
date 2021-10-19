@@ -231,8 +231,9 @@ function BillingInfo() {
         </InputDiv>
         <Form onSubmit={handelSubmit}>
           <InputDiv>
-            <Lable>Name on Card*</Lable>
+            <Lable for="cardName">Name on Card*</Lable>
             <Input
+              id="cardName"
               placeholder="Your Name"
               type="text"
               name="cardName"
@@ -241,10 +242,13 @@ function BillingInfo() {
             <DescriptionP>As it appears on the card</DescriptionP>
           </InputDiv>
           <InputDiv>
-            <Lable>Card Number*</Lable>
+            <Lable for="ccn">Card Number*</Lable>
             <Input
+              id="ccn"
               placeholder="••••  ••••  ••••  ••••"
-              type="text"
+              type="tel"
+              pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"
+              maxlength='16'
               name="cardNumber"
               required
             />
@@ -284,8 +288,8 @@ function BillingInfo() {
             </DescriptionP>
           </InputDiv>
           <InputDiv>
-            <Lable>Security Code*</Lable>
-            <Input placeholder="CVC" type="text" name="cvc" required />
+            <Lable for="cvc">Security Code*</Lable>
+            <Input id="cvc" placeholder="CVC" type="tel" name="cvc" pattern='[0-9]{3}' required />
             <DescriptionP>
               The last 3 digits displayed on the back of your credit card.
             </DescriptionP>
@@ -316,13 +320,14 @@ function BillingInfo() {
         </SummaryItem>
       </Summary>
       <Stack spacing={2} sx={{ width: "100%" }}>
-        <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+        <Snackbar open={open} autoHideDuration={3500} onClose={handleClose}>
           <Alert
             onClose={handleClose}
             severity="success"
             sx={{ width: "100%" }}
           >
-            Payment Successfully , Thank You
+            Payment Successfully , Thank You {<br />}
+            You can Find your order in your profile
           </Alert>
         </Snackbar>
       </Stack>
