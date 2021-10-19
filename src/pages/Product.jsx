@@ -1,3 +1,4 @@
+import React from "react";
 import { Add, Remove } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -130,6 +131,7 @@ const Button = styled.button`
 `;
 
 const Product = (props) => {
+  const [openDelete, setOpenDelete] = React.useState(false);
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen(true);
@@ -140,6 +142,7 @@ const Product = (props) => {
       return;
     }
     setOpen(false);
+    setOpenDelete(false);
   };
   let produ = useSelector((state) => state.product);
   const [item, setitem] = useState(JSON.parse(localStorage.getItem("product")));
@@ -172,7 +175,7 @@ const Product = (props) => {
           dispatch(updateCart());
           handleClick();
         });
-    }
+    } else setOpenDelete(true);
   };
 
   return (
@@ -242,6 +245,15 @@ const Product = (props) => {
           >
             Successfully Added {amount < 2 ? "One Item" : amount + " items"} to
             Cart
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={openDelete}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+            <h4>You Need To SIGN IN ...</h4>
           </Alert>
         </Snackbar>
       </Stack>
