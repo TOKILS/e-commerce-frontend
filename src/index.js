@@ -1,10 +1,8 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-
-// import store from './store';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from "redux";
@@ -13,8 +11,8 @@ import reducers from "./store/index";
 import * as serviceWorker from './serviceWorker';
 
 const store = createStore(
-  reducers,
-  composeWithDevTools(applyMiddleware(thunk))
+    reducers,
+    composeWithDevTools(applyMiddleware(thunk))
 );
 
 
