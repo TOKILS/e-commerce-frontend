@@ -8,6 +8,8 @@ import { mobile } from "../../responsive";
 import Category from "./Category/Category.js";
 import Typography from "@material-ui/core/Typography";
 
+
+
 const Container = styled.div``;
 
 const Title = styled.h1`
@@ -56,7 +58,7 @@ const Catalog = ({ productsFilter, handleFilter, categories }) => {
 
                                 <Option id={index} name="category" value={category.id}>{category.Name}</Option>
 
-
+                        
                             ))
                         ) : (
                             <Option>None Category</Option>
@@ -68,6 +70,7 @@ const Catalog = ({ productsFilter, handleFilter, categories }) => {
 
                 productsFilter.length > 0 ? (
                 <Category products={productsFilter} />
+    
             )
                 : (
                     <Typography variant="h6">Products not found ! :( try again !)</Typography>

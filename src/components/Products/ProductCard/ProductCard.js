@@ -13,6 +13,7 @@ import { AuthContext } from "../../../context/authentication";
 import { When } from "react-if";
 import superagent from "superagent";
 import { updateCart } from "../../../store/cart/cart";
+import cookie from "react-cookies";
 
 const Info = styled.div`
   opacity: 0;
@@ -74,7 +75,7 @@ const Icon = styled.div`
   }
 `;
 
-const Product = ({ product }) => {
+const Product = ({ product, handleClick }) => {
   const context = useContext(AuthContext);
   const dispatch = useDispatch();
   const addToCart = () => {
@@ -90,6 +91,7 @@ const Product = ({ product }) => {
         .set("Authorization", "Bearer " + context.token)
         .then((res) => {
           dispatch(updateCart());
+          handleClick();
         });
     }
   };
@@ -104,7 +106,9 @@ const Product = ({ product }) => {
           SizeID: product.color[0].size[0].id,
         })
         .set("Authorization", "Bearer " + context.token)
-        .then((res) => {});
+        .then((res) => {
+          handleClick();
+        });
     }
   };
 
@@ -116,7 +120,12 @@ const Product = ({ product }) => {
         <Icon>
           <ShoppingCartOutlined onClick={addToCart} />
         </Icon>
-        <Icon onClick={() => dispatch(update(product))}>
+        <Icon
+          onClick={() => {
+            dispatch(update(product));
+            localStorage.setItem("product", JSON.stringify(product));
+          }}
+        >
           <Link exact to="/Product">
             <SearchOutlined />
           </Link>

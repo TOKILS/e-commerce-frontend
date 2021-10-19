@@ -15,6 +15,7 @@ import superagent from "superagent";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import cookie from "react-cookies";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -138,19 +139,22 @@ const Product = (props) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
-  const item = useSelector((state) => state.product);
+  let produ = useSelector((state) => state.product);
+  const [item, setitem] = useState(JSON.parse(localStorage.getItem("product")));
   const context = useContext(AuthContext);
   console.log(item, "<=========");
+
+  useEffect(() => {
+    setitem(JSON.parse(localStorage.getItem("product")));
+    window.scrollTo(0, 0);
+    console.log(item);
+  }, [localStorage]);
+
   const [Color, setColor] = useState(item.color[0]);
   const [amount, setAmount] = useState(1);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const addToCart = () => {
     if (context.loggedIn) {
@@ -159,8 +163,8 @@ const Product = (props) => {
         .send({
           ProductID: item.id,
           UserID: context.user.id,
-          ColorID: item.color[0].id,
-          SizeID: item.color[0].size[0].id,
+          ColorID: Color.id,
+          SizeID: Color.size[0].id,
           Quantity: amount,
         })
         .set("Authorization", "Bearer " + context.token)

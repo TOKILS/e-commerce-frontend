@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/authentication";
 import { When } from "react-if";
-
+import Auth from "./login/auth";
 import superagent from "superagent";
 import { useSelector } from "react-redux";
 const Container = styled.div`
@@ -73,7 +73,6 @@ const Navbar = () => {
   const context = useContext(AuthContext);
   const [itemsInCart, setitemsInCart] = useState(0);
   useEffect(() => {
-    console.log(cart);
     if (context.loggedIn) {
       superagent
         .get(
@@ -109,14 +108,18 @@ const Navbar = () => {
               <Link to="/Login">SIGN IN</Link>
             </MenuItem>
           </When>
+          <Auth capability="delete">
+            <MenuItem>
+              <Link to="/dashboard">Dashboard</Link>
+            </MenuItem>
+          </Auth>
           <When condition={context.loggedIn}>
             <MenuItem>
               <Link to="/profile">Profile</Link>
             </MenuItem>
             <MenuItem>
               <Link to="/" onClick={context.logout}>
-                {" "}
-                Logout{" "}
+                Logout
               </Link>
             </MenuItem>
           </When>
