@@ -6,7 +6,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-around;
@@ -30,21 +30,22 @@ const ItemsHome = ({ p }) => {
   };
 
   return (
-    <Container>
-      <ProductCard handleClick={handleClick} product={p} type={true} />
-
-      <Stack spacing={2} sx={{ width: "100%" }}>
-        <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            Successfully Added
-          </Alert>
-        </Snackbar>
-      </Stack>
-    </Container>
+    // <>
+    //   <Container>
+    <ProductCard handleClick={handleClick} product={p} type={true} />
+    //   </Container>
+    //   <Stack>
+    //     <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+    //       <Alert
+    //         onClose={handleClose}
+    //         severity="success"
+    //         sx={{ width: "100%" }}
+    //       >
+    //         Successfully Added
+    //       </Alert>
+    //     </Snackbar>
+    //   </Stack>
+    // </>
   );
 };
 
