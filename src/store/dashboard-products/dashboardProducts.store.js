@@ -63,10 +63,12 @@ export const refreshTypes = () => async (dispatch) => {
         await dispatch(resetTypes());
         await types.forEach((type) => {
             let { id, CategoryID, Name, Description, createdAt, updatedAt } = type;
+            let CategoryIDName = CategoryID ==  1 ? "cat_BAGS" :  CategoryID ==  2 ? "cat_SHOES" : CategoryID == 3 ? "cat_SHIRT" : "cat_idk"
             dispatch(
                 addType({
                     id,
                     CategoryID,
+                    CategoryIDName,
                     Name,
                     Description,
                     createdAt,
@@ -82,18 +84,19 @@ export const refreshTypes = () => async (dispatch) => {
 };
 export const refreshProducts = () => async (dispatch) => {
     try {
-        // TODO: change to https://mid-project-01.herokuapp.com/api/v3/Products
-        const response = await superagent.get(`https://mid-project-01.herokuapp.com/api/v2/Product`);
+        const response = await superagent.get(`https://mid-project-01.herokuapp.com/api/v3/Products`);
         // console.log(`${process.env.BACKEND}/users`)
         // console.log("~ response.text", response.text);
         const products = response.body;
         await dispatch(resetProducts());
         await products.forEach((product) => {
-            let { id, TypeID, Name, Description, Price, Quantity, Discount, createdAt, updatedAt } = product;
+            let { id, TypeID, Name, Description, Price, Quantity, Discount, createdAt, updatedAt, color } = product;
+            let TypeIDName = TypeID ==  1 ? "type_BAGS" :  TypeID ==  2 ? "type_SHOES" : TypeID == 5 ? "type_SHIRT" : TypeID == 6 ? "type_Dogs" : "type_idk"
             dispatch(
                 addProduct({
                     id,
                     TypeID,
+                    TypeIDName,
                     Name,
                     Description,
                     Price,
@@ -101,6 +104,7 @@ export const refreshProducts = () => async (dispatch) => {
                     Discount,
                     createdAt,
                     updatedAt,
+                    color
                 })
             );
         });

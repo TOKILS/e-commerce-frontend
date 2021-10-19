@@ -18,7 +18,7 @@ const TypesTabs = ({ products, categoryTabItem, category, categoryIdx, types }) 
     }, [categoryTabItem]);
     return (
         <>
-            <div key={categoryIdx} role="tabpanel" className="dashboardTypesBar" hidden={categoryTabItem !== categoryIdx}>
+            <div style={{marginLeft: "1rem", marginRight:"1rem"}} key={categoryIdx} role="tabpanel" className="dashboardTypesBar" hidden={categoryTabItem !== categoryIdx}>
                 {categoryTabItem === categoryIdx && (
                     <>
                         <Button disabled style={{ backgroundColor: "#70e2e24f" }}></Button>
@@ -29,16 +29,21 @@ const TypesTabs = ({ products, categoryTabItem, category, categoryIdx, types }) 
                                 }
                             })}
                         </Tabs>
-                        <Button style={{ backgroundColor: "#70e2e24f" }}>
-                            <Add />
+                        <Button disabled style={{ backgroundColor: "#70e2e24f" }} style={{ backgroundColor: "#70e2e24f" }}>
+                            
                         </Button>
                     </>
                 )}
             </div>
 
             {types.map((type, typeIdx) => {
+                // console.log(`${category.Name} ${category.id} || ${type.CategoryIDName} ${type.CategoryID}`);
+                let checkPass = 0;
                 if (category.id === type.CategoryID) {
-                    return <ProductsCards categoryTabItem={categoryTabItem} products={products} type={type} typeIdx={typeIdx} typeTabItem={typeTabItem} />;
+                    console.log(`RAN - ${category.Name} ${category.id} || ${type.CategoryIDName} ${type.CategoryID}`);
+                    let oldCheckPass = checkPass;
+                    checkPass++;
+                    return <ProductsCards categoryTabItem={categoryTabItem} products={products} type={type} checkPass={oldCheckPass} typeTabItem={typeTabItem} />;
                 }
             })}
         </>

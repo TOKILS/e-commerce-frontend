@@ -24,6 +24,10 @@ const Products = (props) => {
         await handleTypesRefresh();
         await handleProductsRefresh();
         setCategoryTabItem(0);
+        console.log(`types vvv`);
+        console.dir(props.types);
+        console.log(`products vvv`);
+        console.dir(props.products);
     }, []);
 
     // general
@@ -47,6 +51,15 @@ const Products = (props) => {
         setCategoryTabItem(newValue);
         // await handleTypesRefresh();
     };
+    async function handleRefreshAll() {
+        await handleCategoryRefresh();
+        await handleTypesRefresh();
+        await handleProductsRefresh();
+        console.log(`types vvv`);
+        console.dir(props.types);
+        console.log(`products vvv`);
+        console.dir(props.products);
+    }
     async function handleCategoryRefresh() {
         setCategoryLoading(true);
         let errorCheck = await props.refreshCategories();
@@ -64,8 +77,6 @@ const Products = (props) => {
                 text: errorCheck.successMsg,
             });
         }
-        await handleTypesRefresh();
-        await handleProductsRefresh();
         setCategoryLoading(false);
     }
     // types section
@@ -110,7 +121,7 @@ const Products = (props) => {
             <div tabIndex="0" className="products">
                 <ThemeProvider theme={PrimaryTheme}>
                     <div className="dashboardCategoriesBar">
-                        <LoadingButton loading={categoryLoading} onClick={handleCategoryRefresh}>
+                        <LoadingButton loading={categoryLoading} onClick={handleRefreshAll}>
                             <Cached />
                         </LoadingButton>
                         <Tabs className="categoriesTabs" centered value={categoryTabItem} onChange={handleCategoryTabChange}>
@@ -118,8 +129,7 @@ const Products = (props) => {
                                 return <Tab key={category.id} style={categoryTabItem === idx ? { borderTopLeftRadius: "1rem", borderTopRightRadius: "1rem", backgroundColor: "#70e2e24f", transition: "0.3s" } : {}} label={category.Name} />;
                             })}
                         </Tabs>
-                        <Button>
-                            <Add />
+                        <Button disabled style={{ backgroundColor: "rgb(241, 241, 241)" }}>
                         </Button>
                     </div>
                     {props.categories.map((category, categoryIdx) => {
