@@ -1,44 +1,104 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# ![cf](https://i.imgur.com/7v5ASc8.png) Fashionable
 
-## Available Scripts
+## Made with 💙 by `TOKILS`
 
-In the project directory, you can run:
+- ⭐ **Tariq Abu-Laban**
+  👋 [See my linkedin](https://www.linkedin.com/in/tariq-abulaban-bb002b204/)
 
-### `npm start`
+- ⭐ **Omar Al-azaizah**
+  👋 [See my linkedin](https://www.linkedin.com/in/omar-alazaizeh-590015131/)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- ⭐ **Khaled Tahat**
+  👋 [See my linkedin](https://www.linkedin.com/in/khaled-z-tahat-1839211b2/)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- ⭐ **Ibrahim Sarayrah**
+  👋 [See my linkedin](https://www.linkedin.com/in/ibrahem-sarayrah-3a4277210/)
 
-### `npm test`
+- ⭐ **Laith Hayajneh**
+  👋 [See my linkedin](https://www.linkedin.com/in/laith-hayajneh/)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- ⭐ **Suhaib Ersan**
+  👋 [See my linkedin](https://www.linkedin.com/in/suhaib-ersan/)
 
-### `npm run build`
+## 💇🏻‍♂️ About the project
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The e-Commerce Fashionable Store introduce the basic operations and functionalities should be exists in an e-commerce aplication, we are looking forward to have a complete web app that meets all set of requierments and introducing the output expected.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+     Gives the customer the freedom to choose with the availability of so many multiple options and make the payment process more easy and more secure.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## ⭐ Website Link
 
-### `npm run eject`
+- [e-Commerce Fashionable Store](https://fashionable-store.netlify.app/)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 🚀 Technologies
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Technologies that I used to develop this web client
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- [ReactJS](https://reactjs.org/)
+- [React Router DOM](https://reacttraining.com/react-router/)
+- [Redux](https://redux.js.org/)
+- [Material UI](https://mui.com/)
+- [styled-components](https://styled-components.com/)
+- [NodeJS](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [ElephantSQL](https://editorconfig.org/)
+- [JSON Web Tokens (JWT) Authorization](https://jwt.io/)
+- [Cookies](https://www.npmjs.com/package/cookies)
+- [axios](https://www.npmjs.com/package/axios)
+- [superagent](https://www.npmjs.com/package/superagent)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 💻 Getting started
 
-## Learn More
+### Requirements
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Clone the project and access the folder**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+$ git clone git@github.com:TOKILS/e-commerce-frontend.git && cd e-commerce-frontend
+```
+
+**Follow the steps below**
+
+```bash
+# Install the dependencies
+$ npm i
+
+# Start the client
+$ npm start
+```
+
+## 🤔 How to contribute
+
+**Make a fork of this repository**
+
+```bash
+# Fork using GitHub official command line
+# If you don't have the GitHub CLI, use the web site to do that.
+
+$ gh repo fork TOKILS/e-commerce-frontend
+```
+
+**Follow the steps below**
+
+```bash
+# Clone your fork
+$ git clone your-fork-url && cd e-commerce-frontend
+
+# Create a branch with your feature
+$ git checkout -b my-feature
+
+# Make the commit with your changes
+$ git commit -m 'feat: My new feature'
+
+# Send the code to your remote branch
+$ git push origin my-feature
+```
+
+After your pull request is merged, you can delete your branch
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
