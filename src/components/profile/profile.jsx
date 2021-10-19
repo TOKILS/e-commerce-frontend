@@ -23,6 +23,8 @@ import { DeleteIcon } from "@mui/icons-material/Delete";
 import WishList from "./WishList";
 import User from "./user";
 import Order from "./order";
+import Footer from "../Footer";
+import Announcement from "../Announcement";
 
 export default function Profile() {
   const context = useContext(AuthContext);
@@ -71,6 +73,7 @@ export default function Profile() {
       />
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
       <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>{" "}
+      <Announcement />
       <Navbar />
       {/* 
       <Stack direction="row" spacing={2}>
@@ -171,6 +174,7 @@ export default function Profile() {
           </section>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

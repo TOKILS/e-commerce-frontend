@@ -30,22 +30,22 @@ const ItemsHome = ({ p }) => {
   };
 
   return (
-    // <>
-    //   <Container>
-    <ProductCard handleClick={handleClick} product={p} type={true} />
-    //   </Container>
-    //   <Stack>
-    //     <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
-    //       <Alert
-    //         onClose={handleClose}
-    //         severity="success"
-    //         sx={{ width: "100%" }}
-    //       >
-    //         Successfully Added
-    //       </Alert>
-    //     </Snackbar>
-    //   </Stack>
-    // </>
+    <>
+
+      <ProductCard handleClick={handleClick} product={p} type={true} />
+
+      <Stack>
+        <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Successfully Added
+          </Alert>
+        </Snackbar>
+      </Stack>
+    </>
   );
 };
 
