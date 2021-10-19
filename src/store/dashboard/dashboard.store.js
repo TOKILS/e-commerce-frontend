@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import superagent from "superagent";
 
 const dashboardSlice = createSlice({
+
     name: "dashboard",
     initialState: {
         users: [],
         support: {},
+
     },
 
     reducers: {
@@ -92,6 +94,7 @@ export const updateUser = (user) => async (dispatch) => {
         console.log("response vvvv");
         console.log(response);
 
+
         // updating redux store section
         let data = response.body;
         let newUser = {
@@ -114,6 +117,7 @@ export const updateUser = (user) => async (dispatch) => {
         console.error(err.message);
         return { error: err };
     }
+
 };
 export const DeleteUser = (token) => async (dispatch) => {
     try {

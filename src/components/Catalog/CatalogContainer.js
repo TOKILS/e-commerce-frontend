@@ -9,6 +9,7 @@ import {
     getProductsByCategory
 } from "../../controllers/categories";
 
+
 const CatalogContainer = ({ value }) => {
     const [products, setProducts] = useState();
     const [productsFilter, setProductsFilter] = useState();
