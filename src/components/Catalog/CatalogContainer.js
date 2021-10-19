@@ -17,17 +17,17 @@ const CatalogContainer = ({ value }) => {
 
     useEffect(() => {
         if (value) {
-            getProductsByCategory(value)
+            getProducts()
                 .then(productsRes => {
-                    console.log('searchhhhhhhhhhhhh',productsRes);
+                    console.log('searchhhhhhhhhhhhh', productsRes);
                     setProducts(productsRes);
-                    setProductsFilter(productsRes)
+                    setProductsFilter(productsRes.filter(p => p.TypeID == value));
                 })
                 .catch((err) => console.log(err.message));
         } else {
             getProducts()
                 .then(productsRes => {
-                    console.log(productsRes);
+                    console.log('prooooooooooooooooooooooooooooo', productsRes);
                     setProducts(productsRes);
                     setProductsFilter(productsRes)
                 })
@@ -36,7 +36,6 @@ const CatalogContainer = ({ value }) => {
 
         getCategories()
             .then((data) => {
-                console.log(data);
                 setCategories(data);
             })
             .catch((err) => console.log(err.message));
@@ -44,9 +43,9 @@ const CatalogContainer = ({ value }) => {
     }, [value]);
 
     const handleFilter = event => {
-               event.target.value === 'All' ? setProductsFilter(products) : setProductsFilter(products.filter(p => p.TypeID == event.target.value))
+        event.target.value === 'All' ? setProductsFilter(products) : setProductsFilter(products.filter(p => p.TypeID == event.target.value))
     }
-//p.find(c => c.TypeID === event.target.value
+    //p.find(c => c.TypeID === event.target.value
     return (
         <>
             <Catalog productsFilter={productsFilter} handleFilter={handleFilter} categories={categories} />

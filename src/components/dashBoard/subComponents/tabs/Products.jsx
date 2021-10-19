@@ -9,6 +9,9 @@ import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { ExitToApp, Add, Cached } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
+// components
+import TypesTabs from "./TypesTabs";
+
 // redux
 import { connect } from "react-redux";
 import { handleSnackBar } from "../../../../store/snackbar/snackbar.store";
@@ -21,6 +24,10 @@ const Products = (props) => {
         await handleTypesRefresh();
         await handleProductsRefresh();
         setCategoryTabItem(0);
+        console.log(`types vvv`);
+        console.dir(props.types);
+        console.log(`products vvv`);
+        console.dir(props.products);
     }, []);
 
     // general
@@ -44,6 +51,15 @@ const Products = (props) => {
         setCategoryTabItem(newValue);
         // await handleTypesRefresh();
     };
+    async function handleRefreshAll() {
+        await handleCategoryRefresh();
+        await handleTypesRefresh();
+        await handleProductsRefresh();
+        console.log(`types vvv`);
+        console.dir(props.types);
+        console.log(`products vvv`);
+        console.dir(props.products);
+    }
     async function handleCategoryRefresh() {
         setCategoryLoading(true);
         let errorCheck = await props.refreshCategories();
@@ -61,18 +77,9 @@ const Products = (props) => {
                 text: errorCheck.successMsg,
             });
         }
-        await handleTypesRefresh();
-        await handleProductsRefresh();
         setCategoryLoading(false);
     }
-
-    // type section
-    const [typeTabItem, setTypeTabItem] = useState(false);
-    function handleTypeTabChange(e, newValue) {
-        console.log("~ newValue", newValue);
-
-        setTypeTabItem(newValue);
-    }
+    // types section
     async function handleTypesRefresh() {
         let errorCheck = await props.refreshTypes();
         if (errorCheck?.error) {
@@ -114,7 +121,7 @@ const Products = (props) => {
             <div tabIndex="0" className="products">
                 <ThemeProvider theme={PrimaryTheme}>
                     <div className="dashboardCategoriesBar">
-                        <LoadingButton loading={categoryLoading} onClick={handleCategoryRefresh}>
+                        <LoadingButton loading={categoryLoading} onClick={handleRefreshAll}>
                             <Cached />
                         </LoadingButton>
                         <Tabs className="categoriesTabs" centered value={categoryTabItem} onChange={handleCategoryTabChange}>
@@ -122,66 +129,11 @@ const Products = (props) => {
                                 return <Tab key={category.id} style={categoryTabItem === idx ? { borderTopLeftRadius: "1rem", borderTopRightRadius: "1rem", backgroundColor: "#70e2e24f", transition: "0.3s" } : {}} label={category.Name} />;
                             })}
                         </Tabs>
-                        <Button>
-                            <Add />
+                        <Button disabled style={{ backgroundColor: "rgb(241, 241, 241)" }}>
                         </Button>
                     </div>
                     {props.categories.map((category, categoryIdx) => {
-                        return (
-                            <div key={categoryIdx} role="tabpanel" className="dashboardTypesBar" hidden={categoryTabItem !== categoryIdx}>
-                                {categoryTabItem === categoryIdx && (
-                                    <>
-                                        <Button disabled style={{ backgroundColor: "#70e2e24f" }}></Button>
-                                        <Tabs centered value={typeTabItem} onChange={handleTypeTabChange}>
-                                            {props.types.map((type, typeIdx) => {
-                                                if (category.id === type.CategoryID) {
-                                                    return <Tab key={typeIdx} label={type.Name} />;
-                                                }
-                                            })}
-                                        </Tabs>
-                                        <Button style={{ backgroundColor: "#70e2e24f" }}>
-                                            <Add />
-                                        </Button>
-                                    </>
-                                )}
-                            </div>
-                        );
-                    })}
-                    {props.types.map((type, typeIdx) => {
-                        return (
-                            <div role="tabpanel" className="dashboardProductsTab" hidden={typeTabItem !== typeIdx}>
-                                {typeTabItem === typeIdx && (
-                                    <Box m={2} sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "1rem" }}>
-                                        {props.products.map((product, productIdx) => {
-                                            return (
-                                                <Card key={productIdx} sx={{ minHeight: "10rem", backgroundColor: "rgb(241, 241, 241)", borderRadius: "1rem" }}>
-                                                    {/* <CardMedia component="img" height="140" image="https://i.imgur.com/tJJ55WXh.jpg" alt="fire-dragon" /> */}
-                                                    <CardContent>
-                                                        <Typography sx={{ display: "flex", justifyContent: "space-between" }} gutterBottom variant="h5" component="div">
-                                                            {product.Name}
-                                                            {product.Price}
-                                                        </Typography>
-                                                        <Typography variant="body2" color="text.secondary">
-                                                            {product.Description}
-                                                        </Typography>
-                                                        <Typography variant="body2" color="text.secondary">
-                                                            {product.Quantity} item in storage
-                                                        </Typography>
-                                                    </CardContent>
-                                                    {/* <CardActions>
-                                                    <Button size="small">Share</Button>
-                                                    <Button size="small">Learn More</Button>
-                                                </CardActions> */}
-                                                </Card>
-                                            );
-                                        })}
-                                        <Button sx={{ minHeight: "10rem", backgroundColor: "rgb(241, 241, 241)", borderRadius: "1rem", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                            <Add sx={{ transform: "scale(2)" }} />
-                                        </Button>
-                                    </Box>
-                                )}
-                            </div>
-                        );
+                        return <TypesTabs products={props.products} categoryTabItem={categoryTabItem} category={category} categoryIdx={categoryIdx} types={props.types} />;
                     })}
                 </ThemeProvider>
             </div>

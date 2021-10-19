@@ -25,6 +25,7 @@ import User from "./user";
 import Order from "./order";
 import Footer from "../Footer";
 import Announcement from "../Announcement";
+import Message from "./message";
 
 export default function Profile() {
   const context = useContext(AuthContext);
@@ -142,7 +143,7 @@ export default function Profile() {
 
                     {/* <li onClick={() => setActiveSection(null)} ><a href="#"><span class="fa fa-credit-card"></span> Billing</a></li> */}
 
-                    <li onClick={() => setActiveSection(null)}>
+                    <li onClick={() => setActiveSection(<Message/>)}>
                       <a href="#">
                         <span class="fa fa-envelope"></span> Messages
                       </a>
@@ -158,6 +159,7 @@ export default function Profile() {
                   <div class="wrapper">
                     <div id="wishlist-king" class="wk-row">
                       {activeSection}
+                      
                     </div>
                   </div>
                 </div>

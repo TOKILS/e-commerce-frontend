@@ -27,9 +27,16 @@ const App = (props) => {
           <Route exact path="/Product">
             <Product />
           </Route>
-          <Route exact path="/products">
-            <Catalog name={""} />
-          </Route>
+          <Route
+            path="/products"
+            render={(props) => {
+              return <Catalog value={props.location.value} />;
+            }}
+          />
+
+          {/* <Route exact path="/products">
+            <Catalog />
+          </Route> */}
 
           <Route exact path="/Login">
             <Login />
