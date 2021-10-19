@@ -258,7 +258,7 @@ function ShippongInfo() {
                     });
                   }}
                   type="tel"
-                  pattern='[0-9]{5}'
+                  pattern="[0-9]{5}"
                   name="postalCode"
                   required
                 />
@@ -314,7 +314,7 @@ function ShippongInfo() {
                     });
                   }}
                   type="tel"
-                  pattern="[0-9]{3}-[0-9]{7}"
+                  maxLength="9"
                   name="shippingPhone"
                   required
                 />

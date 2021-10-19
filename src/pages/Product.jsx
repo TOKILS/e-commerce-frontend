@@ -176,78 +176,80 @@ const Product = (props) => {
   };
 
   return (
-    <Container>
+    <>
       <Navbar />
-      <Announcement />
-      <Wrapper>
-        <ImgContainer>
-          <Image src={Color.image[0].Image} />
-        </ImgContainer>
-        <InfoContainer>
-          <Title>{item.Name}</Title>
-          <Desc>{item.Description}</Desc>
-          <Price>$ {item.Price}</Price>
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>Color</FilterTitle>
-              {item.color.map((color) => {
-                return (
-                  <FilterColor
-                    color={`${color.Code}`}
-                    onClick={() => setColor(color)}
-                  />
-                );
-              })}
-            </Filter>
-            <Filter>
-              <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                {Color.size.map((size) => {
-                  return <FilterSizeOption>{size.Size}</FilterSizeOption>;
+      <Container>
+        <Announcement />
+        <Wrapper>
+          <ImgContainer>
+            <Image src={Color.image[0].Image} />
+          </ImgContainer>
+          <InfoContainer>
+            <Title>{item.Name}</Title>
+            <Desc>{item.Description}</Desc>
+            <Price>$ {item.Price}</Price>
+            <FilterContainer>
+              <Filter>
+                <FilterTitle>Color</FilterTitle>
+                {item.color.map((color) => {
+                  return (
+                    <FilterColor
+                      color={`${color.Code}`}
+                      onClick={() => setColor(color)}
+                    />
+                  );
                 })}
-              </FilterSize>
-            </Filter>
-          </FilterContainer>
-          <AddContainer>
-            <AmountContainer>
-              <Remove
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  if (amount > 1) {
-                    setAmount(amount - 1);
-                  }
-                }}
-              />
-              <Amount>{amount}</Amount>
-              <Add
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  if (amount < 10) {
-                    setAmount(amount + 1);
-                  }
-                }}
-              />
-            </AmountContainer>
-            <Button onClick={addToCart}>ADD TO CART</Button>
-          </AddContainer>
-        </InfoContainer>
-      </Wrapper>
-      {/* <Newsletter /> */}
-      <Stack spacing={2} sx={{ width: "100%" }}>
-        <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            Successfully Added {amount < 2 ? "One Item" : amount + " items"} to
-            Cart
-          </Alert>
-        </Snackbar>
-      </Stack>
-      <Reviews />
-      <Footer />
-    </Container>
+              </Filter>
+              <Filter>
+                <FilterTitle>Size</FilterTitle>
+                <FilterSize>
+                  {Color.size.map((size) => {
+                    return <FilterSizeOption>{size.Size}</FilterSizeOption>;
+                  })}
+                </FilterSize>
+              </Filter>
+            </FilterContainer>
+            <AddContainer>
+              <AmountContainer>
+                <Remove
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    if (amount > 1) {
+                      setAmount(amount - 1);
+                    }
+                  }}
+                />
+                <Amount>{amount}</Amount>
+                <Add
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    if (amount < 10) {
+                      setAmount(amount + 1);
+                    }
+                  }}
+                />
+              </AmountContainer>
+              <Button onClick={addToCart}>ADD TO CART</Button>
+            </AddContainer>
+          </InfoContainer>
+        </Wrapper>
+        {/* <Newsletter /> */}
+        <Stack spacing={2} sx={{ width: "100%" }}>
+          <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              Successfully Added {amount < 2 ? "One Item" : amount + " items"}{" "}
+              to Cart
+            </Alert>
+          </Snackbar>
+        </Stack>
+        <Reviews />
+        <Footer />
+      </Container>
+    </>
   );
 };
 
