@@ -8,7 +8,7 @@ import { BrowserRouter as Routerer, Switch, Route } from "react-router-dom";
 import Checkout from "./pages/Checkout";
 import AuthProvider from "./context/authentication";
 import "./App.css";
-
+import Profile from './components/profile/profile'
 import Catalog from "./components/Catalog/CatalogContainer";
 
 const App = () => {
@@ -40,6 +40,9 @@ const App = () => {
           </Route>
           <Route exact path="/checkout">
             <Checkout />
+          </Route>
+          <Route exact path="/profile">
+            <Profile/>
           </Route>
         </Switch>
         {/* </IsLoadingAndError> */}
