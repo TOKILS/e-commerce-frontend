@@ -1,0 +1,263 @@
+// for dashboard.jsx
+$almostWhite: rgb(241, 241, 241);
+$normalShadow: 0 2px 5px rgba(0, 0, 0, 0.247);
+$normalPadding: 1rem;
+
+::selection {
+    background-color: rgb(5, 209, 209);
+    color: white;
+}
+
+.dashBoard_shadow {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 100vh;
+    width: 100%;
+    background-color: transparent;
+    padding: 1rem;
+    box-sizing: border-box;
+
+    .dashBoard {
+        display: grid;
+        grid-template-columns: 1fr 10fr;
+        height: 100%;
+        // gap: 1rem;
+
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.425);
+
+        overflow: hidden;
+
+        $radius: 2rem;
+        border-radius: $radius;
+
+        > * {
+            padding: 2rem 1rem;
+        }
+        .dashBoard_sideBar {
+            // background: linear-gradient(196deg, rgba(255, 33, 100, 0.637) 0%, rgba(165, 69, 255, 0.226) 36%, rgba(235, 72, 91, 0) 90%);
+            background: linear-gradient(196deg, rgb(33, 223, 223) 0%, rgb(15, 190, 175)  36%, rgb(0, 167, 144)   90%);
+            // background-color: rgba(124, 21, 209, 0.76);
+            background-color: #de9e48;
+            border-top-left-radius: $radius;
+            border-bottom-left-radius: $radius;
+
+            color: rgba(255, 255, 255, 0.863);
+            font-weight: 600;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .dashBoard_logo {
+                margin-bottom: 1rem;
+                text-align: center;
+                > span {
+                    // background-image: linear-gradient(90deg, rgb(255, 255, 255), rgb(255, 186, 82));
+                    // background-clip: text;
+                    color: white;
+                    font-size: large;
+                    font-weight: 800;
+                }
+            }
+            > :nth-child(2) {
+                // hr element
+                border: none;
+                background-color: rgba(255, 255, 255, 0.336);
+                height: 4px;
+                width: 40%;
+
+                border-radius: 1rem;
+            }
+            > :nth-child(3) {
+                margin-top: 1rem;
+            }
+            .backToHomeBtn {
+                align-self: center;
+                margin-top: auto;
+                svg {
+                    transform: scale(-1.2, 1.2);
+                }
+            }
+        }
+        .dashBoard_main {
+            background-color: $almostWhite;
+            border-top-right-radius: $radius;
+            border-bottom-right-radius: $radius;
+
+            overflow: auto;
+            overflow: overlay;
+
+            max-height: 100%;
+
+            &::-webkit-scrollbar {
+                width: 0px;
+                background: transparent;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: transparent !important;
+                width: 0px;
+            }
+            &::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            > * {
+                > div {
+                    // all divs inside each tab
+                    background-color: $almostWhite;
+                    box-shadow: $normalShadow;
+                    border-radius: $radius;
+                    padding: $normalPadding;
+                    box-sizing: content-box;
+
+                    transition: 0.1s;
+
+                    margin-bottom: 1rem;
+
+                    min-width: min-content;
+
+                    &:focus-within {
+                        outline: #00bebe solid;
+                        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.445);
+                    }
+                }
+            }
+            // home tab
+            .homeWelcome {
+                background-image: url("../../assets/rocket_1.png");
+                background-repeat: no-repeat;
+                background-position: 95% -40%;
+                background-size: 200px;
+                // border-radius: $radius;
+                // padding: $normalPadding;
+
+                height: 200px;
+                font-size: 29px;
+                font-weight: 600;
+                text-align: center;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                > span {
+                    background-color: rgba($almostWhite, 0.7);
+                    padding: 1rem;
+                    border-radius: $radius;
+                }
+            }
+            // users tab
+            .allUsers {
+                position: relative;
+                .Btns {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1.5rem;
+
+                    display: flex;
+                    gap: 1rem;
+                }
+            }
+            .products {
+                min-height: 20rem;
+                // .customCard {
+                //     padding: $normalPadding;
+                //     background-color: $almostWhite;
+                //     box-shadow: $normalShadow;
+
+                //     max-width: 15rem;
+                // }
+                .dashboardCategoriesBar{
+                    display: flex;
+                    justify-content: center;
+                    gap: 1rem;
+                }
+                .dashboardTypesBar {
+                    display: flex;
+                    justify-content: center;
+                    // gap: 1rem;
+                    
+                    
+                        & > :first-child {
+                            border-top-right-radius: 0rem;
+                            border-bottom-right-radius: 0rem;
+                            border-bottom-left-radius: 1rem;
+                            border-top-left-radius: 1rem;
+                        }
+                        & > :nth-child(2) {
+                            flex-grow: 2;
+                            background-color: #70e2e24f;
+                        }
+                        & > :last-child {
+                            border-top-right-radius: 1rem;
+                            border-bottom-right-radius: 1rem;
+                            border-bottom-left-radius: 0rem;
+                            border-top-left-radius: 0rem;
+                        }
+                        
+
+                }
+            }
+        }
+        .dashboardUsersEmpty {
+            background-image: url("../../assets/chairs.png");
+            background-repeat: no-repeat;
+            background-position: 95% 100%;
+            background-size: 600px;
+            // border-radius: $radius;
+            // padding: $normalPadding;
+
+            height: 200px;
+            font-size: 29px;
+            font-weight: 600;
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .dashboardUsersEmpty_text {
+                background-color: rgba($almostWhite, 0.7);
+                padding: 1rem;
+                border-radius: $radius;
+            }
+            .dashboardUsersEmpty_arrow {
+                @keyframes slide1 {
+                    0% {
+                        transform: translate(0, 0);
+                    }
+
+                    20% {
+                        transform: translate(10px, 0);
+                    }
+                    30% {
+                        transform: translate(8px, 0);
+                    }
+                    50% {
+                        transform: translate(10px, 0);
+                    }
+                    100% {
+                        transform: translate(0%, 0);
+                    }
+                }
+                position: absolute;
+                top: 0.8rem;
+                right: 5rem;
+                color: rgb(0, 190, 190);
+                animation: slide1 1s ease-in-out infinite;
+            }
+
+            // products tab
+
+            // support tab
+        }
+    }
+}
+// for the header
+.headerDashboard {
+    > a {
+        background-image: linear-gradient(90deg, rgb(36, 131, 209), rgb(219, 37, 180));
+        background-clip: text;
+        color: transparent !important;
+        font-weight: 600;
+    }
+}
