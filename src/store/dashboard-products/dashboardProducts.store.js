@@ -63,7 +63,7 @@ export const refreshTypes = () => async (dispatch) => {
         await dispatch(resetTypes());
         await types.forEach((type) => {
             let { id, CategoryID, Name, Description, createdAt, updatedAt } = type;
-            let CategoryIDName = CategoryID ==  1 ? "cat_BAGS" :  CategoryID ==  2 ? "cat_SHOES" : CategoryID == 3 ? "cat_SHIRT" : "cat_idk"
+            let CategoryIDName = CategoryID == 1 ? "cat_BAGS" : CategoryID == 2 ? "cat_SHOES" : CategoryID == 3 ? "cat_SHIRT" : "cat_idk";
             dispatch(
                 addType({
                     id,
@@ -91,7 +91,7 @@ export const refreshProducts = () => async (dispatch) => {
         await dispatch(resetProducts());
         await products.forEach((product) => {
             let { id, TypeID, Name, Description, Price, Quantity, Discount, createdAt, updatedAt, color } = product;
-            let TypeIDName = TypeID ==  1 ? "type_BAGS" :  TypeID ==  2 ? "type_SHOES" : TypeID == 5 ? "type_SHIRT" : TypeID == 6 ? "type_Dogs" : "type_idk"
+            let TypeIDName = TypeID == 1 ? "type_BAGS" : TypeID == 2 ? "type_SHOES" : TypeID == 5 ? "type_SHIRT" : TypeID == 6 ? "type_Dogs" : "type_idk";
             dispatch(
                 addProduct({
                     id,
@@ -104,11 +104,101 @@ export const refreshProducts = () => async (dispatch) => {
                     Discount,
                     createdAt,
                     updatedAt,
-                    color
+                    color,
                 })
             );
         });
         return { successMsg: `Products list updated` };
+    } catch (err) {
+        console.error(err.message);
+        return { error: err };
+    }
+};
+export const addProductToBackend = (productObj, colorObj, sizeObj, imageObj) => async (dispatch) => {
+    try {
+        console.log("addProductToBackend RAN");
+        let authToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlicmFoZW0iLCJjYXBhYmlsaXRpZXMiOlsicmVhZCIsImNyZWF0ZSIsInVwZGF0ZSIsImRlbGV0ZSJdLCJpYXQiOjE2MzExODMwNDJ9.t1ar77ATPUdvgu41ZhY3F5DWWx-3Z1917GFad__qin8`;
+
+        // add product
+        const productResponse = await superagent
+            .post(`https://mid-project-01.herokuapp.com/api/v2/Product`)
+            .set("Authorization", "Bearer " + authToken)
+            .send(productObj);
+        console.log("~ productResponse.body", productResponse.body);
+        const backProductId = productResponse.body.id;
+
+        // add color
+        let newColorObj = { ...colorObj, ProductID: backProductId };
+        const colorResponse = await superagent
+            .post(`https://mid-project-01.herokuapp.com/api/v2/Color`)
+            .set("Authorization", "Bearer " + authToken)
+            .send(newColorObj);
+        console.log("~ colorResponse.body", colorResponse.body);
+        const backColorId = colorResponse.body.id;
+
+        // add size
+        let newSizeObj = { ...sizeObj, ColorID: backColorId };
+        const sizeResponse = await superagent
+            .post(`https://mid-project-01.herokuapp.com/api/v2/Size`)
+            .set("Authorization", "Bearer " + authToken)
+            .send(newSizeObj);
+        console.log("~ sizeResponse.body", sizeResponse);
+
+        // add image
+        let newImageObj = { ...imageObj, ColorID: backColorId };
+        const imageResponse = await superagent
+            .post(`https://mid-project-01.herokuapp.com/api/v2/Image`)
+            .set("Authorization", "Bearer " + authToken)
+            .send(newImageObj);
+        console.log("~ imageResponse.body", imageResponse);
+
+        let imageResponseBody = imageResponse.body;
+
+        // let colorObjToAdd = [
+        //     {
+        //         id:imageResponseBody.id,
+        //         ProductID: imageResponseBody.ProductID,
+        //         Name: imageResponseBody.Name,
+        //         Code: imageResponseBody.Code,
+        //         Image: imageResponseBody.Image,
+        //         createdAt: imageResponseBody.createAt,
+        //         updatedAt: updatedAt,
+        //         image: [
+        //             {
+        //                 id: 11,
+        //                 ColorID: 9,
+        //                 Image: "https://cdn.shopify.com/s/files/1/1136/2606/products/ABLE21-FALL-074_2048x2048.jpg?v=1628528064",
+        //                 createdAt: "2021-10-18T21:58:58.526Z",
+        //                 updatedAt: "2021-10-18T21:58:58.526Z",
+        //             },
+        //         ],
+        //         size: [
+        //             {
+        //                 id: 9,
+        //                 ColorID: 9,
+        //                 Size: "NA",
+        //                 createdAt: "2021-10-18T21:58:40.769Z",
+        //                 updatedAt: "2021-10-18T21:58:40.769Z",
+        //             },
+        //         ],
+        //     },
+        // ];
+
+        // let productToAddToRedux = {
+        //     id,
+        //     TypeID,
+        //     TypeIDName,
+        //     Name,
+        //     Description,
+        //     Price,
+        //     Quantity,
+        //     Discount,
+        //     createdAt,
+        //     updatedAt,
+        //     color,
+        // };
+
+        return { successMsg: `Added product successfully` };
     } catch (err) {
         console.error(err.message);
         return { error: err };
