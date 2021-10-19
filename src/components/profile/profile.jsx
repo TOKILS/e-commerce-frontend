@@ -25,10 +25,11 @@ import User from "./user";
 import Order from "./order";
 import Footer from "../Footer";
 import Announcement from "../Announcement";
+import Message from "./message";
 
 export default function Profile() {
   const context = useContext(AuthContext);
-  const [wish, setWish] = useState([]);
+
   const [user, setUser] = useState([]);
   const dispatch = useDispatch();
   const [activeSection, setActiveSection] = useState(null);
@@ -43,16 +44,14 @@ export default function Profile() {
     // my id is 15
 
     if (context.loggedIn) {
-      superagent
-        .get(
-          `https://mid-project-01.herokuapp.com/api/v3/wishlistProducts/${context.user.id}`
-        )
-        .then((res) => setWish(res.body));
       // let userData = superagent
       //   .get()
       superagent
         .get(`https://mid-project-01.herokuapp.com/userinfo/${context.user.id}`)
-        .then((response) => setUserData(response));
+        .then((response) => {
+          setUserData(response.body);
+          setActiveSection(<User user={response.body} />);
+        });
     }
   }, [context.loggedIn]);
 
@@ -96,13 +95,13 @@ export default function Profile() {
                   />
                   <ul class="meta list list-unstyled">
                     <li class="name">
-                      "userData.name"
+                      {userData.firstname + " " + userData.lastname}
                       <label class="label label-info">
                         {context.user.role}
                       </label>
                     </li>
-                    {/* <li class="email"><a href="#">Email : {userData.body.email}</a></li> */}
-                    {/* <li class="activity">Last updatedAt: {userData.body.updatedAt}</li> */}
+                    {/* <li class="email"><a href="#">Email : {userData.email}</a></li> */}
+                    {/* <li class="activity">Last updatedAt: {userData.updatedAt}</li> */}
                   </ul>
                 </div>
                 <nav class="side-menu">
@@ -121,6 +120,7 @@ export default function Profile() {
                     }}
                   >
                     <li
+                      class="active"
                       onClick={() => setActiveSection(<User user={userData} />)}
                     >
                       <a href="#">
@@ -128,14 +128,7 @@ export default function Profile() {
                       </a>
                     </li>
 
-                    <li
-                      onClick={() =>
-                        setActiveSection(
-                          <WishList wish={wish} setWish={setWish} />
-                        )
-                      }
-                      class="active"
-                    >
+                    <li onClick={() => setActiveSection(<WishList />)}>
                       <a href="#wish">
                         <span class="fa fa-heart"></span> My Wishlist
                       </a>
@@ -150,7 +143,7 @@ export default function Profile() {
 
                     {/* <li onClick={() => setActiveSection(null)} ><a href="#"><span class="fa fa-credit-card"></span> Billing</a></li> */}
 
-                    <li onClick={() => setActiveSection(null)}>
+                    <li onClick={() => setActiveSection(<Message/>)}>
                       <a href="#">
                         <span class="fa fa-envelope"></span> Messages
                       </a>
@@ -166,6 +159,7 @@ export default function Profile() {
                   <div class="wrapper">
                     <div id="wishlist-king" class="wk-row">
                       {activeSection}
+                      
                     </div>
                   </div>
                 </div>

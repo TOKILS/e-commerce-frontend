@@ -48,7 +48,12 @@ const CategoryItem = ({ item }) => {
       <Image src={item.Image} />
       <Info>
         <Title>{item.Name}</Title>
-        <Link to="/products">
+        <Link
+          to={{
+            pathname: "/products",
+            value: item.id,
+          }}
+        >
           <Button>SHOP NOW</Button>
         </Link>
       </Info>

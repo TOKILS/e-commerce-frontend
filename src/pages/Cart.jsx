@@ -169,6 +169,7 @@ const Cart = () => {
     totalItems: 0,
   });
   const [cartItems, setCartItems] = useState([]);
+  const [isEmpty, setisEmpty] = useState(true);
   const context = useContext(AuthContext);
 
   const UpdateItems = () => {
