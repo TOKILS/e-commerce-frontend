@@ -40,7 +40,7 @@ const TypesTabs = ({ products, categoryTabItem, category, categoryIdx, types }) 
                 // console.log(`${category.Name} ${category.id} || ${type.CategoryIDName} ${type.CategoryID}`);
                 let checkPass = 0;
                 if (category.id === type.CategoryID) {
-                    console.log(`RAN - ${category.Name} ${category.id} || ${type.CategoryIDName} ${type.CategoryID}`);
+                    // console.log(`RAN - ${category.Name} ${category.id} || ${type.CategoryIDName} ${type.CategoryID}`);
                     let oldCheckPass = checkPass;
                     checkPass++;
                     return <ProductsCards categoryTabItem={categoryTabItem} products={products} type={type} checkPass={oldCheckPass} typeTabItem={typeTabItem} />;
