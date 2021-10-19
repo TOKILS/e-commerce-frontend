@@ -82,6 +82,7 @@ export const refreshTypes = () => async (dispatch) => {
 };
 export const refreshProducts = () => async (dispatch) => {
     try {
+        // TODO: change to https://mid-project-01.herokuapp.com/api/v3/Products
         const response = await superagent.get(`https://mid-project-01.herokuapp.com/api/v2/Product`);
         // console.log(`${process.env.BACKEND}/users`)
         // console.log("~ response.text", response.text);
