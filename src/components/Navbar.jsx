@@ -115,6 +115,9 @@ const Navbar = () => {
           </Auth>
           <When condition={context.loggedIn}>
             <MenuItem>
+              <Link to="/profile">Profile</Link>
+            </MenuItem>
+            <MenuItem>
               <Link to="/" onClick={context.logout}>
                 Logout
               </Link>

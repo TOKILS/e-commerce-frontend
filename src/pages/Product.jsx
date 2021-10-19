@@ -139,7 +139,6 @@ const Product = (props) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
   let produ = useSelector((state) => state.product);

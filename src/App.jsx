@@ -6,33 +6,31 @@ import Login from "./pages/Login";
 import { BrowserRouter as Routerer, Switch, Route } from "react-router-dom";
 import AuthProvider from "./context/authentication";
 import "./App.css";
+import Profile from "./components/profile/profile";
 import Dashboard from "./components/dashBoard/Dashboard";
 import Catalog from "./components/Catalog/CatalogContainer";
 import AboutUs from "./components/AboutUs/AboutUsContainer";
 import ShippongInfo from "./pages/checkout/ShippingInfo";
 import BillingInfo from "./pages/checkout/BillingInfo";
 
-
 // styled components
 
-
 const App = (props) => {
-    return (
-        <AuthProvider>
-            <Routerer>
-                {/* <IsLoadingAndError> */}
-                <Switch>
-                    <Route exact path="/">
-                        <Home />
-                    </Route>
-                    <Route exact path="/Product">
-                        <Product />
-                    </Route>
-                    <Route exact path="/products">
-                        <Catalog name={""} />
-                    </Route>
+  return (
+    <AuthProvider>
+      <Routerer>
+        {/* <IsLoadingAndError> */}
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/Product">
+            <Product />
+          </Route>
+          <Route exact path="/products">
+            <Catalog name={""} />
+          </Route>
 
-  
           <Route exact path="/Login">
             <Login />
           </Route>
@@ -54,12 +52,14 @@ const App = (props) => {
           <Route exact path="/about-us">
             <AboutUs />
           </Route>
+          <Route exact path="/profile">
+            <Profile />
+          </Route>
         </Switch>
         {/* </IsLoadingAndError> */}
       </Routerer>
     </AuthProvider>
   );
-
 };
 
 export default App;

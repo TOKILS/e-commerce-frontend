@@ -12,7 +12,6 @@ import { Provider } from 'react-redux';
 import reducers from "./store/index";
 import * as serviceWorker from './serviceWorker';
 
-
 const store = createStore(
   reducers,
   composeWithDevTools(applyMiddleware(thunk))
