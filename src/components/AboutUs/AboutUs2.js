@@ -17,9 +17,9 @@ const AboutUs = () => {
 							<h4 class="title">TOKILS Member</h4>
 						</div>
 						<ul class="social">
-							<li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-github" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+							<li><a href="https://www.facebook.com/khaled.tahat.31/" class="fa fa-facebook" aria-hidden="true"></a></li>
+							<li><a href="https://github.com/KZTahat" class="fa fa-github" aria-hidden="true"></a></li>
+							<li><a href="https://www.linkedin.com/in/khaled-z-tahat-1839211b2/" class="fa fa-linkedin" aria-hidden="true"></a></li>
 						</ul>
 					</div>
 				</div>
@@ -35,9 +35,9 @@ const AboutUs = () => {
 							<h4 class="title">TOKILS Member</h4>
 						</div>
 						<ul class="social">
-							<li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-github" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+							<li><a href="https://www.facebook.com/profile.php?id=100002363921097" class="fa fa-facebook" aria-hidden="true"></a></li>
+							<li><a href="https://github.com/Laith-Hayajneh" class="fa fa-github" aria-hidden="true"></a></li>
+							<li><a href="https://www.linkedin.com/in/laith-hayajneh/" class="fa fa-linkedin" aria-hidden="true"></a></li>
 						</ul>
 					</div>
 				</div>
@@ -54,8 +54,8 @@ const AboutUs = () => {
 						</div>
 						<ul class="social">
 							<li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-github" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+							<li><a href="https://github.com/Suhaib-Ersan" class="fa fa-github" aria-hidden="true"></a></li>
+							<li><a href="https://www.linkedin.com/in/suhaib-ersan/" class="fa fa-linkedin" aria-hidden="true"></a></li>
 						</ul>
 					</div>
 				</div>

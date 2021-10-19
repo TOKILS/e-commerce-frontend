@@ -17,9 +17,9 @@ const AboutUs = () => {
 							<h4 class="title">TOKILS Member</h4>
 						</div>
 						<ul class="social">
-							<li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-github" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+							<li><a href="https://www.facebook.com/ibrahem.sarayrah" class="fa fa-facebook" aria-hidden="true"></a></li>
+							<li><a href="https://github.com/IbrahemSarayrah" class="fa fa-github" aria-hidden="true"></a></li>
+							<li><a href="https://www.linkedin.com/in/ibrahem-sarayrah-3a4277210/" class="fa fa-linkedin" aria-hidden="true"></a></li>
 						</ul>
 					</div>
 				</div>
@@ -35,9 +35,9 @@ const AboutUs = () => {
 							<h4 class="title">TOKILS Leader</h4>
 						</div>
 						<ul class="social">
-							<li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-github" aria-hidden="true"></a></li>
-							<li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+							<li><a href="https://www.facebook.com/Taariq.Ziad/" class="fa fa-facebook" aria-hidden="true"></a></li>
+							<li><a href="https://github.com/Abu-laban" class="fa fa-github" aria-hidden="true"></a></li>
+							<li><a href="https://www.linkedin.com/in/tariq-abulaban-bb002b204/" class="fa fa-linkedin" aria-hidden="true"></a></li>
 						</ul>
 					</div>
 				</div>
