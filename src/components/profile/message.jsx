@@ -1,10 +1,10 @@
 import React from 'react'
 
 function Message() {
-    alert('mes')
     return (
         <div>
-            dfsdfsdfsdfsdf
+          <iframe style={{height:"700px", width:"100%"}} src="https://mid-project-01.herokuapp.com/client" title="client">
+            </iframe>
         </div>
     )
 }

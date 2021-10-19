@@ -159,7 +159,7 @@ export default function Profile() {
                   <div class="wrapper">
                     <div id="wishlist-king" class="wk-row">
                       {activeSection}
-                      <Message/>
+                      
                     </div>
                   </div>
                 </div>
