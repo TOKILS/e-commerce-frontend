@@ -1,77 +1,76 @@
-'use strict'
-import React from 'react'
-import Navbar from '../Navbar';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import './profile.css'
+"use strict";
+import React from "react";
+import Navbar from "../Navbar";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import { deepOrange, deepPurple } from "@mui/material/colors";
+import "./profile.css";
 // import { styled } from '@mui/material/styles';
 import styled from "styled-components";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import { useContext, forwardRef } from "react";
-import ButtonBase from '@mui/material/ButtonBase';
+import ButtonBase from "@mui/material/ButtonBase";
 import { AuthContext } from "../../context/authentication";
 import superagent from "superagent";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import { updateCart } from "../../store/cart/cart";
-import { DeleteIcon } from '@mui/icons-material/Delete';
-import WishList from './WishList';
-import User from './user'
-import Order from './order'
+import { DeleteIcon } from "@mui/icons-material/Delete";
+import WishList from "./WishList";
+import User from "./user";
+import Order from "./order";
 
 export default function Profile() {
   const context = useContext(AuthContext);
   const [wish, setWish] = useState([]);
   const [user, setUser] = useState([]);
   const dispatch = useDispatch();
-  const [activeSection, setActiveSection] = useState(null)
-  const [userData, setUserData] = useState('')
+  const [activeSection, setActiveSection] = useState(null);
+  const [userData, setUserData] = useState("");
 
+  // useEffect(() => {
 
-// useEffect(() => {
-  
-//   clg('sddddd')
-// }, [wish])
-
+  //   clg('sddddd')
+  // }, [wish])
 
   useEffect(() => {
-
     // my id is 15
 
+    if (context.loggedIn) {
+      superagent
+        .get(
+          `https://mid-project-01.herokuapp.com/api/v3/wishlistProducts/${context.user.id}`
+        )
+        .then((res) => setWish(res.body));
+      // let userData = superagent
+      //   .get()
+      superagent
+        .get(`https://mid-project-01.herokuapp.com/userinfo/${context.user.id}`)
+        .then((response) => setUserData(response));
+    }
+  }, [context.loggedIn]);
 
-        if (context.loggedIn) {
-
-          superagent
-            .get(`https://mid-project-01.herokuapp.com/api/v3/wishlistProducts/${context.user.id}`)
-            .then((res) =>
-              setWish(res.body))
-          // let userData = superagent
-          //   .get()
-          superagent.get(`https://mid-project-01.herokuapp.com/userinfo/${context.user.id}`)
-            .then((response) => setUserData(response))
-        }
-     
-    
-  }, [context.loggedIn])
-
-
-  console.log(activeSection, 'aaaa')
-
+  console.log(activeSection, "aaaa");
 
   // setTimeout(() => {
-  //  
+  //
 
   // }, 2000);
 
-//  setActiveSection(<WishList wish={wish} setWish={setWish} />)
+  //  setActiveSection(<WishList wish={wish} setWish={setWish} />)
 
   return (
     <>
+      <link
+        href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        rel="stylesheet"
+      />
+      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>{" "}
       <Navbar />
       {/* 
       <Stack direction="row" spacing={2}>
@@ -79,61 +78,91 @@ export default function Profile() {
         <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
         <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
       </Stack> */}
-
       {/* ///////////////////////////////////////// */}
       {/* <h1>Wishlist</h1> */}
-
       <div class="container">
         <div class="view-account">
           <section class="module">
             <div class="module-inner">
               <div class="side-bar">
                 <div class="user-info">
-                  <img class="img-profile img-circle img-responsive center-block" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
+                  <img
+                    class="img-profile img-circle img-responsive center-block"
+                    src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                    alt=""
+                  />
                   <ul class="meta list list-unstyled">
-                    <li class="name">"userData.name"
-                      <label class="label label-info">{context.user.role}</label>
+                    <li class="name">
+                      "userData.name"
+                      <label class="label label-info">
+                        {context.user.role}
+                      </label>
                     </li>
                     {/* <li class="email"><a href="#">Email : {userData.body.email}</a></li> */}
                     {/* <li class="activity">Last updatedAt: {userData.body.updatedAt}</li> */}
                   </ul>
                 </div>
                 <nav class="side-menu">
-                  <ul class="nav" onClick={(e) => {
-                    if (e.target.parentElement.tagName == "LI") {
-                      // setmethod(e.target.innerText);
-                      for (const li of document.querySelectorAll("li.active")) {
-                        li.classList.remove("active");
+                  <ul
+                    class="nav"
+                    onClick={(e) => {
+                      if (e.target.parentElement.tagName == "LI") {
+                        // setmethod(e.target.innerText);
+                        for (const li of document.querySelectorAll(
+                          "li.active"
+                        )) {
+                          li.classList.remove("active");
+                        }
+                        e.target.parentElement.className = "active";
                       }
-                      e.target.parentElement.className = "active";
-                    }
-                  }}>
-                    <li onClick={() => setActiveSection(<User user={userData} />)}  ><a href="#"><span class="fa fa-user"></span> Profile</a></li>
+                    }}
+                  >
+                    <li
+                      onClick={() => setActiveSection(<User user={userData} />)}
+                    >
+                      <a href="#">
+                        <span class="fa fa-user"></span> Profile
+                      </a>
+                    </li>
 
-                    <li onClick={() => setActiveSection(<WishList wish={wish} setWish={setWish} />)
-                    } class="active"><a href="#wish"><span class="fa fa-heart"></span> My Wishlist</a></li>
+                    <li
+                      onClick={() =>
+                        setActiveSection(
+                          <WishList wish={wish} setWish={setWish} />
+                        )
+                      }
+                      class="active"
+                    >
+                      <a href="#wish">
+                        <span class="fa fa-heart"></span> My Wishlist
+                      </a>
+                    </li>
 
                     {/* <li><a href="#"><span class="fa fa-cog"></span> Settings</a></li> */}
-                    <li onClick={() => setActiveSection(<Order/>)}><a href="#"><span class="fa fa-shopping-cart"></span> Orders</a></li>
+                    <li onClick={() => setActiveSection(<Order />)}>
+                      <a href="#">
+                        <span class="fa fa-shopping-cart"></span> Orders
+                      </a>
+                    </li>
 
                     {/* <li onClick={() => setActiveSection(null)} ><a href="#"><span class="fa fa-credit-card"></span> Billing</a></li> */}
 
-                    <li onClick={() => setActiveSection(null)}><a href="#"><span class="fa fa-envelope"></span> Messages</a></li>
+                    <li onClick={() => setActiveSection(null)}>
+                      <a href="#">
+                        <span class="fa fa-envelope"></span> Messages
+                      </a>
+                    </li>
 
                     {/* <li onClick={() => setActiveSection(null)}><a href="user-drive.html"><span class="fa fa-th"></span> Drive</a></li> */}
-
                   </ul>
                 </nav>
               </div>
 
               <div class="content-panel">
                 <div class="billing">
-
                   <div class="wrapper">
                     <div id="wishlist-king" class="wk-row">
-        
-                      {activeSection }
-
+                      {activeSection}
                     </div>
                   </div>
                 </div>
@@ -141,13 +170,7 @@ export default function Profile() {
             </div>
           </section>
         </div>
-      </div >
-
-
-
-
-
+      </div>
     </>
-  )
+  );
 }
-
