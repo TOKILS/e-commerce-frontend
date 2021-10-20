@@ -188,6 +188,7 @@ export default function AlignItemsList() {
               sx={{ marginLeft: "20px" }}
               variant="contained"
               startIcon={<Add />}
+              size="large"
               className="addUsersUsersBtn"
               onClick={handleShow}
             >
