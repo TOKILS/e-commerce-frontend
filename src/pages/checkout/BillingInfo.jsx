@@ -9,6 +9,8 @@ import MuiAlert from "@mui/material/Alert";
 import { useHistory } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Announcement from "../../components/Announcement";
+import Footer from "../../components/Footer";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -226,7 +228,9 @@ function BillingInfo() {
   };
   return (
     <>
+      <Announcement />
       <Navbar />
+
       <BillingContainer>
         <Title>Billing Information</Title>
         <InputDiv style={{ textAlign: "center" }}>
@@ -348,23 +352,20 @@ function BillingInfo() {
           <SummaryItemPrice>$ {cartInfo.totalPrice + 10}</SummaryItemPrice>
         </SummaryItem>
       </Summary>
-      <Stack
-        spacing={2}
-        sx={{ width: "100%" }}
-      >
+      <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar
           open={open}
           onClose={handleClose}
-          style={{ marginLeft: "450px", marginBottom: "330px"}}
-          autoHideDuration={3500} 
+          style={{ marginLeft: "450px", marginBottom: "330px" }}
+          autoHideDuration={3500}
         >
           <Alert
             onClose={handleClose}
             // severity="success"
             sx={{ width: "100%" }}
           >
-              Payment Successfully , Thank You {<br />}
-              You can Find your order in your profile
+            Payment Successfully , Thank You {<br />}
+            You can Find your order in your profile
           </Alert>
         </Snackbar>
       </Stack>
@@ -377,6 +378,7 @@ function BillingInfo() {
           <CircularProgress color="inherit" />
         </Backdrop>
       </div>
+      <Footer />
     </>
   );
 }

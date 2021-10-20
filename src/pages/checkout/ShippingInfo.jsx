@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/authentication";
 import { useHistory } from "react-router-dom";
 import Footer from "../../components/Footer";
 import { CardContent, Typography } from "@material-ui/core";
-
+import Announcement from "../../components/Announcement";
 const ShippingInfo = styled.div`
   width: 60%;
   display: inline-block;
@@ -140,7 +140,9 @@ function ShippongInfo() {
   console.log(address);
   return (
     <>
+      <Announcement />
       <Navbar />
+
       <Summary>
         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
         <SummaryItem>
@@ -164,8 +166,8 @@ function ShippongInfo() {
       <Summary>
         <SummaryTitle>SHIPPING & DELIVERY</SummaryTitle>
         <SummaryItemText>
-          Orders are delivered on business days (Sunday-Thuersday) excluding public
-          holidays.
+          Orders are delivered on business days (Sunday-Thuersday) excluding
+          public holidays.
         </SummaryItemText>
       </Summary>
       <div style={{ marginTop: "-300px" }}>

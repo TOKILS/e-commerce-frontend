@@ -45,8 +45,9 @@ const Catalog = ({ productsFilter, handleFilter, categories, types }) => {
     console.log(categories);
     return (
         <Container>
-            <Navbar />
             <Announcement />
+
+            <Navbar />
             <Title>Products</Title>
             <FilterContainer>
                 <Filter>

@@ -8,7 +8,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 const Container = styled.div`
   height: 60vh;
-  background-color: #fcf5f5;
+  background-color: #f1f1f1;
   display: flex;
   align-items: center;
   justify-content: center;

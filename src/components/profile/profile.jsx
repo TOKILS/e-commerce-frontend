@@ -4,7 +4,9 @@ import Navbar from "../Navbar";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { deepOrange, deepPurple } from "@mui/material/colors";
+
 import "./profile.css";
+
 // import { styled } from '@mui/material/styles';
 import styled from "styled-components";
 
@@ -86,6 +88,8 @@ export default function Profile() {
                   <ul class="meta list list-unstyled">
                     <li class="name">
                       {userData.firstname + " " + userData.lastname}
+                      <h5 class="user-name">{userData.username}</h5>
+                      <h6 class="user-email">{userData.email}</h6>
                       <label class="label label-info">
                         {context.user.role}
                       </label>
