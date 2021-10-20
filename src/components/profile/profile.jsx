@@ -58,10 +58,10 @@ export default function Profile() {
   }, [context.loggedIn]);
   return (
     <>
-      <link
+      {/* <link
         href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         rel="stylesheet"
-      />
+      /> */}
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
       <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>{" "}
       <Announcement />
