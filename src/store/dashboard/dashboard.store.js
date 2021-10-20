@@ -49,17 +49,8 @@ export const getUsers = () => async (dispatch) => {
         const parsedUsers = JSON.parse(users);
         await dispatch(resetUsersList());
         parsedUsers.forEach((user) => {
-            let { username, firstname, lastname, email, role, createdAt, token } = user;
             dispatch(
-                addUserToList({
-                    username,
-                    firstname,
-                    lastname,
-                    email,
-                    role,
-                    createdAt,
-                    token,
-                })
+                addUserToList(user)
             );
         });
         return { successMsg: `Users list updated` };
