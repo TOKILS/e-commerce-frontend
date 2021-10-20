@@ -13,6 +13,9 @@ import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
+  padding-left: 150px;
+  background-color: teal;
+  color: white;
   ${mobile({ flexDirection: "column" })}
 `;
 
@@ -114,31 +117,49 @@ const Footer = () => {
         <List>
           <ListItem>
             {" "}
-            <Link to="/"> Home </Link>
+            <Link style={{ color: "white" }} to="/">
+              {" "}
+              Home{" "}
+            </Link>
           </ListItem>
           <ListItem>
             {" "}
-            <Link to="/Cart">Cart </Link>
+            <Link style={{ color: "white" }} to="/Cart">
+              Cart{" "}
+            </Link>
           </ListItem>
           <ListItem>
-            <Link to="/products"> Products </Link>
+            <Link style={{ color: "white" }} to="/products">
+              {" "}
+              Products{" "}
+            </Link>
           </ListItem>
           <ListItem>
             {" "}
-            <Link to="/about-us">About us</Link>
+            <Link style={{ color: "white" }} to="/about-us">
+              About us
+            </Link>
           </ListItem>
           <ListItem>
             {" "}
-            <Link to="/profile">My Account</Link>
+            <Link style={{ color: "white" }} to="/profile">
+              My Account
+            </Link>
           </ListItem>
           <ListItem>
-            <Link to="/profile#order">Order Tracking</Link>
+            <Link style={{ color: "white" }} to="/profile#order">
+              Order Tracking
+            </Link>
           </ListItem>
           <ListItem>
-            <Link to="/profile#wish">Wishlist</Link>
+            <Link style={{ color: "white" }} to="/profile#wish">
+              Wishlist
+            </Link>
           </ListItem>
           <ListItem>
-            <Link to="/profile#message">Support</Link>
+            <Link style={{ color: "white" }} to="/profile#message">
+              Support
+            </Link>
           </ListItem>
         </List>
       </Center>

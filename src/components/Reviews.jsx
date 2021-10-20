@@ -183,7 +183,20 @@ export default function AlignItemsList() {
       <List sx={{ width: "100%" }}>
         <Typography variant="h3" component="div" sx={{ textAlign: "center" }}>
           Reviews
+          <ThemeProvider theme={mainPrimaryTheme}>
+            <BButton
+              sx={{ marginLeft: "20px" }}
+              variant="contained"
+              startIcon={<Add />}
+              size="large"
+              className="addUsersUsersBtn"
+              onClick={handleShow}
+            >
+              Add Review
+            </BButton>
+          </ThemeProvider>
         </Typography>
+
         <When condition={reviews.length}>
           <AliceCarousel
             mouseTracking
@@ -239,163 +252,9 @@ export default function AlignItemsList() {
               </ListItem>
             ))}
           />
-          {/* <Carousel>
-            {reviews.map((review) => (
-              <Carousel.Item style={{ padding: "20px" }}>
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar
-                      alt={review.UserID.username.toUpperCase()}
-                      //   src={review.Image}
-                      sx={{ width: 50, height: 50, marginRight: 2 }}
-                      src="x"
-                    />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={review.Title}
-                    secondary={
-                      <>
-                        <Rating
-                          name="read-only"
-                          value={review.Rating}
-                          readOnly
-                          size="small"
-                        />
-                        <ListItemText
-                          secondary={new Date(
-                            Date.parse(review.createdAt)
-                          ).toDateString()}
-                        />
-
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          {review.UserID.username.toUpperCase()}
-                        </Typography>
-                        {` — ${review.Description}`}
-
-                        {context.user.id === review.UserID.id ? (
-                          <IconButton aria-label="delete">
-                            <DeleteIcon
-                              style={{ width: "0.9rem" }}
-                              onClick={() => deleteReview(review.id)}
-                            />
-                          </IconButton>
-                        ) : null}
-                      </>
-                    }
-                  />{" "}
-                  <ListItemAvatar>
-                    <Avatar
-                      alt={review.UserID.username.toUpperCase()}
-                      //   src={review.Image}
-                      sx={{ width: 50, height: 50, marginRight: 2 }}
-                      src="x"
-                    />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={review.Title}
-                    secondary={
-                      <>
-                        <Rating
-                          name="read-only"
-                          value={review.Rating}
-                          readOnly
-                          size="small"
-                        />
-                        <ListItemText
-                          secondary={new Date(
-                            Date.parse(review.createdAt)
-                          ).toDateString()}
-                        />
-
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          {review.UserID.username.toUpperCase()}
-                        </Typography>
-                        {` — ${review.Description}`}
-
-                        {context.user.id === review.UserID.id ? (
-                          <IconButton aria-label="delete">
-                            <DeleteIcon
-                              style={{ width: "0.9rem" }}
-                              onClick={() => deleteReview(review.id)}
-                            />
-                          </IconButton>
-                        ) : null}
-                      </>
-                    }
-                  />{" "}
-                  <ListItemAvatar>
-                    <Avatar
-                      alt={review.UserID.username.toUpperCase()}
-                      //   src={review.Image}
-                      sx={{ width: 50, height: 50, marginRight: 2 }}
-                      src="x"
-                    />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={review.Title}
-                    secondary={
-                      <>
-                        <Rating
-                          name="read-only"
-                          value={review.Rating}
-                          readOnly
-                          size="small"
-                        />
-                        <ListItemText
-                          secondary={new Date(
-                            Date.parse(review.createdAt)
-                          ).toDateString()}
-                        />
-
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          {review.UserID.username.toUpperCase()}
-                        </Typography>
-                        {` — ${review.Description}`}
-
-                        {context.user.id === review.UserID.id ? (
-                          <IconButton aria-label="delete">
-                            <DeleteIcon
-                              style={{ width: "0.9rem" }}
-                              onClick={() => deleteReview(review.id)}
-                            />
-                          </IconButton>
-                        ) : null}
-                      </>
-                    }
-                  />
-                </ListItem>
-              </Carousel.Item>
-            ))}
-          </Carousel> */}
         </When>
       </List>
 
-      <ThemeProvider theme={mainPrimaryTheme}>
-        <BButton
-          sx={{ float: "right" }}
-          variant="contained"
-          startIcon={<Add />}
-          className="addUsersUsersBtn"
-          onClick={handleShow}
-        >
-          Add Review
-        </BButton>
-      </ThemeProvider>
       <br style={{ clear: "both" }} />
 
       <Dialog open={show} onClose={handleClose}>

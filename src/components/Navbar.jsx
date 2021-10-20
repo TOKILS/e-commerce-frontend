@@ -12,6 +12,8 @@ import superagent from "superagent";
 import { useSelector } from "react-redux";
 const Container = styled.div`
   height: 60px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   ${mobile({ height: "50px" })}
 `;
 
@@ -120,7 +122,7 @@ const Navbar = () => {
           </When>
           <MenuItem>
             <Link to="/Cart">
-              <Badge badgeContent={itemsInCart} style={{color: 'teal'}}>
+              <Badge badgeContent={itemsInCart} style={{ color: "teal" }}>
                 <ShoppingCartOutlined />
               </Badge>
             </Link>

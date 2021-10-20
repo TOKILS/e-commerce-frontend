@@ -223,6 +223,7 @@ const Cart = () => {
   return (
     <Container>
       <Announcement />
+
       <Navbar />
       <Wrapper>
         <Title>YOUR BAG</Title>
@@ -237,20 +238,27 @@ const Cart = () => {
           {/* <TopButton type="filled">CHECKOUT NOW</TopButton> */}
         </Top>
         <Bottom>
-          { cartInfo.totalItems ? <Info>
-            {cartItems.map((item) => {
-              return (
-                <>
-                  <CartItem
-                    UpdateItems={UpdateItems}
-                    UpdateSummery={UpdateSummery}
-                    item={item}
-                  />
-                  <Hr />
-                </>
-              );
-            })}
-          </Info> : <img style={{margin: '0px auto 0px auto'}} src='https://www.hindarthouse.com/uploads/emptycart.png'/>}
+          {cartInfo.totalItems ? (
+            <Info>
+              {cartItems.map((item) => {
+                return (
+                  <>
+                    <CartItem
+                      UpdateItems={UpdateItems}
+                      UpdateSummery={UpdateSummery}
+                      item={item}
+                    />
+                    <Hr />
+                  </>
+                );
+              })}
+            </Info>
+          ) : (
+            <img
+              style={{ margin: "0px auto 0px auto" }}
+              src="https://www.hindarthouse.com/uploads/emptycart.png"
+            />
+          )}
           {cartInfo.totalItems > 0 ? (
             <Summary>
               <SummaryTitle>ORDER SUMMARY</SummaryTitle>
