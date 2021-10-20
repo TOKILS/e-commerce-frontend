@@ -36,7 +36,7 @@ $normalPadding: 1rem;
         }
         .dashBoard_sideBar {
             // background: linear-gradient(196deg, rgba(255, 33, 100, 0.637) 0%, rgba(165, 69, 255, 0.226) 36%, rgba(235, 72, 91, 0) 90%);
-            background: linear-gradient(196deg, rgb(33, 223, 223) 0%, rgb(15, 190, 175)  36%, rgb(0, 167, 144)   90%);
+            background: linear-gradient(196deg, rgb(33, 223, 223) 0%, rgb(15, 190, 175) 36%, rgb(0, 167, 144) 90%);
             // background-color: rgba(124, 21, 209, 0.76);
             background-color: #de9e48;
             border-top-left-radius: $radius;
@@ -166,7 +166,7 @@ $normalPadding: 1rem;
 
                 //     max-width: 15rem;
                 // }
-                .dashboardCategoriesBar{
+                .dashboardCategoriesBar {
                     display: flex;
                     justify-content: center;
                     gap: 1rem;
@@ -175,26 +175,23 @@ $normalPadding: 1rem;
                     display: flex;
                     justify-content: center;
                     // gap: 1rem;
-                    
-                    
-                        & > :first-child {
-                            border-top-right-radius: 0rem;
-                            border-bottom-right-radius: 0rem;
-                            border-bottom-left-radius: 1rem;
-                            border-top-left-radius: 1rem;
-                        }
-                        & > :nth-child(2) {
-                            flex-grow: 2;
-                            background-color: #70e2e24f;
-                        }
-                        & > :last-child {
-                            border-top-right-radius: 1rem;
-                            border-bottom-right-radius: 1rem;
-                            border-bottom-left-radius: 0rem;
-                            border-top-left-radius: 0rem;
-                        }
-                        
 
+                    & > :first-child {
+                        border-top-right-radius: 0rem;
+                        border-bottom-right-radius: 0rem;
+                        border-bottom-left-radius: 1rem;
+                        border-top-left-radius: 1rem;
+                    }
+                    & > :nth-child(2) {
+                        flex-grow: 2;
+                        background-color: #70e2e24f;
+                    }
+                    & > :last-child {
+                        border-top-right-radius: 1rem;
+                        border-bottom-right-radius: 1rem;
+                        border-bottom-left-radius: 0rem;
+                        border-top-left-radius: 0rem;
+                    }
                 }
             }
         }

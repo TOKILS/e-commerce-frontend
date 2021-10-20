@@ -3,6 +3,7 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
+import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -14,6 +15,8 @@ import { When } from "react-if";
 import superagent from "superagent";
 import { updateCart } from "../../../store/cart/cart";
 import cookie from "react-cookies";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const Info = styled.div`
   opacity: 0;
@@ -74,10 +77,22 @@ const Icon = styled.div`
     transform: scale(1.1);
   }
 `;
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Product = ({ product, handleClick }) => {
   const context = useContext(AuthContext);
   const dispatch = useDispatch();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   const addToCart = () => {
     if (context.loggedIn) {
       superagent
@@ -93,7 +108,7 @@ const Product = ({ product, handleClick }) => {
           dispatch(updateCart());
           handleClick();
         });
-    }
+    } else setOpen(true);
   };
   const addToWish = () => {
     if (context.loggedIn) {
@@ -109,32 +124,39 @@ const Product = ({ product, handleClick }) => {
         .then((res) => {
           handleClick();
         });
-    }
+    } else setOpen(true);
   };
 
   return (
-    <Container>
-      <Circle />
-      <Image src={product.color[0].image[0].Image} />
-      <Info>
-        <Icon>
-          <ShoppingCartOutlined onClick={addToCart} />
-        </Icon>
-        <Icon
-          onClick={() => {
-            dispatch(update(product));
-            localStorage.setItem("product", JSON.stringify(product));
-          }}
-        >
-          <Link exact to="/Product">
-            <SearchOutlined />
-          </Link>
-        </Icon>
-        <Icon>
-          <FavoriteBorderOutlined onClick={addToWish} />
-        </Icon>
-      </Info>
-    </Container>
+    <>
+      <Container>
+        <Circle />
+        <Image src={product.color[0].image[0].Image} />
+        <Info>
+          <Icon>
+            <ShoppingCartOutlined onClick={addToCart} />
+          </Icon>
+          <Icon
+            onClick={() => {
+              dispatch(update(product));
+              localStorage.setItem("product", JSON.stringify(product));
+            }}
+          >
+            <Link exact to="/Product">
+              <SearchOutlined />
+            </Link>
+          </Icon>
+          <Icon>
+            <FavoriteBorderOutlined onClick={addToWish} />
+          </Icon>
+        </Info>
+      </Container>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          <h4>You Need To SIGN IN ...</h4>
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 

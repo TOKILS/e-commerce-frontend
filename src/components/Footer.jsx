@@ -127,15 +127,19 @@ const Footer = () => {
             {" "}
             <Link to="/about-us">About us</Link>
           </ListItem>
-          <ListItem>Accessories</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
           <ListItem>
             {" "}
-            <a href="https://mid-project-01.herokuapp.com/client">Support</a>
+            <Link to="/profile">My Account</Link>
           </ListItem>
-          <ListItem>Terms</ListItem>
+          <ListItem>
+            <Link to="/profile#order">Order Tracking</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/profile#wish">Wishlist</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/profile#message">Support</Link>
+          </ListItem>
         </List>
       </Center>
       <Right>

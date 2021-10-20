@@ -5,6 +5,7 @@ import superagent from "superagent";
 import { AuthContext } from "../../context/authentication";
 import { useHistory } from "react-router-dom";
 import Footer from "../../components/Footer";
+import { CardContent, Typography } from "@material-ui/core";
 
 const ShippingInfo = styled.div`
   width: 60%;
@@ -135,7 +136,7 @@ function ShippongInfo() {
         });
     }
   }
-
+  console.log(address);
   return (
     <>
       <Navbar />
@@ -172,15 +173,37 @@ function ShippongInfo() {
           {Object.keys(address).length !== 0 ? (
             <h3 style={{ margin: "10px", textAlign: "center" }}>
               <SummaryTitle>you already have this address:</SummaryTitle>
-              <SummaryItem>
-                <SummaryItemText>Address: {address.Address1}</SummaryItemText>
-              </SummaryItem>
-              <SummaryItem>
-                <SummaryItemText>City: {address.City}</SummaryItemText>
-              </SummaryItem>
-              <SummaryItem>
-                <SummaryItemText>Phone: {address.Phone}</SummaryItemText>
-              </SummaryItem>
+              <CardContent>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  Address Line: {address.Country} - {address.Address1} -{" "}
+                  {address.Province}
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  Company: {address.Company}
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  PostalCode: {address.PostalCode}
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  Phone: {address.Phone}
+                </Typography>
+              </CardContent>
               <Button
                 onClick={() => {
                   setAddress({});
@@ -193,7 +216,7 @@ function ShippongInfo() {
                   history.push("/billing");
                 }}
               >
-                Continue To Billing
+                Confirm and Continue To Billing
               </Button>
             </h3>
           ) : (
@@ -234,7 +257,8 @@ function ShippongInfo() {
                       PostalCode: Number(e.target.value),
                     });
                   }}
-                  type="text"
+                  type="tel"
+                  pattern="[0-9]{5}"
                   name="postalCode"
                   required
                 />
@@ -282,14 +306,15 @@ function ShippongInfo() {
                   required
                 />
                 <Input
-                  placeholder="Shipping Phone*"
+                  placeholder="Shipping Phone* 000-0000000"
                   onChange={(e) => {
                     setbodystate({
                       ...bodystate,
                       Phone: Number(e.target.value),
                     });
                   }}
-                  type="text"
+                  type="tel"
+                  maxLength="9"
                   name="shippingPhone"
                   required
                 />

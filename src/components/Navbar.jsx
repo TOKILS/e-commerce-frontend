@@ -86,12 +86,7 @@ const Navbar = () => {
   return (
     <Container>
       <Wrapper>
-        <Left>
-          <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
-        </Left>
+        <Left></Left>
         <Center>
           <Link to="/">
             <Logo>Fashionable</Logo>
