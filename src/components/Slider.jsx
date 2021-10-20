@@ -11,6 +11,7 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+  margin-top: 15px;
   ${mobile({ display: "none" })}
 `;
 
@@ -99,12 +100,15 @@ const Slider = () => {
         {sliderItems.map((item) => (
           <Slide bg={item.bg} key={item.id}>
             <ImgContainer>
-              <Image style={{marginLeft:"90px"}} src={item.img} />
+              <Image style={{ marginLeft: "90px" }} src={item.img} />
             </ImgContainer>
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button> <Link to="/products">SHOW NOW</Link></Button>
+              <Button>
+                {" "}
+                <Link to="/products">SHOW NOW</Link>
+              </Button>
             </InfoContainer>
           </Slide>
         ))}

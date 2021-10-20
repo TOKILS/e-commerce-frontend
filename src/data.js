@@ -4,21 +4,21 @@ export const sliderItems = [
     img: "https://www.seekpng.com/png/full/858-8584137_fashion-forward-episodes-offers-fashion.png",
     title: "SUMMER SALE",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-    bg: "fcf1ed",
+    bg: "f1f1f1",
   },
   {
     id: 2,
     img: "https://www.seekpng.com/png/full/858-8583854_780-931-in-layer-10-fashion.png",
     title: "AUTUMN COLLECTION",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-    bg: "fbf0f4",
+    bg: "f1f1f1",
   },
   {
     id: 3,
     img: "https://i.ibb.co/cXFnLLV/3.png",
     title: "LOUNGEWEAR LOVE",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-    bg: "fcf1ed",
+    bg: "f1f1f1",
   },
 ];
 

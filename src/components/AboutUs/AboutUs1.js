@@ -50,6 +50,7 @@ const AboutUs = () => {
                 </div>
             </div>
 
+
             <div class="col-12 col-sm-6 col-md-4 col-lg-3" style={{width:"100%", position:"relative", top:"7.5rem"}}>
                 <div class="our-team">
                     <div class="picture">
@@ -75,5 +76,6 @@ const AboutUs = () => {
         </div>
     );
 };
+
 
 export default AboutUs;

@@ -35,7 +35,7 @@ function Order() {
     if (context.loggedIn) {
       superagent
         .get(
-          `https://mid-project-01.herokuapp.com/api/v3/wishlistProducts/${context.user.id}`
+          `https://mid-project-01.herokuapp.com/api/v3/orderProducts/${context.user.id}`
         )
         .then((res) => setorder(res.body));
     }
@@ -43,7 +43,7 @@ function Order() {
   console.log(order, "order");
   const deleteOrder = (id) => {
     superagent
-      .del(`https://mid-project-01.herokuapp.com/api/v2/Order/${id}`)
+      .del(`https://mid-project-01.herokuapp.com/api/v2/OrderDetails/${id}`)
       .set("Authorization", "Bearer " + context.token)
       .then((res) =>
         setorder(
@@ -74,7 +74,7 @@ function Order() {
               <Grid container spacing={2}>
                 <Grid item>
                   <ButtonBase sx={{ width: 128, height: 128 }}>
-                    <Img alt="complex" src={item.image[0].Image} />
+                    <Img alt="complex" src={item.Image.Image} />
                   </ButtonBase>
                 </Grid>
                 <Grid item xs={12} sm container>
@@ -108,7 +108,7 @@ function Order() {
                           variant="outlined"
                           color="error"
                         >
-                          Remove
+                          Cancel Product
                         </Button>
                       </Typography>
                     </Grid>
