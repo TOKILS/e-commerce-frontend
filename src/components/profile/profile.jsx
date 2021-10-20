@@ -136,15 +136,15 @@ export default function Profile() {
 
                     {/* <li><a href="#"><span class="fa fa-cog"></span> Settings</a></li> */}
                     <li onClick={() => setActiveSection(<Order />)}>
-                      <a href="#">
+                      <a href="#order">
                         <span class="fa fa-shopping-cart"></span> Orders
                       </a>
                     </li>
 
                     {/* <li onClick={() => setActiveSection(null)} ><a href="#"><span class="fa fa-credit-card"></span> Billing</a></li> */}
 
-                    <li onClick={() => setActiveSection(<Message/>)}>
-                      <a href="#">
+                    <li onClick={() => setActiveSection(<Message />)}>
+                      <a href="#message">
                         <span class="fa fa-envelope"></span> Messages
                       </a>
                     </li>
@@ -159,7 +159,6 @@ export default function Profile() {
                   <div class="wrapper">
                     <div id="wishlist-king" class="wk-row">
                       {activeSection}
-                      
                     </div>
                   </div>
                 </div>

@@ -9,7 +9,6 @@ import MuiAlert from "@mui/material/Alert";
 import { useHistory } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -57,7 +56,7 @@ const DescriptionP = styled.p`
   margin: 5px 125px;
 `;
 
-const Buttonx = styled.button`
+const Button = styled.button`
   width: 40%;
   border: none;
   padding: 15px 20px;
@@ -350,7 +349,6 @@ function BillingInfo() {
         </Snackbar>
       </Stack>
       <div>
-        <Buttonx onClick={handleToggleLoading}>Show backdrop</Buttonx>
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={open}
