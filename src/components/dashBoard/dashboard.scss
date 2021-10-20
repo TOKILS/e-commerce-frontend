@@ -112,8 +112,6 @@ $normalPadding: 1rem;
 
                     transition: 0.1s;
 
-                    margin-bottom: 1rem;
-
                     min-width: min-content;
 
                     &:focus-within {
@@ -193,7 +191,6 @@ $normalPadding: 1rem;
                         border-top-left-radius: 0rem;
                     }
                 }
-                
             }
             .support {
                 height: 81.6vh;
@@ -205,6 +202,26 @@ $normalPadding: 1rem;
                     margin-top: 0;
                 }
                 padding: -5rem;
+            }
+            .dashboard_ordersTab {
+                position: relative;
+                min-height: 20rem;
+                .Btns {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1.5rem;
+
+                    display: flex;
+                    gap: 1rem;
+                }
+                .ordersContainerDiv {
+                    > * {
+                        &:focus {
+                            outline: #00bebe solid;
+                            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.445);
+                        }
+                    }
+                }
             }
         }
         .dashboardUsersEmpty {
@@ -254,7 +271,6 @@ $normalPadding: 1rem;
                 color: rgb(0, 190, 190);
                 animation: slide1 1s ease-in-out infinite;
             }
-            
         }
     }
 }

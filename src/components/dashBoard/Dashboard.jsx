@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 // tabs
 import Users from "./subComponents/tabs/Users";
 import Products from "./subComponents/tabs/Products";
+import Orders from "./subComponents/tabs/Orders";
 import Support from "./subComponents/tabs/Support";
 
 import "./dashboard.scss";
@@ -23,6 +24,7 @@ import "./dashboard.scss";
 // redux
 import { connect } from "react-redux";
 import { handleSnackBar } from "../../store/snackbar/snackbar.store";
+import { borderRadius } from "@mui/system";
 
 const DashBoard = (props) => {
     const [finishedLoading, setFinishLoading] = useState(false);
@@ -89,6 +91,10 @@ const DashBoard = (props) => {
             content: <Products />,
         },
         {
+            name: "Orders",
+            content: <Orders />,
+        },
+        {
             name: "Support",
             content: <Support />,
         },
@@ -127,10 +133,14 @@ const DashBoard = (props) => {
                                 <Tab sx={{ fontWeight: "600", color: "white" }} label="Home" />
                                 <Tab sx={{ fontWeight: "600", color: "white" }} label="Users" />
                                 <Tab sx={{ fontWeight: "600", color: "white" }} label="Products" />
+                                <Tab sx={{ fontWeight: "600", color: "white" }} label="Orders" />
                                 <Tab sx={{ fontWeight: "600", color: "white" }} label="Support" />
                             </Tabs>
                         ) : (
                             <>
+                                <Skeleton height={40} sx={{ bgcolor: "white", opacity: "0.5", marginBottom: "0.5rem" }}>
+                                    <Button>list item</Button>
+                                </Skeleton>
                                 <Skeleton height={40} sx={{ bgcolor: "white", opacity: "0.5", marginBottom: "0.5rem" }}>
                                     <Button>list item</Button>
                                 </Skeleton>
@@ -162,8 +172,8 @@ const DashBoard = (props) => {
                     </div>
                 </ThemeProvider>
             </div>
-            <Snackbar open={props.snackbar.show} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity={props.snackbar.type} sx={{ width: "100%" }}>
+            <Snackbar sx={{ bottom:"2rem!important", left: "2rem!important"}} open={props.snackbar.show} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={props.snackbar.type} sx={{ width: "100%", borderRadius:"20rem" }}>
                     {props.snackbar.text}
                 </Alert>
             </Snackbar>
