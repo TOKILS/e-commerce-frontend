@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Catalog from "./Catalog";
 
-import { getCategories } from "../../controllers/categories";
+import { getCategories, getProductsByType, getProductsByCategory } from "../../controllers/categories";
 import {
     getProducts,
 } from "../../controllers/products";
-import {
-    getProductsByCategory
-} from "../../controllers/categories";
+
 
 
 const CatalogContainer = ({ value }) => {
     const [products, setProducts] = useState();
     const [productsFilter, setProductsFilter] = useState();
     const [categories, setCategories] = useState();
+    const [Types, setTypes] = useState();
 
     useEffect(() => {
         if (value) {
@@ -40,6 +39,12 @@ const CatalogContainer = ({ value }) => {
             })
             .catch((err) => console.log(err.message));
 
+        getProductsByType()
+            .then((data) => {
+                setTypes(data);
+            })
+            .catch((err) => console.log(err.message));
+
     }, [value]);
 
     const handleFilter = event => {
@@ -48,7 +53,7 @@ const CatalogContainer = ({ value }) => {
     //p.find(c => c.TypeID === event.target.value
     return (
         <>
-            <Catalog productsFilter={productsFilter} handleFilter={handleFilter} categories={categories} />
+            <Catalog productsFilter={productsFilter} handleFilter={handleFilter} categories={categories} types={Types} />
         </>
     );
 };

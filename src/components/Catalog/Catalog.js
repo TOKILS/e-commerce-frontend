@@ -40,7 +40,7 @@ const Select = styled.select`
 `;
 const Option = styled.option``;
 
-const Catalog = ({ productsFilter, handleFilter, categories }) => {
+const Catalog = ({ productsFilter, handleFilter, categories, types }) => {
     console.log(productsFilter);
     console.log(categories);
     return (
@@ -53,15 +53,15 @@ const Catalog = ({ productsFilter, handleFilter, categories }) => {
                     <FilterText>Sort Products:</FilterText>
                     <Select onClick={handleFilter}>
                         <Option name="category" value="All">All</Option>
-                        {categories ? (
-                            categories.map((category, index) => (
+                        {types ? (
+                            types.map((types, index) => (
 
-                                <Option id={index} name="category" value={category.id}>{category.Name}</Option>
+                                <Option id={index} name="category" value={types.id}>{types.Name}</Option>
 
-                        
+
                             ))
                         ) : (
-                            <Option>None Category</Option>
+                            <Option>None types</Option>
                         )}
                     </Select>
                 </Filter>
@@ -70,7 +70,7 @@ const Catalog = ({ productsFilter, handleFilter, categories }) => {
 
                 productsFilter.length > 0 ? (
                 <Category products={productsFilter} />
-    
+
             )
                 : (
                     <Typography variant="h6">Products not found ! :( try again !)</Typography>
