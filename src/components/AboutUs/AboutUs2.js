@@ -5,9 +5,9 @@ const AboutUs = () => {
 
 
 	return (
-		<>
+		<div style={{width:"70rem",display:"grid",gap: "5rem", gridTemplateColumns:"1fr 1fr 1fr", marginLeft:"auto", marginRight:"auto"}}>
 			
-				<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+				<div class="col-12 col-sm-6 col-md-4 col-lg-3" style={{width:"100%", position:"relative", bottom:"7.5rem"}}>
 					<div class="our-team">
 						<div class="picture">
 							<img class="img-fluid" src="https://ca.slack-edge.com/TNGRRLUMA-U01TUDCP3HT-847ceef88e12-512" />
@@ -25,7 +25,7 @@ const AboutUs = () => {
 				</div>
 			
 			
-				<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+				<div class="col-12 col-sm-6 col-md-4 col-lg-3" style={{width:"100%"}}>
 					<div class="our-team">
 						<div class="picture">
 							<img class="img-fluid" src="https://ca.slack-edge.com/TNGRRLUMA-U01U3LHE17W-5caca8b458c5-512" />
@@ -42,7 +42,7 @@ const AboutUs = () => {
 					</div>
 				</div>
 			
-				<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+				<div class="col-12 col-sm-6 col-md-4 col-lg-3" style={{width:"100%", position:"relative", bottom:"7.5rem"}}>
 					<div class="our-team">
 						<div class="picture">
 							<img class="img-fluid" src="https://ca.slack-edge.com/TNGRRLUMA-U01UA4BUL5P-b3f7b9b9a33f-512" />
@@ -59,7 +59,7 @@ const AboutUs = () => {
 					</div>
 				</div>
 			
-		</>
+		</div>
 	)
 }
 
