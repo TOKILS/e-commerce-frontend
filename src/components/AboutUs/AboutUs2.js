@@ -28,7 +28,7 @@ const AboutUs = () => {
 				<div class="col-12 col-sm-6 col-md-4 col-lg-3" style={{width:"100%"}}>
 					<div class="our-team">
 						<div class="picture">
-							<img class="img-fluid" src="https://ca.slack-edge.com/TNGRRLUMA-U01U3LHE17W-5caca8b458c5-512" />
+							<img class="img-fluid" src="https://i.imgur.com/DsPJW4w.png" />
 						</div>
 						<div class="team-content">
 							<h3 class="name">Laith Hayajneh</h3>
