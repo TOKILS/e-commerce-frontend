@@ -54,16 +54,6 @@ export default function Profile() {
         });
     }
   }, [context.loggedIn]);
-
-  console.log(activeSection, "aaaa");
-
-  // setTimeout(() => {
-  //
-
-  // }, 2000);
-
-  //  setActiveSection(<WishList wish={wish} setWish={setWish} />)
-
   return (
     <>
       <link
@@ -137,7 +127,7 @@ export default function Profile() {
                     {/* <li><a href="#"><span class="fa fa-cog"></span> Settings</a></li> */}
                     <li onClick={() => setActiveSection(<Order />)}>
                       <a href="#order">
-                        <span class="fa fa-shopping-cart"></span> Orders
+                        <span class="fa fa-shopping-cart"></span> My Orders
                       </a>
                     </li>
 

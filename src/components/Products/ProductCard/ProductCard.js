@@ -151,9 +151,14 @@ const Product = ({ product, handleClick }) => {
           </Icon>
         </Info>
       </Container>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        style={{ marginLeft: "450px", marginBottom: "330px" }}
+      >
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          <h4>You Need To SIGN IN ...</h4>
+          <h4>You Need To SIGN IN First ...</h4>
         </Alert>
       </Snackbar>
     </>

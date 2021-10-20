@@ -237,7 +237,12 @@ const Product = (props) => {
         </Wrapper>
         {/* <Newsletter /> */}
         <Stack spacing={2} sx={{ width: "100%" }}>
-          <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+          <Snackbar
+            open={open}
+            autoHideDuration={2500}
+            onClose={handleClose}
+            style={{ marginLeft: "450px", marginBottom: "330px" }}
+          >
             <Alert
               onClose={handleClose}
               severity="success"
@@ -251,13 +256,14 @@ const Product = (props) => {
             open={openDelete}
             autoHideDuration={3000}
             onClose={handleClose}
+            style={{ marginLeft: "450px", marginBottom: "330px" }}
           >
             <Alert
               onClose={handleClose}
               severity="error"
               sx={{ width: "100%" }}
             >
-              <h4>You Need To SIGN IN ...</h4>
+              <h4>You need to Signin first...</h4>
             </Alert>
           </Snackbar>
         </Stack>

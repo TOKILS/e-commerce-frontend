@@ -99,11 +99,11 @@ const Select = styled.select`
   height: 25px;
   text-align: center;
   border-radius: 7px;
-`
+`;
 
 const Option = styled.option`
   margin: 5px;
-`
+`;
 
 function BillingInfo() {
   let history = useHistory();
@@ -323,7 +323,7 @@ function BillingInfo() {
               The last 3 digits displayed on the back of your credit card.
             </DescriptionP>
           </InputDiv>
-          <InputDiv style={{textAlign: 'center'}}>
+          <InputDiv style={{ textAlign: "center" }}>
             <Button type="submit">Make Payment</Button>
           </InputDiv>
         </Form>
@@ -348,15 +348,23 @@ function BillingInfo() {
           <SummaryItemPrice>$ {cartInfo.totalPrice + 10}</SummaryItemPrice>
         </SummaryItem>
       </Summary>
-      <Stack spacing={2} sx={{ width: "100%" }}>
-        <Snackbar open={open} autoHideDuration={3500} onClose={handleClose}>
+      <Stack
+        spacing={2}
+        sx={{ width: "100%" }}
+      >
+        <Snackbar
+          open={open}
+          onClose={handleClose}
+          style={{ marginLeft: "450px", marginBottom: "330px"}}
+          autoHideDuration={3500} 
+        >
           <Alert
             onClose={handleClose}
-            severity="success"
+            // severity="success"
             sx={{ width: "100%" }}
           >
-            Payment Successfully , Thank You {<br />}
-            You can Find your order in your profile
+              Payment Successfully , Thank You {<br />}
+              You can Find your order in your profile
           </Alert>
         </Snackbar>
       </Stack>
