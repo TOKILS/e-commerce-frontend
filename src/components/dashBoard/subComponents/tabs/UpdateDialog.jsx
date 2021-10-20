@@ -74,11 +74,11 @@ const UpdateDialog = ({ user, check, handleShow, handleClose, updateUser, handle
                     <TextField sx={{ display: "none" }} name="token" label="Token" variant="outlined" defaultValue={user.token} />
                 </Box>
             </DialogContent>
-            <DialogActions>
+            <DialogActions sx={{padding:"1rem"}} >
                 <Button color="secondary" type="button" onClick={handleClose}>
                     Cancel
                 </Button>
-                <LoadingButton loading={submitBtnLoading} form="updateForm" type="submit" autoFocus>
+                <LoadingButton variant="contained" loading={submitBtnLoading} form="updateForm" type="submit" autoFocus>
                     Update
                 </LoadingButton>
             </DialogActions>

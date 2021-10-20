@@ -43,6 +43,7 @@ const DashBoard = (props) => {
         palette: {
             primary: {
                 main: "#00bebe",
+                contrastText: "#fff",
             },
             secondary: {
                 main: "#4e4e4e",
@@ -123,10 +124,10 @@ const DashBoard = (props) => {
 
                         {finishedLoading ? (
                             <Tabs orientation="vertical" value={tabItem} onChange={handleTabChange}>
-                                <Tab sx={{ color: "white" }} label="Home" />
-                                <Tab sx={{ color: "white" }} label="Users" />
-                                <Tab sx={{ color: "white" }} label="Products" />
-                                <Tab sx={{ color: "white" }} label="Support" />
+                                <Tab sx={{ fontWeight: "600", color: "white" }} label="Home" />
+                                <Tab sx={{ fontWeight: "600", color: "white" }} label="Users" />
+                                <Tab sx={{ fontWeight: "600", color: "white" }} label="Products" />
+                                <Tab sx={{ fontWeight: "600", color: "white" }} label="Support" />
                             </Tabs>
                         ) : (
                             <>

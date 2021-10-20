@@ -8,7 +8,7 @@ import DeleteDialog from "./DeleteDialog";
 // styled components
 import { Table, TableBody, TableCell, TableHead, TableRow, Avatar } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { Add } from "@mui/icons-material";
+import { Add, Delete, Edit } from "@mui/icons-material";
 
 export default function UsersTable(props) {
     // avatar section
@@ -110,10 +110,10 @@ export default function UsersTable(props) {
                                     {user.createdAt.substr(0, 10)}
                                 </TableCell>
                                 <TableCell align="right" component="th" scope="row">
-                                    <LoadingButton onClick={() => handleUpdateUser(user)}>Update Info</LoadingButton>
+                                    <LoadingButton onClick={() => handleUpdateUser(user)}><Edit /></LoadingButton>
                                 </TableCell>
                                 <TableCell align="right" component="th" scope="row">
-                                    <LoadingButton onClick={() => handleDeleteUser(user)}>Delete</LoadingButton>
+                                    <LoadingButton onClick={() => handleDeleteUser(user)}><Delete/></LoadingButton>
                                 </TableCell>
                             </TableRow>
                         );

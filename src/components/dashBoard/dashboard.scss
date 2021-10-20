@@ -193,6 +193,18 @@ $normalPadding: 1rem;
                         border-top-left-radius: 0rem;
                     }
                 }
+                
+            }
+            .support {
+                height: 81.6vh;
+                overflow: hidden;
+                .supportIframe {
+                    height: 93vh;
+                    width: 100%;
+                    border: none;
+                    margin-top: 0;
+                }
+                padding: -5rem;
             }
         }
         .dashboardUsersEmpty {
@@ -242,10 +254,7 @@ $normalPadding: 1rem;
                 color: rgb(0, 190, 190);
                 animation: slide1 1s ease-in-out infinite;
             }
-
-            // products tab
-
-            // support tab
+            
         }
     }
 }
