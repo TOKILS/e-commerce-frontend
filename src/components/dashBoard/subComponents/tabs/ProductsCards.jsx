@@ -1,5 +1,5 @@
 // general
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 // styled components
 import { IconButton, Button, Typography, Card, CardActions, CardContent, CardMedia, Box } from "@mui/material";
@@ -39,12 +39,10 @@ const ProductsCards = ({ categoryTabItem, products, type, checkPass, typeTabItem
                                     <Card key={productIdx} sx={{ minHeight: "20rem", backgroundColor: "rgb(241, 241, 241)", borderRadius: "1rem" }}>
                                         <CardMedia component="img" height="250" image={product?.color[0]?.image[0]?.Image ? product?.color[0]?.image[0]?.Image : "https://i.imgur.com/odGVdde.png"} alt="x" />
                                         <CardContent>
-                                          <div className="cardColorsDiv">
-
-                                          </div>
+                                            <div className="cardColorsDiv"></div>
                                             <Typography sx={{ display: "flex", justifyContent: "space-between" }} gutterBottom variant="h5" component="div">
-                                                {product.Name}
-                                                {product.Price}
+                                                <span>{product.Name}</span>
+                                                <span>${product.Price}</span>
                                             </Typography>
                                             <Typography variant="body2" color="text.secondary">
                                                 {product.Description}
@@ -67,7 +65,7 @@ const ProductsCards = ({ categoryTabItem, products, type, checkPass, typeTabItem
                     </Box>
                 )}
             </div>
-            <DashboardAddProductDialog type={type} check={showAddProductDialog} handleClose={handleCloseUpdate}/>
+            <DashboardAddProductDialog type={type} check={showAddProductDialog} handleClose={handleCloseUpdate} />
         </>
     );
 };

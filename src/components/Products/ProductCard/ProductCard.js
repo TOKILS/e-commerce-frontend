@@ -86,8 +86,6 @@ const Product = ({ product, handleClick }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
 
-
-
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -110,7 +108,7 @@ const Product = ({ product, handleClick }) => {
           dispatch(updateCart());
           handleClick();
         });
-    } else setOpen(true)
+    } else setOpen(true);
   };
   const addToWish = () => {
     if (context.loggedIn) {
@@ -126,7 +124,7 @@ const Product = ({ product, handleClick }) => {
         .then((res) => {
           handleClick();
         });
-    } else setOpen(true)
+    } else setOpen(true);
   };
 
   return (
@@ -153,16 +151,8 @@ const Product = ({ product, handleClick }) => {
           </Icon>
         </Info>
       </Container>
-      <Snackbar
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-      >
-        <Alert
-          onClose={handleClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           <h4>You Need To SIGN IN ...</h4>
         </Alert>
       </Snackbar>

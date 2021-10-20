@@ -63,7 +63,7 @@ export const refreshTypes = () => async (dispatch) => {
         await dispatch(resetTypes());
         await types.forEach((type) => {
             let { id, CategoryID, Name, Description, createdAt, updatedAt } = type;
-            let CategoryIDName = CategoryID ==  1 ? "cat_BAGS" :  CategoryID ==  2 ? "cat_SHOES" : CategoryID == 3 ? "cat_SHIRT" : "cat_idk"
+            let CategoryIDName = CategoryID == 1 ? "cat_BAGS" : CategoryID == 2 ? "cat_SHOES" : CategoryID == 3 ? "cat_SHIRT" : "cat_idk";
             dispatch(
                 addType({
                     id,
@@ -91,7 +91,7 @@ export const refreshProducts = () => async (dispatch) => {
         await dispatch(resetProducts());
         await products.forEach((product) => {
             let { id, TypeID, Name, Description, Price, Quantity, Discount, createdAt, updatedAt, color } = product;
-            let TypeIDName = TypeID ==  1 ? "type_BAGS" :  TypeID ==  2 ? "type_SHOES" : TypeID == 5 ? "type_SHIRT" : TypeID == 6 ? "type_Dogs" : "type_idk"
+            let TypeIDName = TypeID == 1 ? "type_BAGS" : TypeID == 2 ? "type_SHOES" : TypeID == 5 ? "type_SHIRT" : TypeID == 6 ? "type_Dogs" : "type_idk";
             dispatch(
                 addProduct({
                     id,
@@ -104,11 +104,105 @@ export const refreshProducts = () => async (dispatch) => {
                     Discount,
                     createdAt,
                     updatedAt,
-                    color
+                    color,
                 })
             );
         });
         return { successMsg: `Products list updated` };
+    } catch (err) {
+        console.error(err.message);
+        return { error: err };
+    }
+};
+export const addProductToBackend = (productObj, colorObj, sizeObj, imageObj) => async (dispatch) => {
+    try {
+        console.log("addProductToBackend RAN");
+        let authToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlicmFoZW0iLCJjYXBhYmlsaXRpZXMiOlsicmVhZCIsImNyZWF0ZSIsInVwZGF0ZSIsImRlbGV0ZSJdLCJpYXQiOjE2MzExODMwNDJ9.t1ar77ATPUdvgu41ZhY3F5DWWx-3Z1917GFad__qin8`;
+
+        // add product
+        const productResponse = await superagent
+            .post(`https://mid-project-01.herokuapp.com/api/v2/Product`)
+            .set("Authorization", "Bearer " + authToken)
+            .send(productObj);
+        console.log("~ productResponse.body", productResponse.body);
+        const backProductId = productResponse.body.id;
+        let productResponseBody = productResponse.body;
+
+        // add color
+        let newColorObj = { ...colorObj, ProductID: backProductId };
+        const colorResponse = await superagent
+            .post(`https://mid-project-01.herokuapp.com/api/v2/Color`)
+            .set("Authorization", "Bearer " + authToken)
+            .send(newColorObj);
+        console.log("~ colorResponse.body", colorResponse.body);
+        const backColorId = colorResponse.body.id;
+        let colorResponseBody = colorResponse.body;
+
+        // add size
+        let newSizeObj = { ...sizeObj, ColorID: backColorId };
+        const sizeResponse = await superagent
+            .post(`https://mid-project-01.herokuapp.com/api/v2/Size`)
+            .set("Authorization", "Bearer " + authToken)
+            .send(newSizeObj);
+        console.log("~ sizeResponse.body", sizeResponse);
+        let sizeResponseBody = sizeResponse.body;
+
+        // add image
+        let newImageObj = { ...imageObj, ColorID: backColorId };
+        const imageResponse = await superagent
+            .post(`https://mid-project-01.herokuapp.com/api/v2/Image`)
+            .set("Authorization", "Bearer " + authToken)
+            .send(newImageObj);
+        console.log("~ imageResponse.body", imageResponse);
+
+        let imageResponseBody = imageResponse.body;
+
+        let productToAddToReduxObj = {
+            id: productResponseBody.id,
+            TypeID: productResponseBody.TypeID,
+            Name: productResponseBody.Name,
+            Description: productResponseBody.Description,
+            Price: productResponseBody.Price,
+            Quantity: productResponseBody.Quantity,
+            Discount: productResponseBody.Discount,
+            createdAt: productResponseBody.createdAt,
+            updatedAt: productResponseBody.updatedAt,
+            color: [
+                {
+                    id: colorResponseBody.id,
+                    ProductID: colorResponseBody.ProductID,
+                    Name: colorResponseBody.Name,
+                    Code: colorResponseBody.Code,
+                    Image: colorResponseBody.Image,
+                    createdAt: colorResponseBody.createAt,
+                    updatedAt: colorResponseBody.updatedAt,
+                    image: [
+                        {
+                            id: imageResponseBody.id,
+                            ColorID: imageResponseBody.ColorID,
+                            Image: imageResponseBody.Image,
+                            createdAt: imageResponseBody.createdAt,
+                            updatedAt: imageResponseBody.updatedAt,
+                        },
+                    ],
+                    size: [
+                        {
+                            id: sizeResponseBody.id,
+                            ColorID: sizeResponseBody.ColorID,
+                            Size: sizeResponseBody.Size,
+                            createdAt: sizeResponseBody.createdAt,
+                            updatedAt: sizeResponseBody.updatedAt,
+                        },
+                    ],
+                },
+            ],
+        };
+        dispatch(
+            addProduct({
+                ...productToAddToReduxObj,
+            })
+        );
+        return { successMsg: `Added product successfully` };
     } catch (err) {
         console.error(err.message);
         return { error: err };
