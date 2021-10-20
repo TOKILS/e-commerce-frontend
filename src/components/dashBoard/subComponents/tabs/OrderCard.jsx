@@ -57,6 +57,14 @@ const OrderCard = ({ order, user, product, colorEle, size, CancelOrder, handleSn
         setShowCancelOrderDialog(false);
     };
 
+    function randomState() {
+        let num = Math.random();
+        if (num > 0.50) {
+            return "On the way"
+        } else {
+            return "Preparing item"
+        }
+    }
     return (
         <>
             <Card tabIndex="0" key={order.id} sx={{ height: "12rem", backgroundColor: "rgb(241, 241, 241)", borderRadius: "1rem" }}>
@@ -69,14 +77,17 @@ const OrderCard = ({ order, user, product, colorEle, size, CancelOrder, handleSn
                             <h2>
                                 Order #{order.id} for user #{user.id} | {user.username}
                             </h2>
+                            <div>
+                                 <span style={{fontSize:"18px", fontWeight:"600"}}>{randomState()}</span>
                             <IconButton id="basic-button" aria-controls="basic-menu" aria-haspopup="true" aria-expanded={open ? "true" : undefined} onClick={handleMenuClick}>
                                 <MoreVert />
                             </IconButton>
+                            </div>
                         </div>
                         <Typography sx={{ display: "flex", justifyContent: "space-between", marginBottom: "0" }} gutterBottom variant="h5" component="div">
                             <span>{product.Name}</span>
                             <span style={{ position: "relative" }}>
-                                <span style={{ fontSize: "14px", opacity: "0.6" }}>{order.Quantity}×</span>
+                                <span style={{ fontSize: "18px", opacity: "0.8" }}>{order.Quantity}×</span>
                                 <span style={{ textDecorationLine: Number.parseInt(product.Discount) > 0 ? "line-through" : "none" }}> ${product.Price}</span>
                                 {Number.parseInt(product.Discount) > 0 ? <div style={{ fontSize: "14px", opacity: "0.6", position: "absolute", right: "0", top: "-1rem", fontSize: "12px", opacity: "0.6" }}>{product.Discount}</div> : ""}
                             </span>

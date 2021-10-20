@@ -9,10 +9,10 @@
 }
 
 .gradient-border {
-  margin-left: auto;
-  margin-top: 35px;
-  margin-right: auto;
-  --border-width: 3px;
+
+  margin: 2rem auto;
+  --border-width: 8px;
+
   text-align: center;
   position: relative;
   display: flex;
@@ -20,9 +20,6 @@
   align-items: center;
   width: 300px;
   height: 200px;
-  font-family: Lato, sans-serif;
-  font-size: 2.5rem;
-  text-transform: uppercase;
   color: black;
   background: white;
   border-radius: var(--border-width);
@@ -49,6 +46,26 @@
     background-size: 300% 300%;
     background-position: 0 50%;
     border-radius: calc(2 * var(--border-width));
+    animation: moveGradient 4s alternate infinite;
+  }
+  > span {
+    font-family: Lato, sans-serif;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+
+    background-image: linear-gradient(
+      60deg,
+      hsl(224, 85%, 66%),
+      hsl(269, 85%, 66%),
+      hsl(314, 85%, 66%),
+      hsl(359, 85%, 66%),
+      hsl(44, 85%, 66%),
+      hsl(89, 85%, 66%),
+      hsl(134, 85%, 66%),
+      hsl(179, 85%, 66%)
+    );
+    background-clip: text;
+    color: rgba(0, 0, 0, 0.199);
     animation: moveGradient 4s alternate infinite;
   }
 }
