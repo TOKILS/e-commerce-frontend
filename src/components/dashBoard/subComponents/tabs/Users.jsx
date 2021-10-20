@@ -63,7 +63,7 @@ const Users = (props) => {
                     ) : (
                         ""
                     )}
-                    <LoadingButton variant="text" loading={gettingUsersLoading} className="refreshUsersBtn">
+                    <LoadingButton onClick={handleGettingUsers} variant="text" loading={gettingUsersLoading} className="refreshUsersBtn">
                         <Cached />
                     </LoadingButton>
                 </div>

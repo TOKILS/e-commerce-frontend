@@ -46,9 +46,9 @@ const DeleteDialog = ({ user, check, handleShow, handleClose, DeleteUser, handle
         setDeleteBtnLoading(false);
         handleClose();
     }
-    useEffect(() => {
-        // console.log("snackbarState updated > ", snackbarState);
-    }, [snackbarState]);
+    // useEffect(() => {
+    //     // console.log("snackbarState updated > ", snackbarState);
+    // }, [snackbarState]);
     return (
         <>
             <Dialog open={check} onClose={handleClose}>
