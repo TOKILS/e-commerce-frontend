@@ -10,15 +10,25 @@ import ProductsCards from "./ProductsCards";
 
 const TypesTabs = ({ products, categoryTabItem, category, categoryIdx, types }) => {
     const [typeTabItem, setTypeTabItem] = useState(false);
+    const [filteredType, setFilteredType] = useState([]);
     function handleTypeTabChange(e, newValue) {
         setTypeTabItem(newValue);
     }
     useEffect(() => {
         setTypeTabItem(false);
+        if (categoryTabItem === categoryIdx) {
+            setTypeTabItem(0);
+        }
+        let fil = types.filter((type, idx) => {
+            if (category.id === type.CategoryID) {
+                return true;
+            }
+        });
+        setFilteredType(fil);
     }, [categoryTabItem]);
     return (
         <>
-            <div style={{marginLeft: "1rem", marginRight:"1rem"}} key={categoryIdx} role="tabpanel" className="dashboardTypesBar" hidden={categoryTabItem !== categoryIdx}>
+            <div style={{ marginLeft: "1rem", marginRight: "1rem" }} key={categoryIdx} role="tabpanel" className="dashboardTypesBar" hidden={categoryTabItem !== categoryIdx}>
                 {categoryTabItem === categoryIdx && (
                     <>
                         <Button disabled style={{ backgroundColor: "#70e2e24f" }}></Button>
@@ -29,22 +39,18 @@ const TypesTabs = ({ products, categoryTabItem, category, categoryIdx, types }) 
                                 }
                             })}
                         </Tabs>
-                        <Button disabled style={{ backgroundColor: "#70e2e24f" }} style={{ backgroundColor: "#70e2e24f" }}>
-                            
-                        </Button>
+                        <Button disabled style={{ backgroundColor: "#70e2e24f" }} style={{ backgroundColor: "#70e2e24f" }}></Button>
                     </>
                 )}
             </div>
-
-            {types.map((type, typeIdx) => {
+            {filteredType.map((type, typeIdx) => {
                 // console.log(`${category.Name} ${category.id} || ${type.CategoryIDName} ${type.CategoryID}`);
-                let checkPass = 0;
-                if (category.id === type.CategoryID) {
-                    // console.log(`RAN - ${category.Name} ${category.id} || ${type.CategoryIDName} ${type.CategoryID}`);
-                    let oldCheckPass = checkPass;
-                    checkPass++;
-                    return <ProductsCards categoryTabItem={categoryTabItem} products={products} type={type} checkPass={oldCheckPass} typeTabItem={typeTabItem} />;
-                }
+
+                // console.log(`RAN - ${category.Name} ${category.id} || ${type.CategoryIDName} ${type.CategoryID}`);
+                // let oldCheckPass = checkPass;
+                // checkPass++;
+                // console.log(`oldCheckPass ${oldCheckPass} || checkPass ${checkPass}`);
+                return <ProductsCards categoryTabItem={categoryTabItem} products={products} type={type} checkPass={typeIdx} typeTabItem={typeTabItem} />;
             })}
         </>
     );

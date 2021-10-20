@@ -112,80 +112,93 @@ function WishList(props) {
     <>
       <div>
         <h2>Wishlist</h2>
-
-        {wish.map((item) => {
-          return (
-            <Paper
-              sx={{ p: 2, boxShadow: 3, margin: "7.5px auto", flexGrow: 1 }}
-            >
-              <Grid container spacing={2}>
-                <Grid item>
-                  <ButtonBase sx={{ width: 128, height: 128 }}>
-                    <Img alt="complex" src={item.image[0].Image} />
-                  </ButtonBase>
-                </Grid>
-                <Grid item xs={12} sm container>
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                      <Typography gutterBottom variant="h4" component="div">
-                        {/* {item.ProductID.id} */}
-                        {item.ProductID.Name}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        <ProductColor color={item.ColorID.Code} />
-                      </Typography>
-                      <Typography variant="subtitle1" gutterBottom>
-                        {item.ProductID.Description}
-                      </Typography>
+        {wish.length ? (
+          wish.map((item) => {
+            return (
+              <Paper
+                sx={{ p: 2, boxShadow: 3, margin: "7.5px auto", flexGrow: 1 }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item>
+                    <ButtonBase sx={{ width: 128, height: 128 }}>
+                      <Img alt="complex" src={item.image[0].Image} />
+                    </ButtonBase>
+                  </Grid>
+                  <Grid item xs={12} sm container>
+                    <Grid item xs container direction="column" spacing={2}>
+                      <Grid item xs>
+                        <Typography gutterBottom variant="h4" component="div">
+                          {/* {item.ProductID.id} */}
+                          {item.ProductID.Name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          <ProductColor color={item.ColorID.Code} />
+                        </Typography>
+                        <Typography variant="subtitle1" gutterBottom>
+                          {item.ProductID.Description}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography
+                          sx={{ cursor: "pointer" }}
+                          variant="subtitle1"
+                        ></Typography>{" "}
+                        <Typography
+                          sx={{ cursor: "pointer" }}
+                          variant="subtitle1"
+                        >
+                          <Button
+                            sx={{ marginRight: "20px" }}
+                            onClick={() => {
+                              handleDelete(item.id);
+                            }}
+                            variant="outlined"
+                            color="error"
+                          >
+                            Remove
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              addToCart(item);
+                            }}
+                            variant="outlined"
+                            color="success"
+                          >
+                            Add To Cart
+                          </Button>
+                        </Typography>
+                      </Grid>
                     </Grid>
                     <Grid item>
-                      <Typography
-                        sx={{ cursor: "pointer" }}
-                        variant="subtitle1"
-                      ></Typography>{" "}
-                      <Typography
-                        sx={{ cursor: "pointer" }}
-                        variant="subtitle1"
-                      >
-                        <Button
-                          sx={{ marginRight: "20px" }}
-                          onClick={() => {
-                            handleDelete(item.id);
-                          }}
-                          variant="outlined"
-                          color="error"
-                        >
-                          Remove
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            addToCart(item);
-                          }}
-                          variant="outlined"
-                          color="success"
-                        >
-                          Add To Cart
-                        </Button>
+                      <Typography variant="h5" component="div">
+                        Price:{item.ProductID.Price}$
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid item>
-                    <Typography variant="h5" component="div">
-                      Price:{item.ProductID.Price}$
-                    </Typography>
-                  </Grid>
                 </Grid>
-              </Grid>
-            </Paper>
-          );
-        })}
+              </Paper>
+            );
+          })
+        ) : (
+          <p style={{ fontSize: "20px" }}>Your wish list is empty</p>
+        )}
       </div>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        style={{ marginLeft: "450px", marginBottom: "330px" }}
+      >
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           <h4> Added To The Cart!</h4>
         </Alert>
       </Snackbar>
-      <Snackbar open={openDelete} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar
+        open={openDelete}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        style={{ marginLeft: "450px", marginBottom: "330px" }}
+      >
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           <h4>Item Deleted ...</h4>
         </Alert>

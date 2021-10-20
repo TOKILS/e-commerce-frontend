@@ -2,6 +2,7 @@ import { Button } from "@material-ui/core";
 import React, { useContext } from "react";
 import superagent from "superagent";
 import { AuthContext } from "../../context/authentication";
+import "./user.css";
 
 function User({ user }) {
   // console.log(user.body)
@@ -128,7 +129,7 @@ function User({ user }) {
                         type="submit"
                         id="submit"
                         name="submit"
-                        class="btn btn-primary"
+                        class="btnupdate"
                       >
                         Update
                       </button>

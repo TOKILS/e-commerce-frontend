@@ -57,7 +57,7 @@ const Users = (props) => {
             <div tabIndex="0" className={props.users.length === 0 ? "allUsers dashboardUsersEmpty" : "allUsers"}>
                 <div className="Btns">
                     {props.users.length > 0 ? (
-                        <LoadingButton onClick={handleShowSignUpDialog} variant="text" startIcon={<Add />} className="addUsersUsersBtn">
+                        <LoadingButton onClick={handleShowSignUpDialog} variant="contained" startIcon={<Add />} className="addUsersUsersBtn">
                             Add User
                         </LoadingButton>
                     ) : (

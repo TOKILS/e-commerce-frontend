@@ -3,7 +3,8 @@ import {
     DELETE_CATEGORY,
     PUT_CATEGORY,
     POST_CATEGORY,
-    GET_PRODUCTS_CATEGORY
+    GET_PRODUCTS_CATEGORY,
+    GET_PRODUCTS_Type
 } from '../constants/api';
 
 
@@ -141,6 +142,30 @@ export const getProductsByCategory = name => {
                 reject(new Error(err.message));
             })
     })
+
+}
+
+export const getProductsByType = () => {
+    return new Promise((resolve, reject) => {
+        fetch(GET_PRODUCTS_Type)
+            .then(response => {
+                switch (response.status) {
+                    case 200:
+                        resolve(response.json());
+                        break;
+                    case 404:
+                        reject(new Error('It appears that the database url was not found'));
+                        break;
+                    default:
+                        reject(new Error('It seems there was an error'));
+                        break;
+                }
+            })
+            .catch(err => {
+                reject(new Error(err.message));
+            })
+    })
+
 }
 
 

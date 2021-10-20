@@ -1,14 +1,14 @@
 export const sliderItems = [
   {
     id: 1,
-    img: "https://i.ibb.co/CKv7F4L/White-lapel-849x1274-removebg-preview.png",
+    img: "https://www.seekpng.com/png/full/858-8584137_fashion-forward-episodes-offers-fashion.png",
     title: "SUMMER SALE",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "fcf1ed",
   },
   {
     id: 2,
-    img: "https://i.ibb.co/DG69bQ4/2.png",
+    img: "https://www.seekpng.com/png/full/858-8583854_780-931-in-layer-10-fashion.png",
     title: "AUTUMN COLLECTION",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "fbf0f4",

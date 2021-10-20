@@ -12,22 +12,15 @@ const ShippingInfo = styled.div`
   display: inline-block;
   border: 0.5px solid teal;
   margin: 30px 40px 40px 90px;
+  border-radius: 10px;
 `;
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
   margin: 10px;
-  border: 1px solid teal;
   text-align: center;
   padding: 10px;
 `;
-
-const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
 const InputDiv = styled.div`
   width: 100%;
 `;
@@ -39,6 +32,12 @@ const Input = styled.input`
   padding: 10px;
   text-align: center;
   border: 1px solid teal;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const Button = styled.button`
@@ -63,7 +62,9 @@ const Summary = styled.div`
 `;
 
 const SummaryTitle = styled.h1`
-  font-weight: 200;
+  font-weight: 180;
+  text-align: center;
+  margin: 10px 0px 10px 0px;
 `;
 
 const SummaryItem = styled.div`
@@ -163,16 +164,16 @@ function ShippongInfo() {
       <Summary>
         <SummaryTitle>SHIPPING & DELIVERY</SummaryTitle>
         <SummaryItemText>
-          Orders are delivered on business days (Monday-Friday) excluding public
+          Orders are delivered on business days (Sunday-Thuersday) excluding public
           holidays.
         </SummaryItemText>
       </Summary>
       <div style={{ marginTop: "-300px" }}>
         <ShippingInfo>
-          <Title>Shipping Info</Title>
+          <SummaryTitle>Shipping Info</SummaryTitle>
           {Object.keys(address).length !== 0 ? (
             <h3 style={{ margin: "10px", textAlign: "center" }}>
-              <SummaryTitle>you already have this address:</SummaryTitle>
+              <Title>You already have this address :</Title>
               <CardContent>
                 <Typography
                   sx={{ fontSize: 14 }}

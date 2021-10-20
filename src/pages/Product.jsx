@@ -119,14 +119,13 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
-  padding: 15px;
-  border: 2px solid teal;
-  background-color: white;
+  width: 40%;
+  border: none;
+  padding: 15px 20px;
+  background-color: teal;
+  color: white;
   cursor: pointer;
-  font-weight: 500;
-  &:hover {
-    background-color: #f8f4f4;
-  }
+  margin: 7px;
 `;
 
 const Product = (props) => {
@@ -237,7 +236,12 @@ const Product = (props) => {
         </Wrapper>
         {/* <Newsletter /> */}
         <Stack spacing={2} sx={{ width: "100%" }}>
-          <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+          <Snackbar
+            open={open}
+            autoHideDuration={2500}
+            onClose={handleClose}
+            style={{ marginLeft: "450px", marginBottom: "330px" }}
+          >
             <Alert
               onClose={handleClose}
               severity="success"
@@ -251,13 +255,14 @@ const Product = (props) => {
             open={openDelete}
             autoHideDuration={3000}
             onClose={handleClose}
+            style={{ marginLeft: "450px", marginBottom: "330px" }}
           >
             <Alert
               onClose={handleClose}
               severity="error"
               sx={{ width: "100%" }}
             >
-              <h4>You Need To SIGN IN ...</h4>
+              <h4>You need to Signin first...</h4>
             </Alert>
           </Snackbar>
         </Stack>

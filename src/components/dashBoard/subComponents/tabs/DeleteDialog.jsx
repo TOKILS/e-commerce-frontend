@@ -56,12 +56,12 @@ const DeleteDialog = ({ user, check, handleShow, handleClose, DeleteUser, handle
                 <DialogContent>
                     <DialogContentText sx={{ color: "#f82d60", fontWeight: "700" }}>This is irreversible</DialogContentText>
                 </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" color="secondary" type="button" onClick={handleClose}>
+                <DialogActions  sx={{padding:"1rem"}}>
+                    <Button color="secondary" type="button" onClick={handleClose}>
                         Cancel
                     </Button>
                     <ThemeProvider theme={deleteTheme}>
-                        <LoadingButton onClick={() => handleDeleteUser(user.token)} variant="outlined" loading={deleteBtnLoading} type="button">
+                        <LoadingButton onClick={() => handleDeleteUser(user.token)} variant="contained" loading={deleteBtnLoading} type="button">
                             DELETE
                         </LoadingButton>
                     </ThemeProvider>
