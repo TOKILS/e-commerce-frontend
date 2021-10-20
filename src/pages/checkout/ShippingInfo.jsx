@@ -21,13 +21,6 @@ const Title = styled.h1`
   text-align: center;
   padding: 10px;
 `;
-
-const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
 const InputDiv = styled.div`
   width: 100%;
 `;
@@ -39,6 +32,12 @@ const Input = styled.input`
   padding: 10px;
   text-align: center;
   border: 1px solid teal;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const Button = styled.button`

@@ -10,25 +10,89 @@ import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { useSelector } from "react-redux";
 import superagent from "superagent";
-import { Modal, Form } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
+import { Add, Remove } from "@material-ui/icons";
 import { AuthContext } from "../context/authentication";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { display } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
+import Fab from "@mui/material/Fab";
 import { FormControl } from "@material-ui/core";
+import styled from "styled-components";
+// import AddCommentIcon from "@mui/icons-material/AddComment";
+import AddCommentIcon from "@mui/icons-material/Add";
+import "./reviews.css";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { When } from "react-if";
 
+import BButton from "@mui/material/Button";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
+const Form = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+const Title = styled.h1`
+  font-size: 24px;
+  font-weight: 300;
+  margin: 10px;
+  text-align: center;
+  padding: 10px;
+`;
+const InputDiv = styled.div`
+  width: 100%;
+`;
+const Button = styled.button`
+  width: 25%;
+  border: none;
+  padding: 15px;
+  background-color: teal;
+  color: white;
+  cursor: pointer;
+  margin: 7px auto;
+`;
+const Input = styled.input`
+  flex: 1;
+  width: 290px;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
+  display: block;
+  border: 1px solid teal;
+`;
+const Textarea = styled.textarea`
+  flex: 1;
+  width: 290px;
+  margin: 10px auto;
+  display: block;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid teal;
+`;
+const mainPrimaryTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#008080",
+      contrastText: "#fff",
+    },
+    secondary: {
+      main: "#4E4E4E",
+    },
+  },
+});
+const ShippingInfo = styled.div`
+  display: block;
+  margin: 30px auto;
+`;
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -109,180 +173,225 @@ export default function AlignItemsList() {
   }
   return (
     <>
-      <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-        <Typography variant="h3" component="div">
+      <List sx={{ width: "100%" }}>
+        <Typography variant="h3" component="div" sx={{ textAlign: "center" }}>
           Reviews
-          <Button variant="outline-info" onClick={handleShow}>
-            +
-          </Button>
         </Typography>
+        <When condition={reviews.length}>
+          <Carousel>
+            {reviews.map((review) => (
+              <Carousel.Item style={{ padding: "20px" }}>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={review.UserID.username.toUpperCase()}
+                      //   src={review.Image}
+                      sx={{ width: 50, height: 50, marginRight: 2 }}
+                      src="x"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={review.Title}
+                    secondary={
+                      <>
+                        <Rating
+                          name="read-only"
+                          value={review.Rating}
+                          readOnly
+                          size="small"
+                        />
+                        <ListItemText
+                          secondary={new Date(
+                            Date.parse(review.createdAt)
+                          ).toDateString()}
+                        />
 
-        {reviews.length ? (
-          reviews.map((review) => (
-            <>
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar
-                    alt={review.UserID.username.toUpperCase()}
-                    //   src={review.Image}
-                    sx={{ width: 50, height: 50, marginRight: 2 }}
-                    src="x"
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={review.Title}
-                  secondary={
-                    <>
-                      <Rating
-                        name="read-only"
-                        value={review.Rating}
-                        readOnly
-                        size="small"
-                      />
-                      <ListItemText
-                        secondary={new Date(
-                          Date.parse(review.createdAt)
-                        ).toDateString()}
-                      />
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {review.UserID.username.toUpperCase()}
+                        </Typography>
+                        {` — ${review.Description}`}
 
-                      <br />
-                      <Typography
-                        sx={{ display: "inline" }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        {review.UserID.username.toUpperCase()}
-                      </Typography>
-                      {` — ${review.Description}`}
-
-                      {context.user.id === review.UserID.id ? (
-                        <>
-                          <IconButton
-                            aria-label="delete"
-                            style={{ color: "teal" }}
-                          >
+                        {context.user.id === review.UserID.id ? (
+                          <IconButton aria-label="delete">
                             <DeleteIcon
+                              style={{ width: "0.9rem" }}
                               onClick={() => deleteReview(review.id)}
                             />
                           </IconButton>
-                        </>
-                      ) : null}
-                    </>
-                  }
-                />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-            </>
-          ))
-        ) : (
-          <Typography padding="10px" variant="h6" color="gray" component="div">
-            No Reviews
-          </Typography>
-        )}
+                        ) : null}
+                      </>
+                    }
+                  />{" "}
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={review.UserID.username.toUpperCase()}
+                      //   src={review.Image}
+                      sx={{ width: 50, height: 50, marginRight: 2 }}
+                      src="x"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={review.Title}
+                    secondary={
+                      <>
+                        <Rating
+                          name="read-only"
+                          value={review.Rating}
+                          readOnly
+                          size="small"
+                        />
+                        <ListItemText
+                          secondary={new Date(
+                            Date.parse(review.createdAt)
+                          ).toDateString()}
+                        />
+
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {review.UserID.username.toUpperCase()}
+                        </Typography>
+                        {` — ${review.Description}`}
+
+                        {context.user.id === review.UserID.id ? (
+                          <IconButton aria-label="delete">
+                            <DeleteIcon
+                              style={{ width: "0.9rem" }}
+                              onClick={() => deleteReview(review.id)}
+                            />
+                          </IconButton>
+                        ) : null}
+                      </>
+                    }
+                  />{" "}
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={review.UserID.username.toUpperCase()}
+                      //   src={review.Image}
+                      sx={{ width: 50, height: 50, marginRight: 2 }}
+                      src="x"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={review.Title}
+                    secondary={
+                      <>
+                        <Rating
+                          name="read-only"
+                          value={review.Rating}
+                          readOnly
+                          size="small"
+                        />
+                        <ListItemText
+                          secondary={new Date(
+                            Date.parse(review.createdAt)
+                          ).toDateString()}
+                        />
+
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {review.UserID.username.toUpperCase()}
+                        </Typography>
+                        {` — ${review.Description}`}
+
+                        {context.user.id === review.UserID.id ? (
+                          <IconButton aria-label="delete">
+                            <DeleteIcon
+                              style={{ width: "0.9rem" }}
+                              onClick={() => deleteReview(review.id)}
+                            />
+                          </IconButton>
+                        ) : null}
+                      </>
+                    }
+                  />
+                </ListItem>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        </When>
       </List>
+
+      <ThemeProvider theme={mainPrimaryTheme}>
+        <BButton
+          sx={{ float: "right" }}
+          variant="contained"
+          startIcon={<Add />}
+          className="addUsersUsersBtn"
+          onClick={handleShow}
+        >
+          Add Review
+        </BButton>
+      </ThemeProvider>
+      <br style={{ clear: "both" }} />
+
       <Dialog open={show} onClose={handleClose}>
-        <DialogTitle>Add Review</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>
             To Add Review to this Product, please fill the form.
-          </DialogContentText> */}
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <div>
-              <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-                <Typography component="legend">Title</Typography>
-                <TextField
-                  onChange={(e) => settitle(e.target.value)}
+          </DialogContentText>  */}
+          <>
+            <>
+              <Title>Add Review</Title>
+              <InputDiv>
+                {/* <Typography component="legend">Title</Typography> */}
+                <div
+                  style={{
+                    alignItems: "center",
+                    flex: 1,
+                    width: "290px",
+                    margin: " 10px auto",
+                    padding: " 10px",
+                    textAlign: "center",
+                    display: "block",
+                  }}
+                >
+                  <Rating
+                    name="simple-controlled"
+                    value={rev}
+                    onChange={(event, newValue) => {
+                      setrev(newValue);
+                    }}
+                  />
+                </div>
+                <Input
                   placeholder="Title"
                   label="Title"
+                  onChange={(e) => settitle(e.target.value)}
+                  required
                 />
-              </FormControl>
-            </div>
-            <div>
-              <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-                <Typography component="legend">Description</Typography>
 
-                <TextField
-                  onChange={(e) => setdesc(e.target.value)}
-                  multiline
+                {/* <Typography component="legend">Description</Typography> */}
+                <Textarea
                   placeholder="Description"
                   label="Description"
-                  rows={3}
+                  onChange={(e) => setdesc(e.target.value)}
+                  rows="3"
+                  required
                 />
-              </FormControl>
-            </div>
-            <div>
-              <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-                <Typography component="legend">Rating</Typography>
-                <Rating
-                  name="simple-controlled"
-                  value={rev}
-                  onChange={(event, newValue) => {
-                    setrev(newValue);
-                  }}
-                />
-              </FormControl>
-            </div>
-          </Box>
+              </InputDiv>
+              <div style={{ display: "flex" }}>
+                {" "}
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleSave}>Send</Button>
+              </div>
+            </>
+          </>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSave}>Send</Button>
-        </DialogActions>
       </Dialog>
 
-      {/* <Modal show={show} onHide={handleClose} animation={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Review</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Title : </Form.Label>
-              <Form.Control
-                onChange={(e) => settitle(e.target.value)}
-                placeholder="Title"
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Description : </Form.Label>
-              <Form.Control
-                onChange={(e) => setdesc(e.target.value)}
-                as="textarea"
-                rows={3}
-              />
-            </Form.Group>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <p style={{ position: "relative", top: "9px" }}> Rating : </p>
-              <Rating
-                name="simple-controlled"
-                value={rev}
-                onChange={(event, newValue) => {
-                  setrev(newValue);
-                }}
-              />
-            </div>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSave}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
       <Snackbar
         open={openDelete}
         autoHideDuration={3000}
