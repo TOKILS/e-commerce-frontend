@@ -179,9 +179,9 @@ const Product = (props) => {
 
   return (
     <>
+      <Announcement />
       <Navbar />
       <Container>
-        <Announcement />
         <Wrapper>
           <ImgContainer>
             <Image src={Color.image[0].Image} />

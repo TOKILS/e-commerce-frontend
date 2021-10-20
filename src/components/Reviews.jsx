@@ -10,13 +10,23 @@ import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { useSelector } from "react-redux";
 import superagent from "superagent";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Form } from "react-bootstrap";
 import { AuthContext } from "../context/authentication";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { display } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Box from "@mui/material/Box";
+import { FormControl } from "@material-ui/core";
+
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -171,8 +181,64 @@ export default function AlignItemsList() {
           </Typography>
         )}
       </List>
+      <Dialog open={show} onClose={handleClose}>
+        <DialogTitle>Add Review</DialogTitle>
+        <DialogContent>
+          {/* <DialogContentText>
+            To Add Review to this Product, please fill the form.
+          </DialogContentText> */}
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <Typography component="legend">Title</Typography>
+                <TextField
+                  onChange={(e) => settitle(e.target.value)}
+                  placeholder="Title"
+                  label="Title"
+                />
+              </FormControl>
+            </div>
+            <div>
+              <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <Typography component="legend">Description</Typography>
 
-      <Modal show={show} onHide={handleClose} animation={false}>
+                <TextField
+                  onChange={(e) => setdesc(e.target.value)}
+                  multiline
+                  placeholder="Description"
+                  label="Description"
+                  rows={3}
+                />
+              </FormControl>
+            </div>
+            <div>
+              <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <Typography component="legend">Rating</Typography>
+                <Rating
+                  name="simple-controlled"
+                  value={rev}
+                  onChange={(event, newValue) => {
+                    setrev(newValue);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSave}>Send</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Add Review</Modal.Title>
         </Modal.Header>
@@ -216,7 +282,7 @@ export default function AlignItemsList() {
             Save Changes
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
       <Snackbar
         open={openDelete}
         autoHideDuration={3000}
@@ -227,7 +293,7 @@ export default function AlignItemsList() {
           severity="error"
           sx={{ width: "100%" }}
         >
-          <h4>You Need To SIGN IN ...</h4>
+          <h4>Please sign in ..</h4>
         </Alert>
       </Snackbar>
     </>
