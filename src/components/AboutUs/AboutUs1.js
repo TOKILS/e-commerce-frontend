@@ -6,7 +6,7 @@ const AboutUs = () => {
 
 	return (
 		<>
-			<div id="about-col">
+			
 				<div class="col-12 col-sm-6 col-md-4 col-lg-3">
 					<div class="our-team">
 						<div class="picture">
@@ -23,8 +23,8 @@ const AboutUs = () => {
 						</ul>
 					</div>
 				</div>
-			</div>
-			<div id="about-col">
+			
+			
 				<div class="col-12 col-sm-6 col-md-4 col-lg-3">
 					<div class="our-team">
 						<div class="picture">
@@ -41,8 +41,8 @@ const AboutUs = () => {
 						</ul>
 					</div>
 				</div>
-			</div>
-			<div id="about-col">
+			
+			
 				<div class="col-12 col-sm-6 col-md-4 col-lg-3">
 					<div class="our-team">
 						<div class="picture">
@@ -59,7 +59,7 @@ const AboutUs = () => {
 						</ul>
 					</div>
 				</div>
-			</div>
+			
 		</>
 	)
 }
