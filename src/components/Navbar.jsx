@@ -120,7 +120,7 @@ const Navbar = () => {
           </When>
           <MenuItem>
             <Link to="/Cart">
-              <Badge badgeContent={itemsInCart} color="primary">
+              <Badge badgeContent={itemsInCart} style={{color: 'teal'}}>
                 <ShoppingCartOutlined />
               </Badge>
             </Link>
