@@ -17,14 +17,13 @@ const BillingContainer = styled.div`
   width: 60%;
   display: inline-block;
   border: 0.5px solid teal;
+  border-radius: 10px;
   margin: 30px 40px 40px 90px;
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
-  font-weight: 300;
+  font-weight: 180;
   margin: 10px;
-  border: 0.5px solid teal;
   text-align: center;
 `;
 
@@ -92,6 +91,19 @@ const SummaryItem = styled.div`
 
 const SummaryItemText = styled.span``;
 const SummaryItemPrice = styled.span``;
+
+// ---------------------
+
+const Select = styled.select`
+  width: 50px;
+  height: 25px;
+  text-align: center;
+  border-radius: 7px;
+`
+
+const Option = styled.option`
+  margin: 5px;
+`
 
 function BillingInfo() {
   let history = useHistory();
@@ -268,30 +280,30 @@ function BillingInfo() {
           </InputDiv>
           <InputDiv>
             <Lable>Expiration Date*</Lable>
-            <select required>
-              <option>01</option>
-              <option>02</option>
-              <option>03</option>
-              <option>04</option>
-              <option>05</option>
-              <option>06</option>
-              <option>07</option>
-              <option>08</option>
-              <option>09</option>
-              <option>10</option>
-              <option>11</option>
-              <option>12</option>
-            </select>
-            <span>/</span>
-            <select required>
-              <option>2021</option>
-              <option>2022</option>
-              <option>2023</option>
-              <option>2024</option>
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-            </select>
+            <Select required>
+              <Option>01</Option>
+              <Option>02</Option>
+              <Option>03</Option>
+              <Option>04</Option>
+              <Option>05</Option>
+              <Option>06</Option>
+              <Option>07</Option>
+              <Option>08</Option>
+              <Option>09</Option>
+              <Option>10</Option>
+              <Option>11</Option>
+              <Option>12</Option>
+            </Select>
+            <span> / </span>
+            <Select required>
+              <Option>2021</Option>
+              <Option>2022</Option>
+              <Option>2023</Option>
+              <Option>2024</Option>
+              <Option>2025</Option>
+              <Option>2026</Option>
+              <Option>2027</Option>
+            </Select>
             <DescriptionP>
               The date your credit card expires. Find this on the front of your
               credit card.
@@ -311,7 +323,7 @@ function BillingInfo() {
               The last 3 digits displayed on the back of your credit card.
             </DescriptionP>
           </InputDiv>
-          <InputDiv>
+          <InputDiv style={{textAlign: 'center'}}>
             <Button type="submit">Make Payment</Button>
           </InputDiv>
         </Form>
