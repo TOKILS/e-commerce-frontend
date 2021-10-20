@@ -20,6 +20,7 @@ export const PUT_CATEGORY = `${API_HOST}/api/v2/Category`; //:id & .body 	    MO
 export const DELETE_CATEGORY = `${API_HOST}/api/v2/Category/`; //:id 			    ELIMINAR CATEGORIA
 export const GET_PRODUCTS_CATEGORY = `${API_HOST}/api/v3/type`; //:name			    LISTAR PRODUCTOS POR CATEGORIA
 export const DELETE_PRODUCT_CATEGORY = `${API_HOST}/products`; //:id/category/:id 	ELIMINAR CATEGORIA DE UN PRODUCTO
+export const GET_PRODUCTS_Type = `${API_HOST}/api/v2/Type`;
 
 // Acciones asociadas a User
 export const POST_USER_SIGNUP = `${API_HOST}/users`;
