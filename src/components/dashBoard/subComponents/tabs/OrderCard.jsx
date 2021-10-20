@@ -60,11 +60,11 @@ const OrderCard = ({ order, user, product, colorEle, size, CancelOrder, handleSn
     return (
         <>
             <Card tabIndex="0" key={order.id} sx={{ height: "12rem", backgroundColor: "rgb(241, 241, 241)", borderRadius: "1rem" }}>
-                <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+                <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem", width:"100%", justifyContent:"space-between" }}>
                     <div>
                         <img style={{ width: "16rem", height: "12rem", objectFit: "cover" }} src={colorEle.image[0]?.Image ? colorEle.image[0]?.Image : "https://i.imgur.com/odGVdde.png"} alt="x" />
                     </div>
-                    <CardContent>
+                    <CardContent sx={{flexGrow:"4"}}>
                         <div style={{ display: "flex", gap: "1rem", justifyContent: "space-between" }}>
                             <h2>
                                 Order #{order.id} for user #{user.id} | {user.username}
@@ -77,7 +77,7 @@ const OrderCard = ({ order, user, product, colorEle, size, CancelOrder, handleSn
                             <span>{product.Name}</span>
                             <span style={{ position: "relative" }}>
                                 <span style={{ fontSize: "14px", opacity: "0.6" }}>{order.Quantity}×</span>
-                                <span style={{ textDecorationLine: Number.parseInt(product.Discount) > 0 ? "line-through" : "none" }}>${product.Price}</span>
+                                <span style={{ textDecorationLine: Number.parseInt(product.Discount) > 0 ? "line-through" : "none" }}> ${product.Price}</span>
                                 {Number.parseInt(product.Discount) > 0 ? <div style={{ fontSize: "14px", opacity: "0.6", position: "absolute", right: "0", top: "-1rem", fontSize: "12px", opacity: "0.6" }}>{product.Discount}</div> : ""}
                             </span>
                         </Typography>
