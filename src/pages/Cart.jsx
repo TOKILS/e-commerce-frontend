@@ -169,6 +169,7 @@ const Cart = () => {
     totalItems: 0,
   });
   const [cartItems, setCartItems] = useState([]);
+  const [isEmpty, setisEmpty] = useState(true);
   const context = useContext(AuthContext);
 
   const UpdateItems = () => {
@@ -226,7 +227,9 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <TopButton>
+            <Link to="/">CONTINUE SHOPPING</Link>
+          </TopButton>
           <TopTexts>
             <TopText>Shopping Bag({cartInfo.totalItems})</TopText>
             <TopText>Your Wishlist ({wishListInfo.totalItems})</TopText>
@@ -234,7 +237,7 @@ const Cart = () => {
           {/* <TopButton type="filled">CHECKOUT NOW</TopButton> */}
         </Top>
         <Bottom>
-          <Info>
+          { cartInfo.totalItems ? <Info>
             {cartItems.map((item) => {
               return (
                 <>
@@ -247,29 +250,35 @@ const Cart = () => {
                 </>
               );
             })}
-          </Info>
-          <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-            <SummaryItem>
-              <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cartInfo.totalPrice}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 15.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {cartInfo.totalPrice + 10}</SummaryItemPrice>
-            </SummaryItem>
-            <Link to="/shipping">
-              <Button>CHECKOUT NOW</Button>
-            </Link>
-          </Summary>
+          </Info> : <img style={{margin: '0px auto 0px auto'}} src='https://www.hindarthouse.com/uploads/emptycart.png'/>}
+          {cartInfo.totalItems > 0 ? (
+            <Summary>
+              <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+              <SummaryItem>
+                <SummaryItemText>Subtotal</SummaryItemText>
+                <SummaryItemPrice>$ {cartInfo.totalPrice}</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>Estimated Shipping</SummaryItemText>
+                <SummaryItemPrice>$ 15.90</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>Shipping Discount</SummaryItemText>
+                <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem type="total">
+                <SummaryItemText>Total</SummaryItemText>
+                <SummaryItemPrice>
+                  $ {cartInfo.totalPrice + 10}
+                </SummaryItemPrice>
+              </SummaryItem>
+              <Link to="/shipping">
+                <Button>CHECKOUT NOW</Button>
+              </Link>
+            </Summary>
+          ) : (
+            []
+          )}
         </Bottom>
       </Wrapper>
       <Footer />

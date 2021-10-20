@@ -86,12 +86,7 @@ const Navbar = () => {
   return (
     <Container>
       <Wrapper>
-        <Left>
-//           <SearchContainer>
-//             <Input placeholder="Search" />
-//             <Search style={{ color: "gray", fontSize: 16 }} />
-//           </SearchContainer>
-        </Left>
+        <Left></Left>
         <Center>
           <Link to="/">
             <Logo>Fashionable</Logo>
@@ -115,6 +110,9 @@ const Navbar = () => {
           </Auth>
           <When condition={context.loggedIn}>
             <MenuItem>
+              <Link to="/profile">Profile</Link>
+            </MenuItem>
+            <MenuItem>
               <Link to="/" onClick={context.logout}>
                 Logout
               </Link>
@@ -131,7 +129,6 @@ const Navbar = () => {
       </Wrapper>
     </Container>
   );
-
 };
 
 export default Navbar;

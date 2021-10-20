@@ -4,9 +4,9 @@ import styled from "styled-components";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-
+ 
 const Container = styled.div`
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-around;
@@ -30,10 +30,10 @@ const ItemsHome = ({ p }) => {
   };
 
   return (
-    <Container>
+    <>
       <ProductCard handleClick={handleClick} product={p} type={true} />
 
-      <Stack spacing={2} sx={{ width: "100%" }}>
+      <Stack>
         <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
           <Alert
             onClose={handleClose}
@@ -44,7 +44,7 @@ const ItemsHome = ({ p }) => {
           </Alert>
         </Snackbar>
       </Stack>
-    </Container>
+    </>
   );
 };
 

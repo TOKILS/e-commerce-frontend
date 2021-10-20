@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:300");
 
+.MuiGrid-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
 .gradient-border {
   margin-left: auto;
   margin-right: auto;
