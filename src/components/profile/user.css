@@ -60,7 +60,16 @@
   border: 0;
   margin-bottom: 1rem;
 } */
+.card-body-user {
+  /* border: red solid;  */
+  width: 65%;
 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.card-body-user input {
+  width: 20rem;
+}
 .btnupdate {
   background-color: teal;
   color: white;

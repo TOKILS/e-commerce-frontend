@@ -38,10 +38,10 @@ function User({ user }) {
   return (
     <div>
       <form onSubmit={updateUser} class="container">
-        <div class="row gutters">
+        <div class="row gutters userInfo">
           <div class="col-xl-4 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
-              <div class="card-body">
+              <div class="card-body-user">
                 <div class="row gutters">
                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
                     <div class="form-group">
