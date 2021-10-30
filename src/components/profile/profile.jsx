@@ -57,111 +57,115 @@ export default function Profile() {
     }
   }, [context.loggedIn]);
   return (
-    <>
-      {/* <link
+    context.loggedIn && (
+      <>
+        {/* <link
         href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         rel="stylesheet"
       /> */}
-      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-      <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>{" "}
-      <Announcement />
-      <Navbar />
-      {/* 
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>{" "}
+        <Announcement />
+        <Navbar />
+        {/* 
       <Stack direction="row" spacing={2}>
         <Avatar>H</Avatar>
         <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
         <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
       </Stack> */}
-      {/* ///////////////////////////////////////// */}
-      {/* <h1>Wishlist</h1> */}
-      <div class="container">
-        <div class="view-account">
-          <section class="module">
-            <div class="module-inner">
-              <div class="side-bar">
-                <div class="user-info">
-                  <img
-                    class="img-profile img-circle img-responsive center-block"
-                    src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                    alt=""
-                  />
-                  <ul class="meta list list-unstyled">
-                    <li class="name">
-                      {userData.firstname + " " + userData.lastname}
-                      <h5 class="user-name">{userData.username}</h5>
-                      <h6 class="user-email">{userData.email}</h6>
-                      <label class="label label-info">
-                        {context.user.role}
-                      </label>
-                    </li>
-                    {/* <li class="email"><a href="#">Email : {userData.email}</a></li> */}
-                    {/* <li class="activity">Last updatedAt: {userData.updatedAt}</li> */}
-                  </ul>
-                </div>
-                <nav class="side-menu">
-                  <ul
-                    class="nav"
-                    onClick={(e) => {
-                      if (e.target.parentElement.tagName == "LI") {
-                        // setmethod(e.target.innerText);
-                        for (const li of document.querySelectorAll(
-                          "li.active"
-                        )) {
-                          li.classList.remove("active");
+        {/* ///////////////////////////////////////// */}
+        {/* <h1>Wishlist</h1> */}
+        <div class="container">
+          <div class="view-account">
+            <section class="module">
+              <div class="module-inner">
+                <div class="side-bar">
+                  <div class="user-info">
+                    <img
+                      class="img-profile img-circle img-responsive center-block"
+                      src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                      alt=""
+                    />
+                    <ul class="meta list list-unstyled">
+                      <li class="name">
+                        {userData.firstname + " " + userData.lastname}
+                        <h5 class="user-name">{userData.username}</h5>
+                        <h6 class="user-email">{userData.email}</h6>
+                        <label class="label label-info">
+                          {context.user.role}
+                        </label>
+                      </li>
+                      {/* <li class="email"><a href="#">Email : {userData.email}</a></li> */}
+                      {/* <li class="activity">Last updatedAt: {userData.updatedAt}</li> */}
+                    </ul>
+                  </div>
+                  <nav class="side-menu">
+                    <ul
+                      class="nav"
+                      onClick={(e) => {
+                        if (e.target.parentElement.tagName == "LI") {
+                          // setmethod(e.target.innerText);
+                          for (const li of document.querySelectorAll(
+                            "li.active"
+                          )) {
+                            li.classList.remove("active");
+                          }
+                          e.target.parentElement.className = "active";
                         }
-                        e.target.parentElement.className = "active";
-                      }
-                    }}
-                  >
-                    <li
-                      class="active"
-                      onClick={() => setActiveSection(<User user={userData} />)}
+                      }}
                     >
-                      <a href="#">
-                        <span class="fa fa-user"></span> Profile
-                      </a>
-                    </li>
+                      <li
+                        class="active"
+                        onClick={() =>
+                          setActiveSection(<User user={userData} />)
+                        }
+                      >
+                        <a href="#">
+                          <span class="fa fa-user"></span> Profile
+                        </a>
+                      </li>
 
-                    <li onClick={() => setActiveSection(<WishList />)}>
-                      <a href="#wish">
-                        <span class="fa fa-heart"></span> My Wishlist
-                      </a>
-                    </li>
+                      <li onClick={() => setActiveSection(<WishList />)}>
+                        <a href="#wish">
+                          <span class="fa fa-heart"></span> My Wishlist
+                        </a>
+                      </li>
 
-                    {/* <li><a href="#"><span class="fa fa-cog"></span> Settings</a></li> */}
-                    <li onClick={() => setActiveSection(<Order />)}>
-                      <a href="#order">
-                        <span class="fa fa-shopping-cart"></span> My Orders
-                      </a>
-                    </li>
+                      {/* <li><a href="#"><span class="fa fa-cog"></span> Settings</a></li> */}
+                      <li onClick={() => setActiveSection(<Order />)}>
+                        <a href="#order">
+                          <span class="fa fa-shopping-cart"></span> My Orders
+                        </a>
+                      </li>
 
-                    {/* <li onClick={() => setActiveSection(null)} ><a href="#"><span class="fa fa-credit-card"></span> Billing</a></li> */}
+                      {/* <li onClick={() => setActiveSection(null)} ><a href="#"><span class="fa fa-credit-card"></span> Billing</a></li> */}
 
-                    <li onClick={() => setActiveSection(<Message />)}>
-                      <a href="#message">
-                        <span class="fa fa-envelope"></span> Messages
-                      </a>
-                    </li>
+                      <li onClick={() => setActiveSection(<Message />)}>
+                        <a href="#message">
+                          <span class="fa fa-envelope"></span> Messages
+                        </a>
+                      </li>
 
-                    {/* <li onClick={() => setActiveSection(null)}><a href="user-drive.html"><span class="fa fa-th"></span> Drive</a></li> */}
-                  </ul>
-                </nav>
-              </div>
+                      {/* <li onClick={() => setActiveSection(null)}><a href="user-drive.html"><span class="fa fa-th"></span> Drive</a></li> */}
+                    </ul>
+                  </nav>
+                </div>
 
-              <div class="content-panel">
-                <div class="billing">
-                  <div class="wrapper">
-                    <div id="wishlist-king" class="wk-row">
-                      {activeSection}
+                <div class="content-panel">
+                  <div class="billing">
+                    <div class="wrapper">
+                      <div id="wishlist-king" class="wk-row">
+                        {activeSection}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
-      </div>
-      <Footer />
-    </>
+        <Footer />
+      </>
+    )
   );
 }
