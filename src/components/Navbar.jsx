@@ -105,11 +105,11 @@ const Navbar = () => {
               <Link to="/Login">SIGN IN</Link>
             </MenuItem>
           </When>
-          <Auth capability="delete">
+          {/* <Auth capability="delete"> */}
             <MenuItem>
               <Link to="/dashboard">Dashboard</Link>
             </MenuItem>
-          </Auth>
+          {/* </Auth> */}
           <When condition={context.loggedIn}>
             <MenuItem>
               <Link to="/profile">Profile</Link>

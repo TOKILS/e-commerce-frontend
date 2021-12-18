@@ -132,7 +132,7 @@ const DashBoard = (props) => {
     props.handleSnackBar({ show: false });
   };
   return (
-    isAdmin && (
+    // isAdmin && (
       <div className="dashBoard_shadow">
         <div className="dashBoard">
           <ThemeProvider theme={whitePrimaryTheme}>
@@ -264,7 +264,7 @@ const DashBoard = (props) => {
           </Alert>
         </Snackbar>
       </div>
-    )
+    // )
   );
 };
 const mapStateToProps = (state) => ({
